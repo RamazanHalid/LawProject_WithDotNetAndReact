@@ -34,6 +34,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<LicenceUserManager>().As<ILicenceUserService>();
             builder.RegisterType<EfLicenceUserDal>().As<ILicenceUserDal>();
 
+            builder.RegisterType<CaseStatusManager>().As<ICaseStatusService>();
+            builder.RegisterType<EfCaseStatusDal >().As<ICaseStatusDal>();
+
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
