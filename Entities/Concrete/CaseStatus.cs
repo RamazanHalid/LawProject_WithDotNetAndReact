@@ -10,7 +10,7 @@ namespace Entities.Concrete
         public int CaseStatusId { get; set; }
         public int LicenceId { get; set; }
         public int CourtOfficeTypeId { get; set; }
-        public CourtOfficeType CourtOffice { get; set; }
+        public CourtOfficeType CourtOfficeType { get; set; }
         public string DescriptionTr { get; set; }
         public string DescriptionEn { get; set; }
         public bool IsActive { get; set; }
