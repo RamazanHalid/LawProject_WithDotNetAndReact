@@ -21,10 +21,10 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<UserManager>().As<IUserService>();
             builder.RegisterType<EfUserDal>().As<IUserDal>();
-            
+
             builder.RegisterType<LicenceManager>().As<ILicenceService>();
             builder.RegisterType<EfLicenceDal>().As<ILicenceDal>();
-            
+
             builder.RegisterType<CityManager>().As<ICityService>();
             builder.RegisterType<EfCityDal>().As<ICityDal>();
 
@@ -35,7 +35,11 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfLicenceUserDal>().As<ILicenceUserDal>();
 
             builder.RegisterType<CaseStatusManager>().As<ICaseStatusService>();
-            builder.RegisterType<EfCaseStatusDal >().As<ICaseStatusDal>();
+            builder.RegisterType<EfCaseStatusDal>().As<ICaseStatusDal>();
+
+
+            builder.RegisterType<CaseTypeManager>().As<ICaseTypeService>();
+            builder.RegisterType<EfCaseTypeDal>().As<ICaseTypeDal>();
 
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
