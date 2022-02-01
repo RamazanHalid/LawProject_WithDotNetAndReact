@@ -20,5 +20,15 @@ namespace DataAccess.Concrete.EntityFramework
 
             }
         }
+        public Licence AddWithReturnLastId(Licence licence)
+        {
+            using (var context = new HukukContext())
+            {
+                var AddLicence = context.Entry(licence);
+                AddLicence.State = EntityState.Added;
+                context.SaveChanges();
+                return licence;
+            }
+        }
     }
 }
