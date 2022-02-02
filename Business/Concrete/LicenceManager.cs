@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
@@ -24,7 +25,7 @@ namespace Business.Concrete
         public IResult Add(Licence licence)
         {
             var newLicence = _licenceDal.AddWithReturnLastId(licence);
-            var result = _licenceUserService.Add(new LicenceUser
+            var result = _licenceUserService.AddForCreatedNewLicence(new LicenceUser
             {
                 IsActive = true,
                 LicenceId = newLicence.LicenceId,
@@ -33,7 +34,7 @@ namespace Business.Concrete
             });
             if (!result.Success)
                 return result;
-            return new SuccessResult("Add success");
+            return new SuccessResult(Messages.AddedSuccessfuly);
         }
 
         public IResult Delete(int id)
@@ -41,9 +42,12 @@ namespace Business.Concrete
             throw new System.NotImplementedException();
         }
 
-        public IDataResult<Licence> Get(int id)
+        public IDataResult<Licence> GetById(int id)
         {
-            throw new System.NotImplementedException();
+            var licence = _licenceDal.GetByIdWithCity(l => l.LicenceId == id);
+            if (licence == null)
+                return new ErrorDataResult<Licence>(Messages.TheItemDoesNotExists);
+            return new SuccessDataResult<Licence>(licence, Messages.GetByIdSuccessfuly);
         }
 
         public IDataResult<List<Licence>> GetAll()
@@ -53,7 +57,8 @@ namespace Business.Concrete
 
         public IResult Update(Licence licence)
         {
-            throw new System.NotImplementedException();
+            _licenceDal.Update(licence);
+            return new SuccessResult(Messages.UpdatedSuccessfuly);
         }
     }
 }

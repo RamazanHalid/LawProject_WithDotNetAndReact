@@ -5,6 +5,7 @@ using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JWT;
 using Entities.DTOs;
 using System;
+using System.Security.Claims;
 
 namespace Business.Concrete
 {
@@ -27,7 +28,7 @@ namespace Business.Concrete
             HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
             var user = new User
             {
-                CellPhone = "+90" + userForRegisterDto.CellPhone,
+                CellPhone = userForRegisterDto.CellPhone,
                 FirstName = userForRegisterDto.FirstName,
                 LastName = userForRegisterDto.LastName,
                 PasswordHash = passwordHash,

@@ -11,13 +11,11 @@ namespace WebAPI.Controllers
     public class CourtOfficeTypesController : ControllerBase
     {
         private ICourtOfficeTypeService _courtOfficeTypeService;
-
         public CourtOfficeTypesController(ICourtOfficeTypeService courtOfficeTypeService)
         {
             _courtOfficeTypeService = courtOfficeTypeService;
         }
-
-        [HttpGet("GetAll")]
+                [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
             var result = _courtOfficeTypeService.GetAll();

@@ -15,10 +15,10 @@ namespace WebAPI.Controllers
         {
             _taskTypeService = taskTypeService;
         }
-        [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        [HttpGet("GetAllByLicenceIdAndActivity")]
+        public IActionResult GetAllByLicenceIdAndActivity(int licenceId, int isActive)
         {
-            var result = _taskTypeService.GetAll();
+            var result = _taskTypeService.GetAllByLicenceIdAndActivity(licenceId, isActive);
             if (result.Success)
             {
                 return Ok(result);
@@ -29,16 +29,6 @@ namespace WebAPI.Controllers
         public IActionResult GetById(int id)
         {
             var result = _taskTypeService.GetById(id);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-        [HttpGet("GetByLicenceId")]
-        public IActionResult GetByLicenceId(int licenceId)
-        {
-            var result = _taskTypeService.GetAllByLicenceId(licenceId);
             if (result.Success)
             {
                 return Ok(result);

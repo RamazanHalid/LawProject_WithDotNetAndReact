@@ -16,10 +16,11 @@ namespace WebAPI.Controllers
             _caseStatusService = caseStatusService;
         }
 
-        [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        [HttpGet("GetAllByLicenceIdAndActivity")]
+        public IActionResult GetAllByLicenceIdAndActivity(int licenceId, int isActive)
         {
-            var result = _caseStatusService.GetAll();
+            var result = _caseStatusService.GetAllByLicenceIdAndActivity(licenceId, isActive);
+
             if (result.Success)
             {
                 return Ok(result);
@@ -62,6 +63,16 @@ namespace WebAPI.Controllers
         public IActionResult Update(CaseStatus caseStatus)
         {
             var result = _caseStatusService.Update(caseStatus);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("ChangeActivity")]
+        public IActionResult ChangeActivity(int id)
+        {
+            var result = _caseStatusService.ChangeActivity(id);
             if (result.Success)
             {
                 return Ok(result);

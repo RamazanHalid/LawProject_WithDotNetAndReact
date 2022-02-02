@@ -43,7 +43,7 @@ namespace Business.Concrete
         {
             var courtOfficeType = _courtOfficeTypeDal.Get(c => c.CourtOfficeTypeId == id);
             if (courtOfficeType == null)
-                return new ErrorDataResult<CourtOfficeType>(null, Messages.TheItemDoesNotExists);
+                return new ErrorDataResult<CourtOfficeType>(Messages.TheItemDoesNotExists);
             return new SuccessDataResult<CourtOfficeType>(Messages.GetByIdSuccessfuly);
         }
 

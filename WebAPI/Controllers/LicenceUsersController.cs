@@ -2,6 +2,8 @@
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Security.Claims;
 
 namespace WebAPI.Controllers
 {
@@ -33,6 +35,7 @@ namespace WebAPI.Controllers
             {
                 return Ok(result);
             }
+
             return BadRequest(result);
         }
         [HttpGet("GetByLicenceId")]
@@ -46,9 +49,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpGet("GetByUserId")]
-        public IActionResult GetByUserId(int userId)
+        public IActionResult GetByUserId()
         {
-            var result = _licenceUser.GetByUserId(userId);
+            var result = _licenceUser.GetByUserId();
             if (result.Success)
             {
                 return Ok(result);

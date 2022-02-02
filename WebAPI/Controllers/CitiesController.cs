@@ -25,8 +25,7 @@ namespace WebAPI.Controllers
                 return Ok(result);
             }
             return BadRequest(result);
-        }
-        
+        }       
         [HttpPost("Add")]
         public IActionResult Add(City city)
         {

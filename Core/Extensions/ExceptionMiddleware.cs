@@ -20,27 +20,27 @@ namespace Core.Extensions
 
         public async Task InvokeAsync(HttpContext httpContext)
         {
-            //try
-            //{
+            try
+            {
                 await _next(httpContext);
-            //}
-            //catch (Exception e)
-            //{
-            //    await HandleExceptionAsync(httpContext, e);
-            //}
+            }
+            catch (Exception e)
+            {
+                await HandleExceptionAsync(httpContext, e);
+            }
         }
 
         private Task HandleExceptionAsync(HttpContext httpContext, Exception e)
         {
             httpContext.Response.ContentType = "application/json";
-            httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            httpContext.Response.StatusCode = 400;
 
             string message = "Internal Server Error";
             IEnumerable<ValidationFailure> errors;
             if (e.GetType() == typeof(ValidationException))
             {
                 message = e.Message;
-                errors = ((ValidationException) e).Errors;
+                errors = ((ValidationException)e).Errors;
                 httpContext.Response.StatusCode = 400;
 
                 return httpContext.Response.WriteAsync(new ValidationErrorDetails
@@ -49,13 +49,13 @@ namespace Core.Extensions
                     Message = message,
                     Errors = errors
                 }.ToString());
-
             }
 
             return httpContext.Response.WriteAsync(new ErrorDetails
             {
+                Success = false,
                 StatusCode = httpContext.Response.StatusCode,
-                Message = message
+                Message = e.Message
             }.ToString());
         }
     }

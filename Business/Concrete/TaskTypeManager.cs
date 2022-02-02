@@ -17,13 +17,11 @@ namespace Business.Concrete
         {
             _taskTypeDal = taskTypeDal;
         }
-
         public IResult Add(TaskType taskType)
         {
             _taskTypeDal.Add(taskType);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
-
         public IResult ChangeActivity(int id)
         {
             var taskType = _taskTypeDal.Get(tp => tp.TaskTypeId == id);
@@ -35,7 +33,6 @@ namespace Business.Concrete
                 return result;
             return new SuccessResult(Messages.ActivityChangedSuccessfuly);
         }
-
         public IResult Delete(int id)
         {
             var taskType = _taskTypeDal.Get(tp => tp.TaskTypeId == id);
@@ -44,17 +41,14 @@ namespace Business.Concrete
             _taskTypeDal.Delete(taskType);
             return new SuccessResult(Messages.DeletedSuccessfuly);
         }
-
-        public IDataResult<List<TaskType>> GetAll()
+        public IDataResult<List<TaskType>> GetAllByLicenceIdAndActivity(int licenceId, int isActive)
         {
-            return new SuccessDataResult<List<TaskType>>(_taskTypeDal.GetAll(), Messages.GetAllSuccessfuly);
+            if (isActive == 0)
+                return new SuccessDataResult<List<TaskType>>(_taskTypeDal.GetAll(tp => tp.LicenceId == licenceId && tp.IsActive == false), Messages.GetAllSuccessfuly);
+            if (isActive == 1)
+                return new SuccessDataResult<List<TaskType>>(_taskTypeDal.GetAll(tp => tp.LicenceId == licenceId && tp.IsActive == true), Messages.GetAllSuccessfuly);
+            return new SuccessDataResult<List<TaskType>>(_taskTypeDal.GetAll(tp => tp.LicenceId == licenceId), Messages.GetAllSuccessfuly);
         }
-
-        public IDataResult<List<TaskType>> GetAllByLicenceId(int licenceId)
-        {
-            return new SuccessDataResult<List<TaskType>>(_taskTypeDal.GetAll(tp => tp.LicenceId == licenceId), Messages.GetAllByLicenceIdSuccessfuly);
-        }
-
         public IDataResult<TaskType> GetById(int id)
         {
             var taskType = _taskTypeDal.Get(tp => tp.TaskTypeId == id);
@@ -62,7 +56,6 @@ namespace Business.Concrete
                 return new ErrorDataResult<TaskType>(Messages.TheItemDoesNotExists);
             return new SuccessDataResult<TaskType>(taskType, Messages.GetByIdSuccessfuly);
         }
-
         public IResult Update(TaskType taskType)
         {
             _taskTypeDal.Update(taskType);

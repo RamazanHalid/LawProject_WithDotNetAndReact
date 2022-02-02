@@ -41,9 +41,18 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CaseTypeManager>().As<ICaseTypeService>();
             builder.RegisterType<EfCaseTypeDal>().As<ICaseTypeDal>();
 
+            builder.RegisterType<TaskTypeManager>().As<ITaskTypeService>();
+            builder.RegisterType<EfTaskTypeDal>().As<ITaskTypeDal>();
+            
+            builder.RegisterType<TransactionActivityTypeManager>().As<ITransactionActivityTypeService>();
+            builder.RegisterType<EfTransactionActivityTypeDal>().As<ITransactionActivityTypeDal>();
+
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+
+            builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>();
+            builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationClaimDal>();
 
             builder.RegisterType<SmsManager>().As<ISmsService>();
 

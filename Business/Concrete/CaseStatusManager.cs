@@ -17,13 +17,22 @@ namespace Business.Concrete
         {
             _caseStatusDal = caseStatusDal;
         }
-
         public IResult Add(CaseStatus caseStatus)
         {
             _caseStatusDal.Add(caseStatus);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
-
+        public IResult ChangeActivity(int id)
+        {
+            var caseStatus = GetById(id);
+            if (!caseStatus.Success)
+                return caseStatus;
+            caseStatus.Data.IsActive = !caseStatus.Data.IsActive;
+            var result = Update(caseStatus.Data);
+            if (!result.Success)
+                return result;
+            return new SuccessResult(Messages.ActivityChangedSuccessfuly);
+        }
         public IResult Delete(int id)
         {
             var caseStatus = _caseStatusDal.Get(cs => cs.CaseStatusId == id);
@@ -33,15 +42,23 @@ namespace Business.Concrete
             return new SuccessResult(Messages.DeletedSuccessfuly);
         }
 
-        public IDataResult<List<CaseStatus>> GetAll()
+        public IDataResult<List<CaseStatus>> GetAllByLicenceIdAndActivity(int licenceId, int isActive)
         {
-            return new SuccessDataResult<List<CaseStatus>>(_caseStatusDal.GetAllWithCourtOfficeType(), Messages.GetAllSuccessfuly);
+            if (isActive == 0)
+                return new SuccessDataResult<List<CaseStatus>>(_caseStatusDal
+                    .GetAllWithCourtOfficeType(cs => cs.LicenceId == licenceId && cs.IsActive == false), Messages.GetAllSuccessfuly);
+            if (isActive == 1)
+                return new SuccessDataResult<List<CaseStatus>>(_caseStatusDal
+                    .GetAllWithCourtOfficeType(cs => cs.LicenceId == licenceId && cs.IsActive == true), Messages.GetAllSuccessfuly);
+            return new SuccessDataResult<List<CaseStatus>>(_caseStatusDal.GetAllWithCourtOfficeType(cs => cs.LicenceId == licenceId), Messages.GetAllSuccessfuly);
+
+
         }
         public IDataResult<CaseStatus> GetById(int id)
         {
             var caseStatus = _caseStatusDal.GetByIdWithCourtOfficeType(cs => cs.CaseStatusId == id);
             if (caseStatus == null)
-                return new ErrorDataResult<CaseStatus>(null, Messages.TheItemDoesNotExists);
+                return new ErrorDataResult<CaseStatus>(Messages.TheItemDoesNotExists);
             return new SuccessDataResult<CaseStatus>(caseStatus, Messages.GetByIdSuccessfuly);
         }
         public IResult Update(CaseStatus caseStatus)

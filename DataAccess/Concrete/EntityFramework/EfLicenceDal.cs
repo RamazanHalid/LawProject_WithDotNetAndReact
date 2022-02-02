@@ -7,19 +7,12 @@ using System.Text;
 using System.Linq;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfLicenceDal : EfEntityRepositoryBase<Licence, HukukContext>, ILicenceDal
     {
-        public List<Licence> LicenceWithCity()
-        {
-            using (var context = new HukukContext())
-            {
-                return context.Licences.Include(l => l.City).ToList();
-
-            }
-        }
         public Licence AddWithReturnLastId(Licence licence)
         {
             using (var context = new HukukContext())
@@ -28,6 +21,24 @@ namespace DataAccess.Concrete.EntityFramework
                 AddLicence.State = EntityState.Added;
                 context.SaveChanges();
                 return licence;
+            }
+        }
+
+        public Licence GetByIdWithCity(Expression<Func<Licence, bool>> filter)
+        {
+            using (var context = new HukukContext())
+            {
+                return context.Set<Licence>().Include(l => l.City).ThenInclude(c => c.Country).SingleOrDefault(filter);
+            }
+        }
+
+        public List<Licence> LicenceWithCity(Expression<Func<Licence, bool>> filter = null)
+        {
+            using (var context = new HukukContext())
+            {
+                return filter == null
+                    ? context.Set<Licence>().Include(l => l.City).ThenInclude(c => c.Country).ToList()
+                    : context.Set<Licence>().Include(l => l.City).ThenInclude(c => c.Country).Where(filter).ToList();
             }
         }
     }

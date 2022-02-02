@@ -16,13 +16,13 @@ namespace WebAPI.Controllers
             _caseTypeService = caseTypeService;
         }
 
-        [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        [HttpGet("GetAllByLicenceIdAndActivity")]
+        public IActionResult GetAllByLicenceIdAndActivity(int licenceId, int isActive)
         {
-            var result = _caseTypeService.GetAll();
+            var result = _caseTypeService.GetByLicenceIdAndActivity(licenceId, isActive);
             if (result.Success)
             {
-               return Ok(result);
+                return Ok(result);
             }
             return BadRequest(result);
         }

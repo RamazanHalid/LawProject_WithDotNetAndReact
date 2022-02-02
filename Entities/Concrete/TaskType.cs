@@ -11,7 +11,7 @@ namespace Entities.Concrete
         public int LicenceId { get; set; }
         public string TaskTypeNameTr { get; set; }
         public string TaskTypeNameEn { get; set; }
-        public byte IsActive { get; set; }
+        public bool IsActive { get; set; }
 
     }
 }

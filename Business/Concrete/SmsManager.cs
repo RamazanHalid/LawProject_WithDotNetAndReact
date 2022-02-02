@@ -26,7 +26,7 @@ namespace Business.Concrete
             this.ReceipentList = new List<string>();
             for (int i = 0; i < cellPhone.Length; i++)
             {
-                this.ReceipentList.Add(cellPhone[i]);
+                this.ReceipentList.Add("+90" + cellPhone[i]);
             }
             //var result = SendSms();
             //if (result.Success)

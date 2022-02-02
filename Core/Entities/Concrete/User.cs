@@ -6,6 +6,7 @@ namespace Core.Entities.Concrete
 {
     public class User : IEntity
     {
+        public static IEnumerable<object> Claims { get; set; }
         public int Id { get; set; }
         public string CellPhone { get; set; }
         public string FirstName { get; set; }
@@ -24,5 +25,6 @@ namespace Core.Entities.Concrete
         public byte[] PasswordSalt { get; set; }
         public byte[] PasswordHash { get; set; }
 
+     
     }
 }

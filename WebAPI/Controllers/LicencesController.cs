@@ -11,12 +11,10 @@ namespace WebAPI.Controllers
     public class LicencesController : ControllerBase
     {
         private ILicenceService _licenceService;
-
         public LicencesController(ILicenceService licenceService)
         {
             _licenceService = licenceService;
         }
-
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
