@@ -8,9 +8,8 @@ namespace Business.Abstract
 {
     public interface ITaskTypeService
     {
-        IDataResult<List<TaskType>> GetAll();
+        IDataResult<List<TaskType>> GetAllByLicenceIdAndActivity(int licenceId, int isActive);
         IDataResult<TaskType> GetById(int id);
-        IDataResult<List<TaskType>> GetAllByLicenceId(int licenceId);
         IResult Add(TaskType taskType);
         IResult Update(TaskType taskType);
         IResult Delete(int id);

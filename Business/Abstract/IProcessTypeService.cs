@@ -8,7 +8,7 @@ namespace Business.Abstract
 {
     public interface IProcessTypeService
     {
-        IDataResult<List<ProcessType>> GetAll();
+        IDataResult<List<ProcessType>> GetAllByLicenceIdAndActivity(int licenceId, int isActive);
         IDataResult<ProcessType> GetById(int id);
         IResult Add(ProcessType processType);
         IResult Update(ProcessType processType);

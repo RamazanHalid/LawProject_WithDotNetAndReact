@@ -15,9 +15,10 @@ namespace Business.Abstract
         IDataResult<List<LicenceUser>> GetAll();
         IDataResult<LicenceUser> GetById(int id);
         IResult Add(LicenceUser licenceUser);
+        IResult AddForCreatedNewLicence(LicenceUser licenceUser);
         IResult Update(LicenceUser licenceUser);
         IResult Delete(int id);
-        IDataResult<List<LicenceUser>> GetByUserId(int userId);
+        IDataResult<List<LicenceUser>> GetByUserId();
         IDataResult<List<LicenceUser>> GetByLicenceId(int licenceId);
 
     }

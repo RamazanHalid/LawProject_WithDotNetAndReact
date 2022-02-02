@@ -13,7 +13,7 @@ namespace Business.Abstract
     public interface ILicenceService
     {
         IDataResult<List<Licence>> GetAll();
-        IDataResult<Licence> Get(int id);
+        IDataResult<Licence> GetById(int id);
         IResult Add(Licence licence);
         IResult Update(Licence licence);
         IResult Delete(int id);
