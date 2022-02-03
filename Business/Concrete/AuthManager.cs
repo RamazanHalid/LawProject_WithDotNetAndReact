@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
+using Core.Utilities.CustomExceptions;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JWT;
@@ -45,7 +46,7 @@ namespace Business.Concrete
             _smsService.SendIndividualMessage(smsMessage, user.CellPhone);
             if (user.IsApproved)
                 return new SuccessDataResult<User>(user, "Kayıt oldu");
-            return new SuccessDataResult<User>(null, "Hesabınızı cep telefonuna gelen kod ile onaylayınız!");
+            return new SuccessDataResult<User>("Hesabınızı cep telefonuna gelen kod ile onaylayınız!");
         }
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
@@ -53,15 +54,24 @@ namespace Business.Concrete
             var userToCheck = _userService.GetByCellPhone(userForLoginDto.CellPhone);
             if (userToCheck == null)
             {
-                return new ErrorDataResult<User>("Kullanıcı bulunamadı");
+                return new ErrorDataResult<User>("User does not exist!");
             }
 
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
-                return new ErrorDataResult<User>("Parola hatası");
+                return new ErrorDataResult<User>("Wrong Password");
             }
-
-            return new SuccessDataResult<User>(userToCheck, "Başarılı giriş");
+            if (!userToCheck.IsApproved)
+            {
+                string smsMessage = $"Account approvement code: {userToCheck.SmsCode}.";
+                _smsService.SendIndividualMessage(smsMessage, userToCheck.CellPhone);
+                throw new UnApprovedAccountException(userToCheck.Id);
+            }
+            if (!userToCheck.IsActive)
+            {
+                new ErrorDataResult<User>("Unactive account!");
+            }
+            return new SuccessDataResult<User>(userToCheck, "Login is successful! Please select your LICENCE");
         }
 
         public IResult UserExists(string cellPhone)
@@ -73,10 +83,10 @@ namespace Business.Concrete
             return new ErrorResult("Kullanıcı mevcut değil!");
         }
 
-        public IDataResult<AccessToken> CreateAccessToken(User user)
+        public IDataResult<AccessToken> CreateAccessToken(User user, int licenceId)
         {
             var claims = _userService.GetClaims(user);
-            var accessToken = _tokenHelper.CreateToken(user, claims);
+            var accessToken = _tokenHelper.CreateToken(user, claims, licenceId);
             return new SuccessDataResult<AccessToken>(accessToken, "Token oluşturuldu");
         }
 

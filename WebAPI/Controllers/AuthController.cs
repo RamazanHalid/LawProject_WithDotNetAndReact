@@ -14,25 +14,37 @@ namespace WebAPI.Controllers
     public class AuthController : Controller
     {
         private IAuthService _authService;
-        public AuthController(IAuthService authService)
+        private ILicenceUserService _licenceUserService;
+
+        public AuthController(IAuthService authService, ILicenceUserService licenceUserService)
         {
             _authService = authService;
+            _licenceUserService = licenceUserService;
         }
 
         [HttpPost("login")]
-        public ActionResult Login(UserForLoginDto userForLoginDto)
+        public ActionResult Login(UserForLoginDto userForLoginDto, int licenceId = 0)
         {
             var userToLogin = _authService.Login(userForLoginDto);
             if (!userToLogin.Success)
             {
                 return BadRequest(userToLogin);
             }
-            var result = _authService.CreateAccessToken(userToLogin.Data);
-            if (result.Success)
+            if (licenceId > 0)
             {
-                return Ok(result);
+                var result = _authService.CreateAccessToken(userToLogin.Data, licenceId);
+                if (result.Success)
+                {
+                    return Ok(result);
+                }
+                return BadRequest(result);
             }
-            return BadRequest(result);
+            var licenceUser = _licenceUserService.GetByUserIdManualy(userToLogin.Data.Id);
+            if (licenceUser.Success)
+            {
+                return Ok(licenceUser);
+            }
+            return BadRequest(licenceUser);
         }
 
         [HttpPost("register")]
@@ -58,7 +70,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(approvingUserResult);
             }
-            var result = _authService.CreateAccessToken(approvingUserResult.Data);
+            var result = _authService.CreateAccessToken(approvingUserResult.Data, 0);
             if (result.Success)
             {
                 return Ok(result);

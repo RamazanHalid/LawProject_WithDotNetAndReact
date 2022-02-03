@@ -13,7 +13,7 @@ namespace Business.Abstract
         IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password);
         IDataResult<User> Login(UserForLoginDto userForLoginDto);
         IResult UserExists(string cellPhone);
-        IDataResult<AccessToken> CreateAccessToken(User user);
+        IDataResult<AccessToken> CreateAccessToken(User user, int licenceId);
 
         IDataResult<User> ApprovingSelectedUser(ApprovingUserDto approvingUserDto);
     }
