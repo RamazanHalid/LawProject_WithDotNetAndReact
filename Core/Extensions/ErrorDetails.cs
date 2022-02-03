@@ -10,6 +10,7 @@ namespace Core.Extensions
     {
         public bool Success { get; set; }
         public string Message { get; set; }
+        public int SituationCode { get; set; }
         public int StatusCode { get; set; }
         public override string ToString()
         {
@@ -20,6 +21,10 @@ namespace Core.Extensions
     public class ValidationErrorDetails : ErrorDetails
     {
         public IEnumerable<ValidationFailure> Errors { get; set; }
+    }
+    public class UnApprovedAccountErrorDetails : ErrorDetails
+    {
+        public int UserId { get; set; }
     }
 
 
