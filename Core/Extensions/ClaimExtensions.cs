@@ -25,7 +25,7 @@ namespace Core.Extensions
         public static void AddLicenceIdentifier(this ICollection<Claim> claims, string licenceId)
         {
             claims.Add(new Claim(ClaimTypes.GroupSid, licenceId));
-        }
+        } 
 
         public static void AddRoles(this ICollection<Claim> claims, string[] roles)
         {

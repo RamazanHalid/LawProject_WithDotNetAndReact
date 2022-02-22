@@ -1,24 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Core.Utilities.CustomExceptions
 {
     public class UnApprovedAccountException : Exception
     {
-        public int UserId { get; set; }
-
-        public UnApprovedAccountException(int userId)
+        public UnApprovedAccountException()
         {
-            UserId = userId;
         }
-        public UnApprovedAccountException(int userId, string message) : base(message)
+        public UnApprovedAccountException(string message) : base(message)
         {
-            UserId = userId;
         }
-        public UnApprovedAccountException(int userId, string message, Exception inner) : base(message, inner)
+        public UnApprovedAccountException(string message, Exception inner) : base(message, inner)
         {
-            UserId = userId;
         }
     }
 }

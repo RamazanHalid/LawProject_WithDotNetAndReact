@@ -9,7 +9,7 @@ namespace Core.Extensions
     public class ErrorDetails
     {
         public bool Success { get; set; }
-        public string Message { get; set; }
+        public List<string> Message { get; set; }
         public int SituationCode { get; set; }
         public int StatusCode { get; set; }
         public override string ToString()
