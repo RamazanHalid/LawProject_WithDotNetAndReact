@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.CustomExceptions;
 using Core.Utilities.Results;
@@ -12,17 +15,15 @@ namespace Business.Concrete
 {
     public class AuthManager : IAuthService
     {
-        private IUserService _userService;
-        private ITokenHelper _tokenHelper;
-        private ISmsService _smsService;
-
+        private readonly IUserService _userService;
+        private readonly ITokenHelper _tokenHelper;
+        private readonly ISmsService _smsService;
         public AuthManager(IUserService userService, ITokenHelper tokenHelper, ISmsService smsService)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
             _smsService = smsService;
         }
-
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;
@@ -42,67 +43,77 @@ namespace Business.Concrete
                 ProfileImage = ""
             };
             _userService.Add(user);
-            string smsMessage = $"Hesap onay kodunuz {user.SmsCode}.";
+            string smsMessage = $"Account approvement code: {user.SmsCode}.";
             _smsService.SendIndividualMessage(smsMessage, user.CellPhone);
-            if (user.IsApproved)
-                return new SuccessDataResult<User>(user, "Kayıt oldu");
-            return new SuccessDataResult<User>("Hesabınızı cep telefonuna gelen kod ile onaylayınız!");
+            return new SuccessDataResult<User>(Messages.CellPhoneCode);
         }
-
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
             var userToCheck = _userService.GetByCellPhone(userForLoginDto.CellPhone);
             if (userToCheck == null)
-            {
-                return new ErrorDataResult<User>("User does not exist!");
-            }
-
+                return new ErrorDataResult<User>(Messages.UserDoesNotExistMessage);
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
-            {
-                return new ErrorDataResult<User>("Wrong Password");
-            }
+                return new ErrorDataResult<User>(Messages.WrongPassword);
             if (!userToCheck.IsApproved)
             {
                 string smsMessage = $"Account approvement code: {userToCheck.SmsCode}.";
                 _smsService.SendIndividualMessage(smsMessage, userToCheck.CellPhone);
-                throw new UnApprovedAccountException(userToCheck.Id);
+                throw new UnApprovedAccountException();
             }
             if (!userToCheck.IsActive)
-            {
-                new ErrorDataResult<User>("Unactive account!");
-            }
-            return new SuccessDataResult<User>(userToCheck, "Login is successful! Please select your LICENCE");
+                return new ErrorDataResult<User>(Messages.UnactivceAccount);
+            return new SuccessDataResult<User>(userToCheck, Messages.LoginSuccessSelectLicence);
         }
-
         public IResult UserExists(string cellPhone)
         {
             if (_userService.GetByCellPhone(cellPhone) != null)
-            {
-                return new SuccessResult("Kullanıcı mevcut!");
-            }
-            return new ErrorResult("Kullanıcı mevcut değil!");
+                return new SuccessResult(Messages.TheItemExists);
+            return new ErrorResult(Messages.TheItemDoesNotExists);
         }
-
         public IDataResult<AccessToken> CreateAccessToken(User user, int licenceId)
         {
-            var claims = _userService.GetClaims(user);
+            var claims = _userService.GetClaims(user, licenceId);
             var accessToken = _tokenHelper.CreateToken(user, claims, licenceId);
-            return new SuccessDataResult<AccessToken>(accessToken, "Token oluşturuldu");
+            return new SuccessDataResult<AccessToken>(accessToken, Messages.TokenCreated);
         }
-
         public IDataResult<User> ApprovingSelectedUser(ApprovingUserDto approvingUserDto)
         {
             var isUserExists = UserExists(approvingUserDto.CellPhone);
             if (!isUserExists.Success)
                 return new ErrorDataResult<User>(isUserExists.Message);
-
             var user = _userService.GetByCellPhone(approvingUserDto.CellPhone);
             if (user.SmsCode != approvingUserDto.SmsCode)
-                return new ErrorDataResult<User>("Sms kodu yanlış.");
+                return new ErrorDataResult<User>(Messages.WrongSmsCode);
 
             user.IsApproved = true;
             _userService.Update(user);
-            return new SuccessDataResult<User>(user, "Hesap Doğrulandı!");
+            return new SuccessDataResult<User>(Messages.AccountApproved);
+        }
+        public IResult UpdateUserPassword(UpdateUserPasswordDto updateUserPasswordDto)
+        {
+            var isUserExists = UserExists(updateUserPasswordDto.CellPhone);
+            if (!isUserExists.Success)
+                return new ErrorResult(isUserExists.Message);
+            var user = _userService.GetByCellPhone(updateUserPasswordDto.CellPhone);
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(updateUserPasswordDto.NewPassword, out passwordHash, out passwordSalt);
+            user.PasswordSalt = passwordSalt;
+            user.PasswordHash = passwordHash;
+            _userService.Update(user);
+            return new SuccessResult(Messages.PasswordChangedSuccessfuly);
+        }
+        public IResult ForgetPassword(string cellPhone)
+        {
+            var isUserExists = UserExists(cellPhone);
+            if (!isUserExists.Success)
+                return new ErrorResult(isUserExists.Message);
+            var user = _userService.GetByCellPhone(cellPhone);
+            string smsCode = new Random().Next(0, 1000000).ToString("D6");
+            string smsMessage = $"Account approvement code: {smsCode}.";
+            user.SmsCode = smsCode;
+            _userService.Update(user);
+            _smsService.SendIndividualMessage(smsMessage, cellPhone);
+            return new SuccessResult(Messages.SmsSended);
         }
     }
 }

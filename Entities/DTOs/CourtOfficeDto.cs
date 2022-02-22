@@ -1,19 +1,17 @@
 ﻿using Core.Entities;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Entities.Concrete
+namespace Entities.DTOs
 {
-    public class CourtOffice : IEntity
+    public class CourtOfficeDto : IDto
     {
         public int CourtOfficeId { get; set; }
-        public int LicenceId { get; set; }
-        public int CourtOfficeTypeId { get; set; }
-        public CourtOfficeType CourtOfficeType { get; set; }
         public string CourtOfficeName { get; set; }
+        public CourtOfficeType CourtOfficeType { get; set; }
         public string Adderess { get; set; }
-        public string CityId { get; set; }
         public City City { get; set; }
         public string FirstPhoneNumber { get; set; }
         public string FirstPhoneNumberAdd { get; set; }
@@ -24,6 +22,7 @@ namespace Entities.Concrete
         public string Fax { get; set; }
         public string Description { get; set; }
         public bool IsActive { get; set; }
+
 
     }
 }
