@@ -17,9 +17,9 @@ namespace Business.Concrete
             _userDal = userDal;
         }
 
-        public List<OperationClaim> GetClaims(User user)
+        public List<OperationClaim> GetClaims(User user,int licenceId)
         {
-            return _userDal.GetClaims(user);
+            return _userDal.GetClaims(user,licenceId);
         }
 
         public void Add(User user)

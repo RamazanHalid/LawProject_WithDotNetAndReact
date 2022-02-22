@@ -16,5 +16,7 @@ namespace Business.Abstract
         IDataResult<AccessToken> CreateAccessToken(User user, int licenceId);
 
         IDataResult<User> ApprovingSelectedUser(ApprovingUserDto approvingUserDto);
+        IResult ForgetPassword(string cellPhone);
+        IResult UpdateUserPassword(UpdateUserPasswordDto updateUserPasswordDto);
     }
 }
