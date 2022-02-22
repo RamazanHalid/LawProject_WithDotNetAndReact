@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
@@ -31,9 +32,9 @@ namespace Business.Concrete
             //var result = SendSms();
             //if (result.Success)
             //{
-            return new SuccessResult("Messaj Gönderildi!");
+                return new SuccessResult(Messages.SmsSended);
             //}
-            //return new ErrorResult("Mesaj Gönderilemedi!");
+            //return new ErrorResult(Messages.SmsCouldNotSend);
         }
         private IResult SendSms()
         {
@@ -90,7 +91,7 @@ namespace Business.Concrete
                 {
                     res = rdr.ReadToEnd();
                 }
-                return new SuccessResult("Sms Gönderildi!");
+                return new SuccessResult(Messages.SmsSended);
             }
         }
 

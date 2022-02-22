@@ -2,6 +2,7 @@
 using Autofac.Extras.DynamicProxy;
 using Business.Abstract;
 using Business.Concrete;
+using Business.Constants;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Security.JWT;
@@ -43,9 +44,12 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<TaskTypeManager>().As<ITaskTypeService>();
             builder.RegisterType<EfTaskTypeDal>().As<ITaskTypeDal>();
-            
+
             builder.RegisterType<TransactionActivityTypeManager>().As<ITransactionActivityTypeService>();
             builder.RegisterType<EfTransactionActivityTypeDal>().As<ITransactionActivityTypeDal>();
+
+            builder.RegisterType<TransactionActivitySubTypeManager>().As<ITransactionActivitySubTypeService>();
+            builder.RegisterType<EfTransactionActivitySubTypeDal>().As<ITransactionActivitySubTypeDal>();
 
 
             builder.RegisterType<AuthManager>().As<IAuthService>();

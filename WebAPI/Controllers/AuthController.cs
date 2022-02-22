@@ -1,11 +1,6 @@
 ﻿using Business.Abstract;
-using Business.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {
@@ -13,9 +8,8 @@ namespace WebAPI.Controllers
     [ApiController]
     public class AuthController : Controller
     {
-        private IAuthService _authService;
-        private ILicenceUserService _licenceUserService;
-
+        private readonly IAuthService _authService;
+        private readonly ILicenceUserService _licenceUserService;
         public AuthController(IAuthService authService, ILicenceUserService licenceUserService)
         {
             _authService = authService;
@@ -46,7 +40,6 @@ namespace WebAPI.Controllers
             }
             return BadRequest(licenceUser);
         }
-
         [HttpPost("register")]
         public ActionResult Register(UserForRegisterDto userForRegisterDto)
         {
@@ -70,12 +63,28 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(approvingUserResult);
             }
-            var result = _authService.CreateAccessToken(approvingUserResult.Data, 0);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return Ok(approvingUserResult);
         }
+        [HttpPost("ForgetPassword")]
+        public ActionResult ForgetPassword(string cellPhone)
+        {
+            var result = _authService.ForgetPassword(cellPhone);
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [HttpPost("UpdateUserPassword")]
+        public ActionResult UpdateUserPassword(UpdateUserPasswordDto updateUserPasswordDto)
+        {
+            var result = _authService.UpdateUserPassword(updateUserPasswordDto);
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
     }
 }

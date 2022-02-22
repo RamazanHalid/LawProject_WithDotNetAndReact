@@ -1,28 +1,16 @@
-using Business.Abstract;
-using Business.Concrete;
+using Business.Extensions;
 using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace WebAPI
 {
     public class Startup
@@ -38,6 +26,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.ConfigureMapping();
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver());
             services.AddCors();
@@ -70,7 +59,6 @@ options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.
             });
 
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -82,7 +70,9 @@ options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1"));
-            app.UseCors("MyPolicy");
+
+            app.UseCors();
+            //app.UseCors(builder => builder.WithOrigins("http://localhost:3000");
 
             app.ConfigureCustomExceptionMiddleware();
 

@@ -78,15 +78,6 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("Delete")]
-        public IActionResult Delete(int id)
-        {
-            var result = _licenceUser.Delete(id);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
+
     }
 }

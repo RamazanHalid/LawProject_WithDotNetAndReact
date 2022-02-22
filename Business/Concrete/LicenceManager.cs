@@ -1,12 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constants;
-using Core.Entities.Concrete;
 using Core.Utilities.Results;
-using Core.Utilities.Security.Hashing;
-using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs;
 using System.Collections.Generic;
 
 namespace Business.Concrete
@@ -15,13 +11,11 @@ namespace Business.Concrete
     {
         private ILicenceDal _licenceDal;
         private ILicenceUserService _licenceUserService;
-
         public LicenceManager(ILicenceDal licenceDal, ILicenceUserService licenceUserService)
         {
             _licenceDal = licenceDal;
             _licenceUserService = licenceUserService;
         }
-
         public IResult Add(Licence licence)
         {
             var newLicence = _licenceDal.AddWithReturnLastId(licence);
@@ -35,11 +29,6 @@ namespace Business.Concrete
             if (!result.Success)
                 return result;
             return new SuccessResult(Messages.AddedSuccessfuly);
-        }
-
-        public IResult Delete(int id)
-        {
-            throw new System.NotImplementedException();
         }
 
         public IDataResult<Licence> GetById(int id)
