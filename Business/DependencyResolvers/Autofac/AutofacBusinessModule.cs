@@ -51,14 +51,16 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<TransactionActivitySubTypeManager>().As<ITransactionActivitySubTypeService>();
             builder.RegisterType<EfTransactionActivitySubTypeDal>().As<ITransactionActivitySubTypeDal>();
 
-
             builder.RegisterType<AuthManager>().As<IAuthService>();
+
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
             builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>();
             builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationClaimDal>();
 
             builder.RegisterType<SmsManager>().As<ISmsService>();
+
+            builder.RegisterType<AuthenticatedUserInfoManager>().As<IAuthenticatedUserInfoService>();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
