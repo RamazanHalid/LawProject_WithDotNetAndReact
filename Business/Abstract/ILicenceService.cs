@@ -16,6 +16,5 @@ namespace Business.Abstract
         IDataResult<Licence> GetById(int id);
         IResult Add(Licence licence);
         IResult Update(Licence licence);
-        IResult Delete(int id);
     }
 }

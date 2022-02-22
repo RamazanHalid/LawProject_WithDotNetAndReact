@@ -1,11 +1,8 @@
 ﻿using Business.Abstract;
-using Core.Entities.Concrete;
-using Core.Utilities.Results;
-using Core.Utilities.Security.Hashing;
-using Core.Utilities.Security.JWT;
+using Business.Constants; 
+using Core.Utilities.Results; 
 using DataAccess.Abstract;
-using Entities.Concrete;
-using Entities.DTOs;
+using Entities.Concrete; 
 using System.Collections.Generic;
 
 namespace Business.Concrete
@@ -22,12 +19,12 @@ namespace Business.Concrete
         public IResult Add(City city)
         {
             _cityDal.Add(city);
-            return new SuccessResult("City added");
+            return new SuccessResult(Messages.AddedSuccessfuly);
         }
  
         public IDataResult<List<City>> GetAll()
         {
-            return new SuccessDataResult<List<City>>(_cityDal.GetAll() ,"Cities listed");
+            return new SuccessDataResult<List<City>>(_cityDal.GetAll() ,Messages.GetAllSuccessfuly);
         }
  
     }

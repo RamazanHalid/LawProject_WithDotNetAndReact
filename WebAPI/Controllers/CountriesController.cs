@@ -9,7 +9,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CountriesController : ControllerBase
     {
-        private ICountryService _countryService;
+        private readonly ICountryService _countryService;
 
         public CountriesController(ICountryService countryService)
         {
