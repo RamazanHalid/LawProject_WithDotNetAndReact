@@ -1,5 +1,7 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,17 +11,15 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CaseStatusesController : ControllerBase
     {
-        private ICaseStatusService _caseStatusService;
-
+        private readonly ICaseStatusService _caseStatusService;
         public CaseStatusesController(ICaseStatusService caseStatusService)
         {
             _caseStatusService = caseStatusService;
         }
-
         [HttpGet("GetAllByLicenceIdAndActivity")]
-        public IActionResult GetAllByLicenceIdAndActivity(int licenceId, int isActive)
+        public IActionResult GetAllByLicenceIdAndActivity(int isActive)
         {
-            var result = _caseStatusService.GetAllByLicenceIdAndActivity(licenceId, isActive);
+            var result = _caseStatusService.GetAllByLicenceIdAndActivity(isActive);
 
             if (result.Success)
             {
@@ -37,22 +37,10 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-
-        [HttpGet("Delete")]
-        public IActionResult Delete(int id)
-        {
-            var result = _caseStatusService.Delete(id);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
         [HttpPost("Add")]
-        public IActionResult Add(CaseStatus caseStatus)
+        public IActionResult Add(CaseStatusDto caseStatusDto)
         {
-            var result = _caseStatusService.Add(caseStatus);
+            var result = _caseStatusService.Add(caseStatusDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -60,9 +48,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("Update")]
-        public IActionResult Update(CaseStatus caseStatus)
+        public IActionResult Update(CaseStatusDto caseStatusDto)
         {
-            var result = _caseStatusService.Update(caseStatus);
+            var result = _caseStatusService.Update(caseStatusDto);
             if (result.Success)
             {
                 return Ok(result);
