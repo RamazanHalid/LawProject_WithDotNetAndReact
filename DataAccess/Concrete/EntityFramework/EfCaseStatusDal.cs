@@ -16,7 +16,8 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new HukukContext())
             {
-                return filter == null
+                return
+                    filter == null
                     ? context.Set<CaseStatus>().Include(cs => cs.CourtOfficeType).ToList()
                     : context.Set<CaseStatus>().Where(filter).Include(cs => cs.CourtOfficeType).ToList();
             }
