@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,10 +9,10 @@ namespace Business.Abstract
 {
     public interface ICaseTypeService
     {
-        IDataResult<List<CaseType>> GetByLicenceIdAndActivity(int licenceId, int isActive);
-        IDataResult<CaseType> GetById(int id);
-        IResult Add(CaseType caseType);
-        IResult Update(CaseType caseType);
+        IDataResult<List<CaseTypeDto>> GetByLicenceIdAndActivity(int isActive);
+        IDataResult<CaseTypeDto> GetById(int id);
+        IResult Add(CaseTypeDto caseTypeDto);
+        IResult Update(CaseTypeDto caseTypeDto);
         IResult Delete(int id);
         IResult ChangeActivity(int id);
     }

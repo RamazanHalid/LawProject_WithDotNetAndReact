@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,10 +9,10 @@ namespace Business.Abstract
 {
     public interface IProcessTypeService
     {
-        IDataResult<List<ProcessType>> GetAllByLicenceIdAndActivity(int licenceId, int isActive);
-        IDataResult<ProcessType> GetById(int id);
-        IResult Add(ProcessType processType);
-        IResult Update(ProcessType processType);
+        IDataResult<List<ProcessTypeDto>> GetAllByLicenceIdAndActivity(int isActive);
+        IDataResult<ProcessTypeDto> GetById(int id);
+        IResult Add(ProcessTypeDto processTypeDto);
+        IResult Update(ProcessTypeDto processTypeDto);
         IResult Delete(int id);
         IResult ChangeActivity(int id);
     }

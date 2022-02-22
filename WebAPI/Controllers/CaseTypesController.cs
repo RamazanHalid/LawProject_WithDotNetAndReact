@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +18,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetAllByLicenceIdAndActivity")]
-        public IActionResult GetAllByLicenceIdAndActivity(int licenceId, int isActive)
+        public IActionResult GetAllByLicenceIdAndActivity(int isActive)
         {
-            var result = _caseTypeService.GetByLicenceIdAndActivity(licenceId, isActive);
+            var result = _caseTypeService.GetByLicenceIdAndActivity(isActive);
             if (result.Success)
             {
                 return Ok(result);
@@ -57,9 +58,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("Add")]
-        public IActionResult Add(CaseType caseType)
+        public IActionResult Add(CaseTypeDto caseTypeDto)
         {
-            var result = _caseTypeService.Add(caseType);
+            var result = _caseTypeService.Add(caseTypeDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -67,9 +68,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("Update")]
-        public IActionResult Update(CaseType caseType)
+        public IActionResult Update(CaseTypeDto caseTypeDto)
         {
-            var result = _caseTypeService.Update(caseType);
+            var result = _caseTypeService.Update(caseTypeDto);
             if (result.Success)
             {
                 return Ok(result);

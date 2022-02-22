@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +18,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetAllByLicenceIdWithTransactionActivityType")]
-        public IActionResult GetAllByLicenceIdWithTransactionActivityType(int licenceId, int isActive)
+        public IActionResult GetAllByLicenceIdWithTransactionActivityType(int isActive)
         {
-            var result = _transactionActivitySubTypeService.GetAllByLicenceIdWithTransactionActivityType(licenceId, isActive);
+            var result = _transactionActivitySubTypeService.GetAllByLicenceIdWithTransactionActivityType(isActive);
             if (result.Success)
             {
                 return Ok(result);
@@ -47,9 +48,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("Add")]
-        public IActionResult Add(TransactionActivitySubType transactionActivitySubType)
+        public IActionResult Add(TransactionActivitySubTypeDto transactionActivitySubTypeDto)
         {
-            var result = _transactionActivitySubTypeService.Add(transactionActivitySubType);
+            var result = _transactionActivitySubTypeService.Add(transactionActivitySubTypeDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -57,9 +58,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("Update")]
-        public IActionResult Update(TransactionActivitySubType transactionActivitySubType)
+        public IActionResult Update(TransactionActivitySubTypeDto transactionActivitySubTypeDto)
         {
-            var result = _transactionActivitySubTypeService.Update(transactionActivitySubType);
+            var result = _transactionActivitySubTypeService.Update(transactionActivitySubTypeDto);
             if (result.Success)
             {
                 return Ok(result);
