@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCaseStatusDal : EfEntityRepositoryBase<CaseStatus, HukukContext>, ICaseStatusDal
     {
-        public List<CaseStatus> GetAllWithCourtOfficeType(Expression<Func<CaseStatus, bool>> filter = null)
+        public List<CaseStatus> GetAllExpressionWithInclude(Expression<Func<CaseStatus, bool>> filter = null)
         {
             using (var context = new HukukContext())
             {
@@ -23,13 +23,31 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public CaseStatus GetByIdWithCourtOfficeType(Expression<Func<CaseStatus, bool>> filter)
+        public List<CaseStatus> GetAllFilterWithInclude(int licenceId, int courtOfficeId, int isActive)
+        {
+            using (var context = new HukukContext())
+            {
+                var caseStasuses = context.Set<CaseStatus>().Include(cs => cs.CourtOfficeType);
+                if (courtOfficeId > 0)
+                    caseStasuses.Where(c => c.CourtOfficeTypeId == courtOfficeId);
+                if (isActive == 1 || isActive == 0)
+                {
+                    bool boolIsActive = isActive == 1;
+                    caseStasuses.Where(c => c.IsActive == boolIsActive);
+                }
+                if (licenceId > 0)
+                    caseStasuses.Where(c => c.LicenceId == licenceId);
+                return caseStasuses.ToList();
+            }
+        }
+
+        public CaseStatus GetWithInclude(Expression<Func<CaseStatus, bool>> filter)
         {
             using (var context = new HukukContext())
             {
                 return context.Set<CaseStatus>().Include(cs => cs.CourtOfficeType).SingleOrDefault(filter);
             }
         }
- 
+
     }
 }

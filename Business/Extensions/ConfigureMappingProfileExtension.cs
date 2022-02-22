@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using Business.Abstract;
+using Core.Utilities.IoC;
 using Entities.Concrete;
 using Entities.DTOs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Business.Extensions
@@ -9,7 +12,8 @@ namespace Business.Extensions
     {
         public static IServiceCollection ConfigureMapping(this IServiceCollection serviceCollection)
         {
-            var mappingConfig = new MapperConfiguration(i => i.AddProfile(new AutoMapperMappingProfile()));
+            var mappingConfig = new MapperConfiguration(i => i.AddProfile(
+                new AutoMapperMappingProfile()));
             IMapper mapper = mappingConfig.CreateMapper();
             serviceCollection.AddSingleton(mapper);
             return serviceCollection;
@@ -18,16 +22,18 @@ namespace Business.Extensions
         {
             public AutoMapperMappingProfile()
             {
-                CreateMap<CaseStatus, CaseStatusDto>()
-                    .ReverseMap();
-                CreateMap<CaseType, CaseTypeDto>()
-                    .ReverseMap();
+                //CaseStatus
+                CreateMap<CaseStatus, CaseStatusGetDto>();
+                CreateMap<CaseStatusAddDto, CaseStatus>();
+                CreateMap<CaseStatusUpdateDto, CaseStatus>();
+
                 CreateMap<ProcessType, ProcessTypeDto>()
                     .ReverseMap();
                 CreateMap<TransactionActivitySubType, TransactionActivitySubTypeDto>()
                     .ReverseMap();
                 CreateMap<CourtOffice, CourtOfficeDto>()
                     .ReverseMap();
+
             }
         }
     }

@@ -6,49 +6,39 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
-using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 namespace Business.Concrete
 {
     public class CaseStatusManager : ICaseStatusService
     {
         private readonly ICaseStatusDal _caseStatusDal;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IAuthenticatedUserInfoService _authenticatedUserInfoService;
         private readonly IMapper _mapper;
-        private readonly int _authUserlicenceId;
-        public CaseStatusManager(ICaseStatusDal caseStatusDal, IHttpContextAccessor httpContextAccessor, IMapper mapper)
+        public CaseStatusManager(ICaseStatusDal caseStatusDal, IMapper mapper, IAuthenticatedUserInfoService authenticatedUserInfoService)
         {
             _caseStatusDal = caseStatusDal;
-            _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
-            if (_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
-            {
-                _authUserlicenceId = Convert.ToInt32(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.GroupSid).Value);
-            }
+            _authenticatedUserInfoService = authenticatedUserInfoService;
         }
-        [SecuredOperation("case_status_CUD")]
-        public IResult Add(CaseStatusDto caseStatusDto)
+        [SecuredOperation("CaseStatusAdd")]
+        public IResult Add(CaseStatusAddDto caseStatusAddDto)
         {
-            CaseStatus caseStatus = _mapper.Map<CaseStatus>(caseStatusDto);
-            caseStatus.LicenceId = _authUserlicenceId;
+            CaseStatus caseStatus = _mapper.Map<CaseStatus>(caseStatusAddDto);
+            caseStatus.LicenceId = _authenticatedUserInfoService.GetLicenceId();
             _caseStatusDal.Add(caseStatus);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
-        [SecuredOperation("case_status_R")]
+        [SecuredOperation("CaseStatusUpdate")]
         public IResult ChangeActivity(int id)
         {
-            var caseStatus = GetById(id);
-            if (!caseStatus.Success)
-                return caseStatus;
-            caseStatus.Data.IsActive = !caseStatus.Data.IsActive;
-            var result = Update(caseStatus.Data);
-            if (!result.Success)
-                return result;
+            var caseStatus = _caseStatusDal.GetWithInclude(c => c.CaseStatusId == id);
+            if (caseStatus == null)
+                return new ErrorResult(Messages.TheItemDoesNotExists);
+            caseStatus.IsActive = !caseStatus.IsActive;
+            _caseStatusDal.Update(caseStatus);
             return new SuccessResult(Messages.ActivityChangedSuccessfuly);
         }
-        [SecuredOperation("case_status_CUD,admin")]
+        [SecuredOperation("CaseStatusDelete")]
         public IResult Delete(int id)
         {
             var caseStatus = _caseStatusDal.Get(cs => cs.CaseStatusId == id);
@@ -57,34 +47,27 @@ namespace Business.Concrete
             _caseStatusDal.Delete(caseStatus);
             return new SuccessResult(Messages.DeletedSuccessfuly);
         }
-        [SecuredOperation("case_status_R")]
-        public IDataResult<List<CaseStatusDto>> GetAllByLicenceIdAndActivity(int isActive)
+        [SecuredOperation("CaseStatusGet")]
+        public IDataResult<List<CaseStatusGetDto>> GetAll(int courtOfficeId, int isActive)
         {
-            List<CaseStatus> caseStatuses;
-            if (isActive == 0)
-                caseStatuses = _caseStatusDal.GetAllWithCourtOfficeType(cs => cs.LicenceId == _authUserlicenceId && cs.IsActive == false);
-            else if (isActive == 1)
-                caseStatuses = _caseStatusDal.GetAllWithCourtOfficeType(cs => cs.LicenceId == _authUserlicenceId && cs.IsActive == true);
-            else
-                caseStatuses = _caseStatusDal.GetAllWithCourtOfficeType(cs => cs.LicenceId == _authUserlicenceId);
-            List<CaseStatusDto> caseStatusDtos = _mapper.Map<List<CaseStatusDto>>(caseStatuses);
-            return new SuccessDataResult<List<CaseStatusDto>>(caseStatusDtos, Messages.GetAllSuccessfuly);
+            List<CaseStatus> caseStatuses = _caseStatusDal.GetAllFilterWithInclude(_authenticatedUserInfoService.GetLicenceId(), courtOfficeId, isActive);
+            List<CaseStatusGetDto> caseStatusDtos = _mapper.Map<List<CaseStatusGetDto>>(caseStatuses);
+            return new SuccessDataResult<List<CaseStatusGetDto>>(caseStatusDtos, Messages.GetAllSuccessfuly);
         }
-        [SecuredOperation("case_status_R,admin")]
-        public IDataResult<CaseStatusDto> GetById(int id)
+        [SecuredOperation("CaseStatusGet")]
+        public IDataResult<CaseStatusGetDto> GetById(int id)
         {
-            var caseStatus = _caseStatusDal.GetByIdWithCourtOfficeType(cs => cs.CaseStatusId == id);
-            CaseStatusDto caseStatusDto = _mapper.Map<CaseStatusDto>(caseStatus);
-
+            var caseStatus = _caseStatusDal.GetWithInclude(cs => cs.CaseStatusId == id);
+            CaseStatusGetDto caseStatusDto = _mapper.Map<CaseStatusGetDto>(caseStatus);
             if (caseStatus == null)
-                return new ErrorDataResult<CaseStatusDto>(Messages.TheItemDoesNotExists);
-            return new SuccessDataResult<CaseStatusDto>(caseStatusDto, Messages.GetByIdSuccessfuly);
+                return new ErrorDataResult<CaseStatusGetDto>(Messages.TheItemDoesNotExists);
+            return new SuccessDataResult<CaseStatusGetDto>(caseStatusDto, Messages.GetByIdSuccessfuly);
         }
-        [SecuredOperation("case_status_R")]
-        public IResult Update(CaseStatusDto caseStatusDto)
+        [SecuredOperation("CaseStatusUpdate")]
+        public IResult Update(CaseStatusUpdateDto caseStatusUpdateDto)
         {
-            CaseStatus caseStatus = _mapper.Map<CaseStatus>(caseStatusDto);
-            caseStatus.LicenceId = _authUserlicenceId;
+            CaseStatus caseStatus = _mapper.Map<CaseStatus>(caseStatusUpdateDto);
+            caseStatus.LicenceId = _authenticatedUserInfoService.GetLicenceId();
             _caseStatusDal.Update(caseStatus);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }

@@ -17,9 +17,9 @@ namespace WebAPI.Controllers
             _caseStatusService = caseStatusService;
         }
         [HttpGet("GetAllByLicenceIdAndActivity")]
-        public IActionResult GetAllByLicenceIdAndActivity(int isActive)
+        public IActionResult GetAllByLicenceIdAndActivity(int courtOfficeTypeId = -1, int isActive = -1)
         {
-            var result = _caseStatusService.GetAllByLicenceIdAndActivity(isActive);
+            var result = _caseStatusService.GetAll(courtOfficeTypeId, isActive);
 
             if (result.Success)
             {
@@ -38,9 +38,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("Add")]
-        public IActionResult Add(CaseStatusDto caseStatusDto)
+        public IActionResult Add(CaseStatusAddDto caseStatusAddDto)
         {
-            var result = _caseStatusService.Add(caseStatusDto);
+            var result = _caseStatusService.Add(caseStatusAddDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -48,9 +48,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("Update")]
-        public IActionResult Update(CaseStatusDto caseStatusDto)
+        public IActionResult Update(CaseStatusUpdateDto caseStatusUpdateDto)
         {
-            var result = _caseStatusService.Update(caseStatusDto);
+            var result = _caseStatusService.Update(caseStatusUpdateDto);
             if (result.Success)
             {
                 return Ok(result);

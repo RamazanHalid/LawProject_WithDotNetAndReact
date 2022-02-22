@@ -9,7 +9,8 @@ namespace DataAccess.Abstract
 {
     public interface ICaseStatusDal : IEntityRepository<CaseStatus>
     {
-        List<CaseStatus> GetAllWithCourtOfficeType(Expression<Func<CaseStatus, bool>> filter = null);
-        CaseStatus GetByIdWithCourtOfficeType(Expression<Func<CaseStatus, bool>> filter);
+        List<CaseStatus> GetAllExpressionWithInclude(Expression<Func<CaseStatus, bool>> filter = null);
+        List<CaseStatus> GetAllFilterWithInclude(int licenceId, int courtOfficeId, int isActive);
+        CaseStatus GetWithInclude(Expression<Func<CaseStatus, bool>> filter);
     }
 }
