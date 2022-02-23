@@ -17,5 +17,7 @@ namespace Core.DataAccess
         void Add(T entity);
         void Update(T entity);
         void Delete(T entity);
+        bool DoesItExist(Expression<Func<T, bool>> filter);
+        int GetCount(Expression<Func<T, bool>> filter);
     }
 }

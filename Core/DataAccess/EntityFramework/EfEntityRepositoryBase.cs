@@ -54,5 +54,19 @@ namespace Core.DataAccess.EntityFramework
                 context.SaveChanges();
             }
         }
+        public bool DoesItExist(Expression<Func<TEntity, bool>> filter)
+        {
+            using (TContext context = new TContext())
+            {
+                return context.Set<TEntity>().Where(filter).Any();
+            }
+        }
+        public int GetCount(Expression<Func<TEntity, bool>> filter)
+        {
+            using (TContext context = new TContext())
+            {
+                return context.Set<TEntity>().Where(filter).Count();
+            }
+        }
     }
 }
