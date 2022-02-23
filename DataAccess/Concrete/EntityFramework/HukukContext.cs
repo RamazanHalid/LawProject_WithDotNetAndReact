@@ -11,7 +11,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=178.157.15.114;Database=HUKUK2;User Id = sa;Password=Terra2010*;");
+            optionsBuilder.UseSqlServer(@"");
         }
         public DbSet<Licence> Licences { get; set; }
         public DbSet<City> Cities { get; set; }
