@@ -14,10 +14,10 @@ namespace WebAPI.Controllers
         {
             _licenceService = licenceService;
         }
-        [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        [HttpGet("GetAllByUserId")]
+        public IActionResult GetAllByUserId(int userId)
         {
-            var result = _licenceService.GetAll();
+            var result = _licenceService.GetAllAfterLogin(userId);
             if (result.Success)
             {
                 return Ok(result);
@@ -40,6 +40,28 @@ namespace WebAPI.Controllers
                 licenceAddDto.Image = "/Uploads/LicenceImages/NoLicenceImage.jpg";
             }
             var result = _licenceService.Add(licenceAddDto);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpPost("Update")]
+        public IActionResult Update(LicenceUpdateDto licenceUpdateDto)
+        {
+            if (licenceUpdateDto.ImageFile != null)
+            {
+                var imageResult = FileHelper.Add(licenceUpdateDto.ImageFile, "LicenceImages");
+                if (imageResult.Success)
+                {
+                    licenceUpdateDto.Image = imageResult.Data;
+                }
+            }
+            else
+            {
+                licenceUpdateDto.Image = "/Uploads/LicenceImages/NoLicenceImage.jpg";
+            }
+            var result = _licenceService.Update(licenceUpdateDto);
             if (result.Success)
             {
                 return Ok(result);

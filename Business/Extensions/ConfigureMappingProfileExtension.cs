@@ -29,6 +29,8 @@ namespace Business.Extensions
 
                 //Licence
                 CreateMap<LicenceAddDto, Licence>();
+                CreateMap<Licence, LicenceAfterLoginDto>();
+                CreateMap<LicenceUpdateDto, Licence>();
 
                 CreateMap<ProcessType, ProcessTypeDto>()
                     .ReverseMap();

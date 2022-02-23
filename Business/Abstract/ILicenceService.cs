@@ -12,9 +12,9 @@ namespace Business.Abstract
 
     public interface ILicenceService
     {
-        IDataResult<List<Licence>> GetAll();
-        IDataResult<Licence> GetById(int id);
+        IDataResult<List<LicenceAfterLoginDto>> GetAllAfterLogin(int userId);
+        IDataResult<Licence> GetCurrentAuthUserLicence();
         IResult Add(LicenceAddDto licenceAddDto);
-        IResult Update(Licence licence);
+        IResult Update(LicenceUpdateDto licenceUpdateDro);
     }
 }

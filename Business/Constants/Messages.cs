@@ -45,5 +45,7 @@ namespace Business.Constants
         public static List<string> PasswordChangedSuccessfuly = new List<string> { "Password changed successfuly!" };
 
         public static List<string> UnauthenticatedUser = new List<string> { "You must be logged in to do this." };
+
+        public static List<string> OnlyLicenceOwnerCanChange = new List<string> { "Only licence owner can update the licence" };
     }
 }
