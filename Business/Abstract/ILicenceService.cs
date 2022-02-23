@@ -14,7 +14,7 @@ namespace Business.Abstract
     {
         IDataResult<List<Licence>> GetAll();
         IDataResult<Licence> GetById(int id);
-        IResult Add(Licence licence);
+        IResult Add(LicenceAddDto licenceAddDto);
         IResult Update(Licence licence);
     }
 }

@@ -1,9 +1,8 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Helpers;
 using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -26,9 +25,21 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("Add")]
-        public IActionResult Add(Licence licence)
+        public IActionResult Add(LicenceAddDto licenceAddDto)
         {
-            var result = _licenceService.Add(licence);
+            if (licenceAddDto.ImageFile != null)
+            {
+                var imageResult = FileHelper.Add(licenceAddDto.ImageFile, "LicenceImages");
+                if (imageResult.Success)
+                {
+                    licenceAddDto.Image = imageResult.Data;
+                }
+            }
+            else
+            {
+                licenceAddDto.Image = "/Uploads/LicenceImages/NoLicenceImage.jpg";
+            }
+            var result = _licenceService.Add(licenceAddDto);
             if (result.Success)
             {
                 return Ok(result);
