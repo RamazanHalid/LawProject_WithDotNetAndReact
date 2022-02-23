@@ -15,7 +15,6 @@ namespace WebAPI.Controllers
             _authService = authService;
             _licenceUserService = licenceUserService;
         }
-
         [HttpPost("login")]
         public ActionResult Login(UserForLoginDto userForLoginDto, int licenceId = 0)
         {
@@ -85,6 +84,5 @@ namespace WebAPI.Controllers
             }
             return Ok(result);
         }
-
     }
 }

@@ -4,14 +4,16 @@ using DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(HukukContext))]
-    partial class HukukContextModelSnapshot : ModelSnapshot
+    [Migration("20220223062936_migration170")]
+    partial class migration170
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -456,6 +458,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -507,6 +512,8 @@ namespace DataAccess.Migrations
                     b.HasKey("LicenceId");
 
                     b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
 
                     b.HasIndex("PersonTypeId");
 
@@ -679,9 +686,8 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.City", b =>
                 {
                     b.HasOne("Entities.Concrete.Country", "Country")
-                        .WithMany("Cities")
+                        .WithMany()
                         .HasForeignKey("CountryId")
-                        .HasConstraintName("cityCountryIdFK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -711,9 +717,14 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.Licence", b =>
                 {
                     b.HasOne("Entities.Concrete.City", "City")
-                        .WithMany("Licences")
+                        .WithMany()
                         .HasForeignKey("CityId")
-                        .HasConstraintName("licenceCityIdFK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Concrete.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

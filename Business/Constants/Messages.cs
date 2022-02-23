@@ -43,5 +43,7 @@ namespace Business.Constants
         public static List<string> SmsCouldNotSend = new List<string> { "Sms could not send!" };
 
         public static List<string> PasswordChangedSuccessfuly = new List<string> { "Password changed successfuly!" };
+
+        public static List<string> UnauthenticatedUser = new List<string> { "You must be logged in to do this." };
     }
 }

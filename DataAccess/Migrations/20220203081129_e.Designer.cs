@@ -4,14 +4,16 @@ using DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(HukukContext))]
-    partial class HukukContextModelSnapshot : ModelSnapshot
+    [Migration("20220203081129_e")]
+    partial class e
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,9 +102,6 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("LicenceId")
-                        .HasColumnType("int");
 
                     b.Property<int>("OperationClaimId")
                         .HasColumnType("int");
@@ -230,9 +229,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("CityId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CityId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("CourtOfficeName")
                         .HasColumnType("nvarchar(max)");
 
@@ -251,8 +247,8 @@ namespace DataAccess.Migrations
                     b.Property<string>("FirstPhoneNumberAdd")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                    b.Property<byte>("IsActive")
+                        .HasColumnType("tinyint");
 
                     b.Property<int>("LicenceId")
                         .HasColumnType("int");
@@ -270,10 +266,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CourtOfficeId");
-
-                    b.HasIndex("CityId1");
-
-                    b.HasIndex("CourtOfficeTypeId");
 
                     b.ToTable("CourtOffices");
                 });
@@ -456,7 +448,19 @@ namespace DataAccess.Migrations
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DemoDay")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Fax")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Gb")
@@ -471,10 +475,16 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("LastBillDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("MinuseBalanceDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("PersonTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Profil")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfilName")
@@ -504,11 +514,15 @@ namespace DataAccess.Migrations
                     b.Property<string>("WebSite")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<float>("X")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Y")
+                        .HasColumnType("real");
+
                     b.HasKey("LicenceId");
 
                     b.HasIndex("CityId");
-
-                    b.HasIndex("PersonTypeId");
 
                     b.ToTable("Licences");
                 });
@@ -627,7 +641,7 @@ namespace DataAccess.Migrations
                     b.Property<string>("TransactionAcitivitySubTypeNameTr")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TransactionAcitivityTypeId")
+                    b.Property<int>("TransactionAcitivityTypeNameId")
                         .HasColumnType("int");
 
                     b.Property<int?>("TransactionActivityTypeId")
@@ -679,22 +693,8 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.City", b =>
                 {
                     b.HasOne("Entities.Concrete.Country", "Country")
-                        .WithMany("Cities")
+                        .WithMany()
                         .HasForeignKey("CountryId")
-                        .HasConstraintName("cityCountryIdFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Entities.Concrete.CourtOffice", b =>
-                {
-                    b.HasOne("Entities.Concrete.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId1");
-
-                    b.HasOne("Entities.Concrete.CourtOfficeType", "CourtOfficeType")
-                        .WithMany()
-                        .HasForeignKey("CourtOfficeTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -711,15 +711,8 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.Licence", b =>
                 {
                     b.HasOne("Entities.Concrete.City", "City")
-                        .WithMany("Licences")
-                        .HasForeignKey("CityId")
-                        .HasConstraintName("licenceCityIdFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Concrete.PersonType", "PersonType")
                         .WithMany()
-                        .HasForeignKey("PersonTypeId")
+                        .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -27,6 +27,9 @@ namespace Business.Extensions
                 CreateMap<CaseStatusAddDto, CaseStatus>();
                 CreateMap<CaseStatusUpdateDto, CaseStatus>();
 
+                //Licence
+                CreateMap<LicenceAddDto, Licence>();
+
                 CreateMap<ProcessType, ProcessTypeDto>()
                     .ReverseMap();
                 CreateMap<TransactionActivitySubType, TransactionActivitySubTypeDto>()
