@@ -20,6 +20,8 @@ namespace Business.Concrete
             _mapper = mapper;
             _authenticatedUserInfoService = authenticatedUserInfoService;
         }
+
+        //Needed to authority as a lawyer or licence owner.
         [SecuredOperation("CaseStatusAdd")]
         public IResult Add(CaseStatusAddDto caseStatusAddDto)
         {
@@ -28,6 +30,8 @@ namespace Business.Concrete
             _caseStatusDal.Add(caseStatus);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
+
+        //Needed to authority as a lawyer or licence owner.
         [SecuredOperation("CaseStatusUpdate")]
         public IResult ChangeActivity(int id)
         {
@@ -38,6 +42,8 @@ namespace Business.Concrete
             _caseStatusDal.Update(caseStatus);
             return new SuccessResult(Messages.ActivityChangedSuccessfuly);
         }
+
+        //Needed to authority as a lawyer or licence owner.
         [SecuredOperation("CaseStatusDelete")]
         public IResult Delete(int id)
         {
@@ -47,6 +53,8 @@ namespace Business.Concrete
             _caseStatusDal.Delete(caseStatus);
             return new SuccessResult(Messages.DeletedSuccessfuly);
         }
+
+        //Needed to authority as a lawyer or licence owner.
         [SecuredOperation("CaseStatusGet")]
         public IDataResult<List<CaseStatusGetDto>> GetAll(int courtOfficeId, int isActive)
         {

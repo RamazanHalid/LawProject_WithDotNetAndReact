@@ -1,12 +1,12 @@
 ﻿using Core.DataAccess.EntityFramework;
- using DataAccess.Abstract;
+using DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
- using System.Linq;
+using System.Linq;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-
+ 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfLicenceDal : EfEntityRepositoryBase<Licence, HukukContext>, ILicenceDal
@@ -27,5 +27,6 @@ namespace DataAccess.Concrete.EntityFramework
                     : context.Set<Licence>().Include(l => l.City).ThenInclude(c => c.Country).Where(filter).ToList();
             }
         }
+      
     }
 }

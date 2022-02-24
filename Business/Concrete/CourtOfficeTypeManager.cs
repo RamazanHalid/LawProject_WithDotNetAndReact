@@ -44,7 +44,7 @@ namespace Business.Concrete
             _courtOfficeTypeDal.Update(courtOfficeType);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }
-        public IResult IsCourtOfficeTypeExists(int id)
+        public IResult DoesItExist(int id)
         {
             var result = _courtOfficeTypeDal.Get(c => c.CourtOfficeTypeId == id);
             if (result == null)
