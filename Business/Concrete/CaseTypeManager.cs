@@ -26,15 +26,14 @@ namespace Business.Concrete
             if (_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
                 authUserLicenceId = Convert.ToInt32(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.GroupSid).Value);
         }
-        [SecuredOperation("case_type_CUD")]
-        public IResult Add(CaseTypeDto caseTypeDto)
+        [SecuredOperation("CaseTypeGet")]
+        public IDataResult<List<CaseTypeDto>> GetAll(int courtOfficeTypeId, int isActive)
         {
-            CaseType caseType = _mapper.Map<CaseType>(caseTypeDto);
-            caseType.LicenceId = authUserLicenceId;
-            _caseTypeDal.Add(caseType);
-            return new SuccessResult(Messages.AddedSuccessfuly);
+            List<CaseType> caseTypes = _caseTypeDal.GetAllFilter(courtOfficeTypeId, isActive);
+            List<CaseTypeDto> caseTypeDto = _mapper.Map<List<CaseTypeDto>>(caseTypes);
+            return new SuccessDataResult<List<CaseTypeDto>>(caseTypeDto, Messages.GetAllSuccessfuly);
         }
-        [SecuredOperation("case_type_R,admin")]
+        [SecuredOperation("CaseTypeGet")]
         public IDataResult<CaseTypeDto> GetById(int id)
         {
             CaseType caseType = _caseTypeDal.GetByIdWithCourtOfficeType(ct => ct.CaseTypeId == id);
@@ -43,20 +42,17 @@ namespace Business.Concrete
             CaseTypeDto caseTypeDto = _mapper.Map<CaseTypeDto>(caseType);
             return new SuccessDataResult<CaseTypeDto>(caseTypeDto, Messages.GetByIdSuccessfuly);
         }
-        [SecuredOperation("case_type_R")]
-        public IDataResult<List<CaseTypeDto>> GetByLicenceIdAndActivity(int isActive)
+        [SecuredOperation("CaseTypeAdd")]
+        public IResult Add(CaseTypeDto caseTypeDto)
         {
-            List<CaseType> caseTypes;
-            if (isActive == 0)
-                caseTypes = _caseTypeDal.GetAllWithCourtOfficeType(c => c.LicenceId == authUserLicenceId && c.IsActive == false);
-            else if (isActive == 1)
-                caseTypes = _caseTypeDal.GetAllWithCourtOfficeType(c => c.LicenceId == authUserLicenceId && c.IsActive == true);
-            else
-                caseTypes = _caseTypeDal.GetAllWithCourtOfficeType(c => c.LicenceId == authUserLicenceId);
-            List<CaseTypeDto> caseTypeDto = _mapper.Map<List<CaseTypeDto>>(caseTypes);
-            return new SuccessDataResult<List<CaseTypeDto>>(caseTypeDto, Messages.GetAllSuccessfuly);
+            CaseType caseType = _mapper.Map<CaseType>(caseTypeDto);
+            caseType.LicenceId = authUserLicenceId;
+            _caseTypeDal.Add(caseType);
+            return new SuccessResult(Messages.AddedSuccessfuly);
         }
-        [SecuredOperation("case_type_CUD")]
+
+
+        [SecuredOperation("CaseTypeUpdate")]
         public IResult ChangeActivity(int id)
         {
             var caseType = _caseTypeDal.Get(ct => ct.CaseTypeId == id);
@@ -67,7 +63,7 @@ namespace Business.Concrete
                 return new ErrorResult(result.Message);
             return new SuccessResult(Messages.ActivityChangedSuccessfuly);
         }
-        [SecuredOperation("case_type_CUD,admin")]
+        [SecuredOperation("CaseTypeDelete")]
         public IResult Delete(int id)
         {
             var caseType = _caseTypeDal.Get(ct => ct.CaseTypeId == id);
@@ -77,7 +73,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.DeletedSuccessfuly);
         }
 
-
+        [SecuredOperation("CaseTypeUpdate")]
         public IResult Update(CaseTypeDto caseTypeDto)
         {
             CaseType caseType = _mapper.Map<CaseType>(caseTypeDto);

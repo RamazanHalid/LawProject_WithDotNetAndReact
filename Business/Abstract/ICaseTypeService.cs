@@ -9,7 +9,7 @@ namespace Business.Abstract
 {
     public interface ICaseTypeService
     {
-        IDataResult<List<CaseTypeDto>> GetByLicenceIdAndActivity(int isActive);
+        IDataResult<List<CaseTypeDto>> GetAll(int courtOfficeTypeId, int isActive);
         IDataResult<CaseTypeDto> GetById(int id);
         IResult Add(CaseTypeDto caseTypeDto);
         IResult Update(CaseTypeDto caseTypeDto);

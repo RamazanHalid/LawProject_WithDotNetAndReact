@@ -17,10 +17,10 @@ namespace WebAPI.Controllers
             _caseTypeService = caseTypeService;
         }
 
-        [HttpGet("GetAllByLicenceIdAndActivity")]
-        public IActionResult GetAllByLicenceIdAndActivity(int isActive)
+        [HttpGet("GetAll")]
+        public IActionResult GetAll(int courtOfficeTypeId, int isActive)
         {
-            var result = _caseTypeService.GetByLicenceIdAndActivity(isActive);
+            var result = _caseTypeService.GetAll(courtOfficeTypeId,isActive);
             if (result.Success)
             {
                 return Ok(result);
@@ -31,26 +31,6 @@ namespace WebAPI.Controllers
         public IActionResult GetById(int id)
         {
             var result = _caseTypeService.GetById(id);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-        [HttpGet("Delete")]
-        public IActionResult Delete(int id)
-        {
-            var result = _caseTypeService.Delete(id);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-        [HttpGet("ChangeActivity")]
-        public IActionResult ChangeActivity(int id)
-        {
-            var result = _caseTypeService.ChangeActivity(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -77,5 +57,26 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("Delete")]
+        public IActionResult Delete(int id)
+        {
+            var result = _caseTypeService.Delete(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("ChangeActivity")]
+        public IActionResult ChangeActivity(int id)
+        {
+            var result = _caseTypeService.ChangeActivity(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+    
     }
 }

@@ -11,5 +11,6 @@ namespace DataAccess.Abstract
     {
         List<CaseType> GetAllWithCourtOfficeType(Expression<Func<CaseType, bool>> filter = null);
         CaseType GetByIdWithCourtOfficeType(Expression<Func<CaseType, bool>> filter);
+        List<CaseType> GetAllFilter(int courtOfficeTypeId, int isActive);
     }
 }
