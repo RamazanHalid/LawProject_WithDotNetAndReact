@@ -28,16 +28,12 @@ namespace Business.Concrete
         //No need authority.
         public IResult Add(LicenceAddDto licenceAddDto)
         {
-
-            BusinessRules.Run(DoesLicenceProfileNameExist(licenceAddDto.ProfilName)
-                );
+            BusinessRules.Run(DoesLicenceProfileNameExist(licenceAddDto.ProfilName));
             Licence licence = _mapper.Map<Licence>(licenceAddDto);
             licence.Balance = 0;
             licence.Gb = 1;
             licence.IsApproved = false;
             licence.SmsAccountId = 1;
-            licence.SmsCount = 20;
-            licence.UserCount = 0;
             licence.StartDate = DateTime.Now;
             _licenceDal.Add(licence);
             return new SuccessResult(Messages.AddedSuccessfuly);
@@ -46,12 +42,13 @@ namespace Business.Concrete
         //Get current auth user licence informations.
         //Need to LicenceGet authority.
         [SecuredOperation("LicenceGet")]
-        public IDataResult<Licence> GetCurrentAuthUserLicence()
+        public IDataResult<LicenceGetDto> GetCurrentAuthUserLicence()
         {
             var licence = _licenceDal.GetByIdWithInclude(l => l.LicenceId == _authenticatedUserInfoService.GetLicenceId());
             if (licence == null)
-                return new ErrorDataResult<Licence>(Messages.TheItemDoesNotExists);
-            return new SuccessDataResult<Licence>(licence, Messages.GetByIdSuccessfuly);
+                return new ErrorDataResult<LicenceGetDto>(Messages.TheItemDoesNotExists);
+            LicenceGetDto licenceGetDto = _mapper.Map<LicenceGetDto>(licence);
+            return new SuccessDataResult<LicenceGetDto>(licenceGetDto, Messages.GetByIdSuccessfuly);
         }
 
         //Just after login, lists the licences with userId.
@@ -74,7 +71,6 @@ namespace Business.Concrete
             _licenceDal.Update(licenceResult.Data);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }
-
         #region Some methods which using in this class
         //Mapping LicenceUpdateDto to Licence
         //LicenceUpdate needed for authority

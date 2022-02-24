@@ -13,7 +13,7 @@ namespace Business.Abstract
     public interface ILicenceService
     {
         IDataResult<List<LicenceAfterLoginDto>> GetAllAfterLogin(int userId);
-        IDataResult<Licence> GetCurrentAuthUserLicence();
+        IDataResult<LicenceGetDto> GetCurrentAuthUserLicence();
         IResult Add(LicenceAddDto licenceAddDto);
         IResult Update(LicenceUpdateDto licenceUpdateDro);
     }
