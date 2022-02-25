@@ -12,9 +12,9 @@ namespace Business.Concrete
     public class CaseStatusManager : ICaseStatusService
     {
         private readonly ICaseStatusDal _caseStatusDal;
-        private readonly IAuthenticatedUserInfoService _authenticatedUserInfoService;
+        private readonly ICurrentUserService _authenticatedUserInfoService;
         private readonly IMapper _mapper;
-        public CaseStatusManager(ICaseStatusDal caseStatusDal, IMapper mapper, IAuthenticatedUserInfoService authenticatedUserInfoService)
+        public CaseStatusManager(ICaseStatusDal caseStatusDal, IMapper mapper, ICurrentUserService authenticatedUserInfoService)
         {
             _caseStatusDal = caseStatusDal;
             _mapper = mapper;
@@ -55,13 +55,23 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("CaseStatusGet")]
-        public IDataResult<List<CaseStatusGetDto>> GetAll(int courtOfficeId, int isActive)
+        [SecuredOperation("CaseStatusGetAll")]
+        public IDataResult<List<CaseStatusGetDto>> GetAll()
         {
-            List<CaseStatus> caseStatuses = _caseStatusDal.GetAllFilterWithInclude(_authenticatedUserInfoService.GetLicenceId(), courtOfficeId, isActive);
+            List<CaseStatus> caseStatuses = _caseStatusDal.GetAllExpressionWithInclude(c => c.LicenceId == _authenticatedUserInfoService.GetLicenceId());
             List<CaseStatusGetDto> caseStatusDtos = _mapper.Map<List<CaseStatusGetDto>>(caseStatuses);
             return new SuccessDataResult<List<CaseStatusGetDto>>(caseStatusDtos, Messages.GetAllSuccessfuly);
         }
+        //Needed to authority as a lawyer or licence owner.
+        [SecuredOperation("CaseStatusGetAllActive")]
+        public IDataResult<List<CaseStatusGetDto>> GetAllActive()
+        {
+            List<CaseStatus> caseStatuses = _caseStatusDal.GetAllExpressionWithInclude(
+                c => c.LicenceId == _authenticatedUserInfoService.GetLicenceId() && c.IsActive == true);
+            List<CaseStatusGetDto> caseStatusDtos = _mapper.Map<List<CaseStatusGetDto>>(caseStatuses);
+            return new SuccessDataResult<List<CaseStatusGetDto>>(caseStatusDtos, Messages.GetAllSuccessfuly);
+        }
+        //Needed to authority as a lawyer or licence owner.
         [SecuredOperation("CaseStatusGet")]
         public IDataResult<CaseStatusGetDto> GetById(int id)
         {

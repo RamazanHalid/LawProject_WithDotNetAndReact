@@ -16,10 +16,21 @@ namespace WebAPI.Controllers
         {
             _caseStatusService = caseStatusService;
         }
-        [HttpGet("GetAllByLicenceIdAndActivity")]
-        public IActionResult GetAllByLicenceIdAndActivity(int courtOfficeTypeId = -1, int isActive = -1)
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
         {
-            var result = _caseStatusService.GetAll(courtOfficeTypeId, isActive);
+            var result = _caseStatusService.GetAll();
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("GetAllActive")]
+        public IActionResult GetAllActive()
+        {
+            var result = _caseStatusService.GetAllActive();
 
             if (result.Success)
             {
