@@ -18,8 +18,8 @@ namespace Business.Concrete
     {
         private readonly IProcessTypeDal _processTypeDal;
         private readonly IMapper _mapper;
-        private readonly IAuthenticatedUserInfoService _authenticatedUserInfoService;
-        public ProcessTypeManager(IProcessTypeDal processTypeDal, IMapper mapper, IAuthenticatedUserInfoService authenticatedUserInfoService)
+        private readonly ICurrentUserService _authenticatedUserInfoService;
+        public ProcessTypeManager(IProcessTypeDal processTypeDal, IMapper mapper, ICurrentUserService authenticatedUserInfoService)
         {
             _processTypeDal = processTypeDal;
             _mapper = mapper;

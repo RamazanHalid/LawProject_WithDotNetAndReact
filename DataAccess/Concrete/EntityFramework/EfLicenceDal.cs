@@ -6,7 +6,7 @@ using System.Linq;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
- 
+
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfLicenceDal : EfEntityRepositoryBase<Licence, HukukContext>, ILicenceDal
@@ -23,10 +23,10 @@ namespace DataAccess.Concrete.EntityFramework
             using (var context = new HukukContext())
             {
                 return filter == null
-                    ? context.Set<Licence>().Include(l => l.City).ThenInclude(c => c.Country).ToList()
-                    : context.Set<Licence>().Include(l => l.City).ThenInclude(c => c.Country).Where(filter).ToList();
+                    ? context.Set<Licence>().Include(l => l.City).ThenInclude(c => c.Country).Include(c => c.PersonType).ToList()
+                    : context.Set<Licence>().Include(l => l.City).ThenInclude(c => c.Country).Include(c => c.PersonType).Where(filter).ToList();
             }
         }
-      
+
     }
 }

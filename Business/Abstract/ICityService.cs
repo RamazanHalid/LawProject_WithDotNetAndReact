@@ -12,7 +12,7 @@ namespace Business.Abstract
 
     public interface ICityService
     {
-        IDataResult<List<City>> GetAll();
+        IDataResult<List<City>> GetAll(int countryId);
         IResult Add(City city);
     }
 }

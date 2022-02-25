@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.DTOs.LicenceUser;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -38,30 +39,11 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
-        [HttpGet("GetByLicenceId")]
-        public IActionResult GetByLicenceId(int licenceId)
-        {
-            var result = _licenceUser.GetByLicenceId(licenceId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-        [HttpGet("GetByUserId")]
-        public IActionResult GetByUserId()
-        {
-            var result = _licenceUser.GetByUserId();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
+
         [HttpPost("Add")]
-        public IActionResult Add(LicenceUser licenceUser)
+        public IActionResult Add(LicenceUserAddDto licenceUserAddDto)
         {
-            var result = _licenceUser.Add(licenceUser);
+            var result = _licenceUser.Add(licenceUserAddDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -69,9 +51,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("Update")]
-        public IActionResult Update(LicenceUser licenceUser)
+        public IActionResult Update(LicenceUserUpdateDto licenceUserUpdateDto)
         {
-            var result = _licenceUser.Update(licenceUser);
+            var result = _licenceUser.Update(licenceUserUpdateDto);
             if (result.Success)
             {
                 return Ok(result);

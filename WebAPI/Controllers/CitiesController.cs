@@ -17,15 +17,15 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int countryId)
         {
-            var result = _cityService.GetAll();
+            var result = _cityService.GetAll(countryId);
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
-        }       
+        }
         [HttpPost("Add")]
         public IActionResult Add(City city)
         {

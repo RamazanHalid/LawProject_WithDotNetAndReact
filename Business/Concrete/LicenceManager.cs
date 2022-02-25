@@ -16,8 +16,8 @@ namespace Business.Concrete
     {
         private readonly ILicenceDal _licenceDal;
         private readonly IMapper _mapper;
-        private readonly IAuthenticatedUserInfoService _authenticatedUserInfoService;
-        public LicenceManager(ILicenceDal licenceDal, IMapper mapper, IAuthenticatedUserInfoService authenticatedUserInfoService)
+        private readonly ICurrentUserService _authenticatedUserInfoService;
+        public LicenceManager(ILicenceDal licenceDal, IMapper mapper, ICurrentUserService authenticatedUserInfoService)
         {
             _licenceDal = licenceDal;
             _mapper = mapper;
