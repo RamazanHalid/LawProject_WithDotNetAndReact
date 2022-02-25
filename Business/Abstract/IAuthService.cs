@@ -13,10 +13,11 @@ namespace Business.Abstract
         IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password);
         IDataResult<User> Login(UserForLoginDto userForLoginDto);
         IResult UserExists(string cellPhone);
-        IDataResult<AccessToken> CreateAccessToken(User user, int licenceId);
+        IDataResult<LoginSuccessDto> CreateAccessToken(User user, int licenceId);
 
         IDataResult<User> ApprovingSelectedUser(ApprovingUserDto approvingUserDto);
         IResult ForgetPassword(string cellPhone);
         IResult UpdateUserPassword(UpdateUserPasswordDto updateUserPasswordDto);
+        IDataResult<UserOwnAndRelationalLicencesDto> UserAfterLogin(int userId);
     }
 }

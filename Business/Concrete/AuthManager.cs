@@ -9,6 +9,7 @@ using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JWT;
 using Entities.DTOs;
 using System;
+using System.Collections.Generic;
 
 namespace Business.Concrete
 {
@@ -17,11 +18,15 @@ namespace Business.Concrete
         private readonly IUserService _userService;
         private readonly ITokenHelper _tokenHelper;
         private readonly ISmsService _smsService;
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper, ISmsService smsService)
+        private readonly ILicenceService _licenceService;
+        private readonly ILicenceUserService _licenceUserService;
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper, ISmsService smsService, ILicenceService licenceService, ILicenceUserService licenceUserService)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
             _smsService = smsService;
+            _licenceService = licenceService;
+            _licenceUserService = licenceUserService;
         }
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
@@ -69,11 +74,19 @@ namespace Business.Concrete
                 return new SuccessResult(Messages.TheItemExists);
             return new ErrorResult(Messages.TheItemDoesNotExists);
         }
-        public IDataResult<AccessToken> CreateAccessToken(User user, int licenceId)
+        public IDataResult<LoginSuccessDto> CreateAccessToken(User user, int licenceId)
         {
             var claims = _userService.GetClaims(user, licenceId);
             var accessToken = _tokenHelper.CreateToken(user, claims, licenceId);
-            return new SuccessDataResult<AccessToken>(accessToken, Messages.TokenCreated);
+            List<string> operationClaims = new List<string>();
+            foreach (var operationClaim in claims)
+                operationClaims.Add(operationClaim.Name);
+            LoginSuccessDto loginSuccessDto = new LoginSuccessDto()
+            {
+                AccessToken = accessToken,
+                OperationClaims = operationClaims
+            };
+            return new SuccessDataResult<LoginSuccessDto>(loginSuccessDto, Messages.TokenCreated);
         }
         public IDataResult<User> ApprovingSelectedUser(ApprovingUserDto approvingUserDto)
         {
@@ -113,6 +126,21 @@ namespace Business.Concrete
             _userService.Update(user);
             _smsService.SendIndividualMessage(smsMessage, cellPhone);
             return new SuccessResult(Messages.SmsSended);
+        }
+        public IDataResult<UserOwnAndRelationalLicencesDto> UserAfterLogin(int userId)
+        {
+            var licencesResult = _licenceService.GetAllAfterLogin(userId);
+            if (!licencesResult.Success)
+                return new ErrorDataResult<UserOwnAndRelationalLicencesDto>(licencesResult.Message);
+            var licenceUserResult = _licenceUserService.GetByUserIdManualy(userId);
+            if (!licenceUserResult.Success)
+                return new ErrorDataResult<UserOwnAndRelationalLicencesDto>(licenceUserResult.Message);
+            UserOwnAndRelationalLicencesDto user = new UserOwnAndRelationalLicencesDto
+            {
+                UserOwnLicences = licencesResult.Data,
+                UserRealtionalLicences = licenceUserResult.Data
+            };
+            return new SuccessDataResult<UserOwnAndRelationalLicencesDto>(user);
         }
     }
 }

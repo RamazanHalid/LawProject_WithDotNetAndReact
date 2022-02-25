@@ -9,11 +9,9 @@ namespace WebAPI.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
-        private readonly ILicenceUserService _licenceUserService;
-        public AuthController(IAuthService authService, ILicenceUserService licenceUserService)
+        public AuthController(IAuthService authService)
         {
             _authService = authService;
-            _licenceUserService = licenceUserService;
         }
         [HttpPost("login")]
         public ActionResult Login(UserForLoginDto userForLoginDto, int licenceId = 0)
@@ -32,12 +30,12 @@ namespace WebAPI.Controllers
                 }
                 return BadRequest(result);
             }
-            var licenceUser = _licenceUserService.GetByUserIdManualy(userToLogin.Data.Id);
-            if (licenceUser.Success)
+            var resultAllLicences = _authService.UserAfterLogin(userToLogin.Data.Id);
+            if (resultAllLicences.Success)
             {
-                return Ok(licenceUser);
+                return Ok(resultAllLicences);
             }
-            return BadRequest(licenceUser);
+            return BadRequest(resultAllLicences);
         }
         [HttpPost("register")]
         public ActionResult Register(UserForRegisterDto userForRegisterDto)
