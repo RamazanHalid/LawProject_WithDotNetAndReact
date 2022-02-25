@@ -11,7 +11,5 @@ namespace Entities.Concrete
         public int CountryId { get; set; }
         public Country Country { get; set; }
         public string CityName { get; set; }
-        public virtual ICollection<Licence> Licences { get; set; }
-
     }
 }

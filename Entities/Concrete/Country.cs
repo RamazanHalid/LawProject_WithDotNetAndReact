@@ -12,7 +12,6 @@ namespace Entities.Concrete
         public string CountryNameEn { get; set; }
         public string Abbreviation { get; set; }
         public string Code { get; set; }
-        public virtual ICollection<City> Cities { get; set; } 
 
     }
 }

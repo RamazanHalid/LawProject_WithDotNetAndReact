@@ -4,6 +4,7 @@ namespace Entities.DTOs
 {
     public class LicenceGetDto
     {
+        public int LicenceId { get; set; }
         public string Image { get; set; }
         public DateTime StartDate { get; set; }
         public int Gb { get; set; }
