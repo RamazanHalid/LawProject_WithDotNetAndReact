@@ -60,7 +60,7 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<SmsManager>().As<ISmsService>();
 
-            builder.RegisterType<AuthenticatedUserInfoManager>().As<IAuthenticatedUserInfoService>();
+            builder.RegisterType<CurrentUserManager>().As<ICurrentUserService>();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
