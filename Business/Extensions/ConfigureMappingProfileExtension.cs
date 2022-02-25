@@ -3,8 +3,11 @@ using Business.Abstract;
 using Core.Utilities.IoC;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.CaseType;
+using Entities.DTOs.LicenceUser;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 
 namespace Business.Extensions
 {
@@ -27,19 +30,28 @@ namespace Business.Extensions
                 CreateMap<CaseStatusAddDto, CaseStatus>();
                 CreateMap<CaseStatusUpdateDto, CaseStatus>();
 
+                //TaskType
+                CreateMap<CaseType, CaseTypeGetDto>();
+                CreateMap<CaseStatusAddDto, CaseType>();
+                CreateMap<CaseTypeUpdateDto, CaseType>();
+
                 //Licence
                 CreateMap<LicenceAddDto, Licence>();
                 CreateMap<Licence, LicenceAfterLoginDto>();
                 CreateMap<LicenceUpdateDto, Licence>();
                 CreateMap<Licence, LicenceGetDto>();
 
-                CreateMap<ProcessType, ProcessTypeDto>()
-                    .ReverseMap();
-                CreateMap<TransactionActivitySubType, TransactionActivitySubTypeDto>()
-                    .ReverseMap();
-                CreateMap<CourtOffice, CourtOfficeDto>()
-                    .ReverseMap();
+                //TaskType
+                CreateMap<TaskTypeUpdateDto, TaskType>();
+                CreateMap<TaskTypeAddDto, TaskType>();
+                CreateMap<TaskType, TaskTypeGetDto>();
 
+                //LicenceUser
+                CreateMap<LicenceUser, LicenceUserGetDto>()
+                    .ForMember(dest => dest.LicenceGetDto, x => x.MapFrom(src => src.Licence))
+                    .ForMember(dest => dest.User, x => x.MapFrom(src => src.User));
+                CreateMap<LicenceUserAddDto, LicenceUser>();
+                ;
             }
         }
     }

@@ -9,8 +9,7 @@ namespace DataAccess.Abstract
 {
     public interface ICaseTypeDal : IEntityRepository<CaseType>
     {
-        List<CaseType> GetAllWithCourtOfficeType(Expression<Func<CaseType, bool>> filter = null);
-        CaseType GetByIdWithCourtOfficeType(Expression<Func<CaseType, bool>> filter);
-        List<CaseType> GetAllFilter(int courtOfficeTypeId, int isActive);
+        List<CaseType> GetAllWithInclude(Expression<Func<CaseType, bool>> filter = null);
+        CaseType GetByIdWithInclude(Expression<Func<CaseType, bool>> filter);
     }
 }

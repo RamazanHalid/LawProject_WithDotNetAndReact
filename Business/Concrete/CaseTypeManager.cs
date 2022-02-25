@@ -5,64 +5,72 @@ using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs;
-using Microsoft.AspNetCore.Http;
-using System;
+using Entities.DTOs.CaseType;
 using System.Collections.Generic;
-using System.Security.Claims;
 namespace Business.Concrete
 {
     public class CaseTypeManager : ICaseTypeService
     {
         private readonly ICaseTypeDal _caseTypeDal;
         private readonly IMapper _mapper;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly int authUserLicenceId;
-        public CaseTypeManager(ICaseTypeDal caseTypeDal, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        private readonly ICurrentUserService _currentUserInfoService;
+        public CaseTypeManager(ICaseTypeDal caseTypeDal, IMapper mapper, ICurrentUserService currentUserInfoService)
         {
             _caseTypeDal = caseTypeDal;
             _mapper = mapper;
-            _httpContextAccessor = httpContextAccessor;
-            if (_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
-                authUserLicenceId = Convert.ToInt32(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.GroupSid).Value);
+            _currentUserInfoService = currentUserInfoService;
         }
-        [SecuredOperation("CaseTypeGet")]
-        public IDataResult<List<CaseTypeDto>> GetAll(int courtOfficeTypeId, int isActive)
+        //Get all Case Types as an user
+        //Authority needed
+        [SecuredOperation("CaseTypeGetAll")]
+        public IDataResult<List<CaseTypeGetDto>> GetAll()
         {
-            List<CaseType> caseTypes = _caseTypeDal.GetAllFilter(courtOfficeTypeId, isActive);
-            List<CaseTypeDto> caseTypeDto = _mapper.Map<List<CaseTypeDto>>(caseTypes);
-            return new SuccessDataResult<List<CaseTypeDto>>(caseTypeDto, Messages.GetAllSuccessfuly);
+            List<CaseType> caseTypes = _caseTypeDal.GetAllWithInclude(c => c.LicenceId == _currentUserInfoService.GetLicenceId());
+            List<CaseTypeGetDto> caseTypeGetDto = _mapper.Map<List<CaseTypeGetDto>>(caseTypes);
+            return new SuccessDataResult<List<CaseTypeGetDto>>(caseTypeGetDto, Messages.GetAllSuccessfuly);
         }
-        [SecuredOperation("CaseTypeGet")]
-        public IDataResult<CaseTypeDto> GetById(int id)
+        //Get all Active Case Types as an user
+        //Authority needed
+        [SecuredOperation("CaseTypeGetAllActive")]
+        public IDataResult<List<CaseTypeGetDto>> GetAllActive()
         {
-            CaseType caseType = _caseTypeDal.GetByIdWithCourtOfficeType(ct => ct.CaseTypeId == id);
+            List<CaseType> caseTypes = _caseTypeDal.GetAllWithInclude(c => c.LicenceId == _currentUserInfoService.GetLicenceId() && c.IsActive == true);
+            List<CaseTypeGetDto> caseTypeGetDto = _mapper.Map<List<CaseTypeGetDto>>(caseTypes);
+            return new SuccessDataResult<List<CaseTypeGetDto>>(caseTypeGetDto, Messages.GetAllSuccessfuly);
+        }
+        //Get Case Type
+        //Authority needed
+        [SecuredOperation("CaseTypeGet")]
+        public IDataResult<CaseTypeGetDto> GetById(int id)
+        {
+            CaseType caseType = _caseTypeDal.GetByIdWithInclude(ct => ct.CaseTypeId == id);
             if (caseType == null)
-                return new ErrorDataResult<CaseTypeDto>(Messages.TheItemDoesNotExists);
-            CaseTypeDto caseTypeDto = _mapper.Map<CaseTypeDto>(caseType);
-            return new SuccessDataResult<CaseTypeDto>(caseTypeDto, Messages.GetByIdSuccessfuly);
+                return new ErrorDataResult<CaseTypeGetDto>(Messages.TheItemDoesNotExists);
+            CaseTypeGetDto caseTypeGetDto = _mapper.Map<CaseTypeGetDto>(caseType);
+            return new SuccessDataResult<CaseTypeGetDto>(caseTypeGetDto, Messages.GetByIdSuccessfuly);
         }
+        //Add Case Type as an user
+        //Authority needed
         [SecuredOperation("CaseTypeAdd")]
-        public IResult Add(CaseTypeDto caseTypeDto)
+        public IResult Add(CaseTypeAddDto caseTypeAddDto)
         {
-            CaseType caseType = _mapper.Map<CaseType>(caseTypeDto);
-            caseType.LicenceId = authUserLicenceId;
+            CaseType caseType = _mapper.Map<CaseType>(caseTypeAddDto);
+            caseType.LicenceId = _currentUserInfoService.GetLicenceId();
             _caseTypeDal.Add(caseType);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
-
-
+        //Change activity Case Type as an user
+        //Authority needed
         [SecuredOperation("CaseTypeUpdate")]
         public IResult ChangeActivity(int id)
         {
             var caseType = _caseTypeDal.Get(ct => ct.CaseTypeId == id);
             caseType.IsActive = !caseType.IsActive;
-            CaseTypeDto caseTypeDto = _mapper.Map<CaseTypeDto>(caseType);
-            var result = Update(caseTypeDto);
-            if (!result.Success)
-                return new ErrorResult(result.Message);
+            _caseTypeDal.Update(caseType);
             return new SuccessResult(Messages.ActivityChangedSuccessfuly);
         }
+        //Delete Case Type 
+        //Authority needed
         [SecuredOperation("CaseTypeDelete")]
         public IResult Delete(int id)
         {
@@ -72,11 +80,13 @@ namespace Business.Concrete
             _caseTypeDal.Delete(caseType);
             return new SuccessResult(Messages.DeletedSuccessfuly);
         }
-
+        //Update Case Type as an user
+        //Authority needed
         [SecuredOperation("CaseTypeUpdate")]
-        public IResult Update(CaseTypeDto caseTypeDto)
+        public IResult Update(CaseTypeUpdateDto caseTypeUpdateDto)
         {
-            CaseType caseType = _mapper.Map<CaseType>(caseTypeDto);
+            CaseType caseType = _mapper.Map<CaseType>(caseTypeUpdateDto);
+            caseType.LicenceId = _currentUserInfoService.GetLicenceId();
             _caseTypeDal.Update(caseType);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }

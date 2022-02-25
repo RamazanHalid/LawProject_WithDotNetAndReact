@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.CaseType;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,9 +19,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetAll")]
-        public IActionResult GetAll(int courtOfficeTypeId, int isActive)
+        public IActionResult GetAll()
         {
-            var result = _caseTypeService.GetAll(courtOfficeTypeId,isActive);
+            var result = _caseTypeService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -38,9 +39,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("Add")]
-        public IActionResult Add(CaseTypeDto caseTypeDto)
+        public IActionResult Add(CaseTypeAddDto caseTypeAddDto)
         {
-            var result = _caseTypeService.Add(caseTypeDto);
+            var result = _caseTypeService.Add(caseTypeAddDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -48,9 +49,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("Update")]
-        public IActionResult Update(CaseTypeDto caseTypeDto)
+        public IActionResult Update(CaseTypeUpdateDto caseTypeUpdateDto)
         {
-            var result = _caseTypeService.Update(caseTypeDto);
+            var result = _caseTypeService.Update(caseTypeUpdateDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -77,6 +78,6 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-    
+
     }
 }
