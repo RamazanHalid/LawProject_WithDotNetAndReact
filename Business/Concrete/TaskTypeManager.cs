@@ -1,8 +1,11 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,43 +14,67 @@ namespace Business.Concrete
 {
     public class TaskTypeManager : ITaskTypeService
     {
-        private ITaskTypeDal _taskTypeDal;
-
-        public TaskTypeManager(ITaskTypeDal taskTypeDal)
+        private readonly ITaskTypeDal _taskTypeDal;
+        private readonly ICurrentUserService _authenticatedUserInfoService;
+        private readonly IMapper _mapper;
+        public TaskTypeManager(ITaskTypeDal taskTypeDal, ICurrentUserService authenticatedUserInfoService, IMapper mapper)
         {
             _taskTypeDal = taskTypeDal;
+            _authenticatedUserInfoService = authenticatedUserInfoService;
+            _mapper = mapper;
         }
-        public IResult Add(TaskType taskType)
+
+        //Adding new item as an user
+        //Authority needed
+        [SecuredOperation("TaskTypeAdd")]
+        public IResult Add(TaskTypeAddDto taskTypeAddDto)
         {
+            TaskType taskType = _mapper.Map<TaskType>(taskTypeAddDto);
+            taskType.LicenceId = _authenticatedUserInfoService.GetLicenceId();
             _taskTypeDal.Add(taskType);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
-        public IDataResult<List<TaskType>> GetAllByLicenceIdAndActivity(int licenceId, int isActive)
+
+        //Get all items as an user
+        //Authority needed
+        [SecuredOperation("TaskTypeGet")]
+        public IDataResult<List<TaskTypeGetDto>> GetAll(int isActive)
         {
-            if (isActive == 0)
-                return new SuccessDataResult<List<TaskType>>(_taskTypeDal.GetAll(tp => tp.LicenceId == licenceId && tp.IsActive == false), Messages.GetAllSuccessfuly);
-            if (isActive == 1)
-                return new SuccessDataResult<List<TaskType>>(_taskTypeDal.GetAll(tp => tp.LicenceId == licenceId && tp.IsActive == true), Messages.GetAllSuccessfuly);
-            return new SuccessDataResult<List<TaskType>>(_taskTypeDal.GetAll(tp => tp.LicenceId == licenceId), Messages.GetAllSuccessfuly);
+            List<TaskType> taskTypes;
+            if (isActive == 0 || isActive == 1)
+                taskTypes = _taskTypeDal.GetAll(tp => tp.LicenceId == _authenticatedUserInfoService.GetUserId()
+                && tp.IsActive == Convert.ToBoolean(isActive));
+            else
+                taskTypes = _taskTypeDal.GetAll(tp => tp.LicenceId == _authenticatedUserInfoService.GetUserId());
+            List<TaskTypeGetDto> taskTypeGetDtos = _mapper.Map<List<TaskTypeGetDto>>(taskTypes);
+            return new SuccessDataResult<List<TaskTypeGetDto>>(taskTypeGetDtos, Messages.GetAllSuccessfuly);
         }
-        public IDataResult<TaskType> GetById(int id)
+        //Get special item 
+        //Authority needed
+        [SecuredOperation("TaskTypeGet")]
+        public IDataResult<TaskTypeGetDto> GetById(int id)
         {
-            var taskType = _taskTypeDal.Get(tp => tp.TaskTypeId == id);
-            if (taskType == null)
-                return new ErrorDataResult<TaskType>(Messages.TheItemDoesNotExists);
-            return new SuccessDataResult<TaskType>(taskType, Messages.GetByIdSuccessfuly);
+            TaskType taskType = _taskTypeDal.Get(tp => tp.TaskTypeId == id);
+            TaskTypeGetDto taskTypeGetDto = _mapper.Map<TaskTypeGetDto>(taskType);
+            if (taskTypeGetDto == null)
+                return new ErrorDataResult<TaskTypeGetDto>(Messages.TheItemDoesNotExists);
+            return new SuccessDataResult<TaskTypeGetDto>(taskTypeGetDto, Messages.GetByIdSuccessfuly);
         }
+        //Change activity special TaskType
+        //Authority needed
+        [SecuredOperation("TaskTypeUpdate")]
         public IResult ChangeActivity(int id)
         {
-            var taskType = _taskTypeDal.Get(tp => tp.TaskTypeId == id);
+            var taskType = _taskTypeDal.Get(tp => tp.TaskTypeId == id); //Get special TaskType
             if (taskType == null)
                 return new ErrorResult(Messages.TheItemDoesNotExists);
             taskType.IsActive = !taskType.IsActive;
-            var result = Update(taskType);
-            if (!result.Success)
-                return result;
+            _taskTypeDal.Update(taskType);
             return new SuccessResult(Messages.ActivityChangedSuccessfuly);
         }
+        //Change activity special TaskType
+        //Authority needed
+        [SecuredOperation("TaskTypeDelete")]
         public IResult Delete(int id)
         {
             var taskType = _taskTypeDal.Get(tp => tp.TaskTypeId == id);
@@ -56,9 +83,13 @@ namespace Business.Concrete
             _taskTypeDal.Delete(taskType);
             return new SuccessResult(Messages.DeletedSuccessfuly);
         }
-  
-        public IResult Update(TaskType taskType)
+        //Update special TaskType
+        //Authority needed
+        [SecuredOperation("TaskTypeUpdate")]
+        public IResult Update(TaskTypeUpdateDto taskTypeUpdateDto)
         {
+            TaskType taskType = _mapper.Map<TaskType>(taskTypeUpdateDto);
+            taskType.LicenceId = _authenticatedUserInfoService.GetLicenceId();
             _taskTypeDal.Update(taskType);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }

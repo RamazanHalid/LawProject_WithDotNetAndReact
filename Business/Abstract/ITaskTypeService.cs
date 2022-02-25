@@ -1,19 +1,17 @@
 ﻿using Core.Utilities.Results;
-using Entities.Concrete;
-using System;
+using Entities.DTOs;
 using System.Collections.Generic;
-using System.Text;
+
 
 namespace Business.Abstract
 {
     public interface ITaskTypeService
     {
-        IDataResult<List<TaskType>> GetAllByLicenceIdAndActivity(int licenceId, int isActive);
-        IDataResult<TaskType> GetById(int id);
-        IResult Add(TaskType taskType);
-        IResult Update(TaskType taskType);
+        IDataResult<List<TaskTypeGetDto>> GetAll(int isActive);
+        IDataResult<TaskTypeGetDto> GetById(int id);
+        IResult Add(TaskTypeAddDto taskTypeAddDto);
+        IResult Update(TaskTypeUpdateDto taskTypeUpdateDto);
         IResult Delete(int id);
         IResult ChangeActivity(int id);
-
     }
 }
