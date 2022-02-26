@@ -2,6 +2,7 @@
 using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Core.Entities.Concrete;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -17,11 +18,15 @@ namespace Business.Concrete
         private readonly ILicenceDal _licenceDal;
         private readonly IMapper _mapper;
         private readonly ICurrentUserService _authenticatedUserInfoService;
-        public LicenceManager(ILicenceDal licenceDal, IMapper mapper, ICurrentUserService authenticatedUserInfoService)
+        private readonly IOperationClaimService _operationClaimService;
+        private readonly IUserOperationClaimService _userOperationClaimService;
+        public LicenceManager(ILicenceDal licenceDal, IMapper mapper, ICurrentUserService authenticatedUserInfoService, IOperationClaimService operationClaimService, IUserOperationClaimService userOperationClaimService)
         {
             _licenceDal = licenceDal;
             _mapper = mapper;
             _authenticatedUserInfoService = authenticatedUserInfoService;
+            _operationClaimService = operationClaimService;
+            _userOperationClaimService = userOperationClaimService;
         }
 
         //Add new licence as an user.
@@ -35,7 +40,20 @@ namespace Business.Concrete
             licence.IsApproved = false;
             licence.SmsAccountId = 1;
             licence.StartDate = DateTime.Now;
-            _licenceDal.Add(licence);
+            licence = _licenceDal.AddWithReturn(licence);
+            //Change here later. It will be GetAllByCategoryName!
+            var defaultClaims = _operationClaimService.GetAllByCategoryId(1);
+            foreach (var claim in defaultClaims.Data)
+            {
+                var result = _userOperationClaimService.Add(new UserOperationClaim
+                {
+                    LicenceId = licence.LicenceId,
+                    UserId = licenceAddDto.UserId,
+                    OperationClaimId = claim.Id
+                });
+                if (!result.Success)
+                    return result;
+            }
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
 
