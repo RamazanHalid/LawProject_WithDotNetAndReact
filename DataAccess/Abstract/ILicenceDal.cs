@@ -9,5 +9,6 @@ namespace DataAccess.Abstract
     {
         List<Licence> GetAllWithInclude(Expression<Func<Licence, bool>> filter = null);
         Licence GetByIdWithInclude(Expression<Func<Licence, bool>> filter);
+        Licence AddWithReturn(Licence licence);
     }
 }

@@ -27,6 +27,18 @@ namespace DataAccess.Concrete.EntityFramework
                     : context.Set<Licence>().Include(l => l.City).ThenInclude(c => c.Country).Include(c => c.PersonType).Where(filter).ToList();
             }
         }
+        public Licence AddWithReturn(Licence licence)
+        {
+            //IDisposable pattern implementation of c#
+            using (var context = new HukukContext())
+            {
+                var addedLicence = context.Entry(licence);
+                addedLicence.State = EntityState.Added;
+                context.SaveChanges();
+                return licence;
+            }
+
+        }
 
     }
 }
