@@ -137,6 +137,7 @@ namespace Business.Concrete
                 return new ErrorDataResult<UserOwnAndRelationalLicencesDto>(licenceUserResult.Message);
             UserOwnAndRelationalLicencesDto user = new UserOwnAndRelationalLicencesDto
             {
+                UserId = userId,
                 UserOwnLicences = licencesResult.Data,
                 UserRealtionalLicences = licenceUserResult.Data
             };
