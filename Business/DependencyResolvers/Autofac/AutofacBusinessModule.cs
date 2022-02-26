@@ -38,7 +38,6 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CaseStatusManager>().As<ICaseStatusService>();
             builder.RegisterType<EfCaseStatusDal>().As<ICaseStatusDal>();
 
-
             builder.RegisterType<CaseTypeManager>().As<ICaseTypeService>();
             builder.RegisterType<EfCaseTypeDal>().As<ICaseTypeDal>();
 
@@ -57,6 +56,9 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>();
             builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationClaimDal>();
+
+            builder.RegisterType<OperationClaimManager>().As<IOperationClaimService>();
+            builder.RegisterType<EfOperationClaimDal>().As<IOperationClaimDal>();
 
             builder.RegisterType<SmsManager>().As<ISmsService>();
 
