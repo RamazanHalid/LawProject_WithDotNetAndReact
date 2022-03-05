@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.DTOs.CourtOfficeType;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace WebAPI.Controllers
         {
             _courtOfficeTypeService = courtOfficeTypeService;
         }
-                [HttpGet("GetAll")]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
             var result = _courtOfficeTypeService.GetAll();
@@ -46,9 +47,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("Add")]
-        public IActionResult Add(CourtOfficeType courtOfficeType)
+        public IActionResult Add(CourtOfficeTypeAddDto courtOfficeTypeAddDto)
         {
-            var result = _courtOfficeTypeService.Add(courtOfficeType);
+            var result = _courtOfficeTypeService.Add(courtOfficeTypeAddDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -56,9 +57,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("Update")]
-        public IActionResult Update(CourtOfficeType courtOfficeType)
+        public IActionResult Update(CourtOfficeTypeUpdateDto courtOfficeTypeUpdateDto)
         {
-            var result = _courtOfficeTypeService.Update(courtOfficeType);
+            var result = _courtOfficeTypeService.Update(courtOfficeTypeUpdateDto);
             if (result.Success)
             {
                 return Ok(result);
