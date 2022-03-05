@@ -37,15 +37,19 @@ namespace Business.Concrete
 
         //Get all items as an user
         //Authority needed
-        [SecuredOperation("TaskTypeGet")]
-        public IDataResult<List<TaskTypeGetDto>> GetAll(int isActive)
+        [SecuredOperation("TaskTypeGetAll")]
+        public IDataResult<List<TaskTypeGetDto>> GetAll()
         {
-            List<TaskType> taskTypes;
-            if (isActive == 0 || isActive == 1)
-                taskTypes = _taskTypeDal.GetAll(tp => tp.LicenceId == _authenticatedUserInfoService.GetUserId()
-                && tp.IsActive == Convert.ToBoolean(isActive));
-            else
-                taskTypes = _taskTypeDal.GetAll(tp => tp.LicenceId == _authenticatedUserInfoService.GetUserId());
+            List<TaskType> taskTypes = _taskTypeDal.GetAll(tp => tp.LicenceId == _authenticatedUserInfoService.GetUserId());
+            List<TaskTypeGetDto> taskTypeGetDtos = _mapper.Map<List<TaskTypeGetDto>>(taskTypes);
+            return new SuccessDataResult<List<TaskTypeGetDto>>(taskTypeGetDtos, Messages.GetAllSuccessfuly);
+        }
+        //Get all active items as an user
+        //Authority needed
+        [SecuredOperation("TaskTypeGetAll")]
+        public IDataResult<List<TaskTypeGetDto>> GetAllActive()
+        {
+            List<TaskType> taskTypes = _taskTypeDal.GetAll(tp => tp.LicenceId == _authenticatedUserInfoService.GetUserId() && tp.IsActive == true);
             List<TaskTypeGetDto> taskTypeGetDtos = _mapper.Map<List<TaskTypeGetDto>>(taskTypes);
             return new SuccessDataResult<List<TaskTypeGetDto>>(taskTypeGetDtos, Messages.GetAllSuccessfuly);
         }

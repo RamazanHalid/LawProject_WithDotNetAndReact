@@ -17,7 +17,7 @@ namespace Business.Abstract
         IDataResult<LicenceUserGetDto> GetById(int id);
         IResult Add(LicenceUserAddDto licenceUserAddDto);
         IResult Update(LicenceUserUpdateDto licenceUser);
-        IDataResult<List<LicenceUserGetDto>> GetByUserIdManualy(int userId);
+        IDataResult<List<LicenceUserGetDto>> GetAllByUserId(int userId);
         IDataResult<List<LicenceUserGetDto>> GetByLicenceId(int licenceId);
 
     }

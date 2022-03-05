@@ -65,7 +65,7 @@ namespace Business.Concrete
             _licenceUserDal.Update(licenceUser);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }
-        public IDataResult<List<LicenceUserGetDto>> GetByUserIdManualy(int userId)
+        public IDataResult<List<LicenceUserGetDto>> GetAllByUserId(int userId)
         {
             var licenceUsers = _licenceUserDal.GetAllInclude(lu => lu.UserId == userId);
             List<LicenceUserGetDto> licenceUserGetDto = _mapper.Map<List<LicenceUserGetDto>>(licenceUsers);

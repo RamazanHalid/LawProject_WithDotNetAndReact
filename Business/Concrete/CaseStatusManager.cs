@@ -2,6 +2,8 @@
 using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -23,6 +25,7 @@ namespace Business.Concrete
 
         //Needed to authority as a lawyer or licence owner.
         [SecuredOperation("CaseStatusAdd")]
+        [ValidationAspect(typeof(CaseStatusAddDtoValidator))]
         public IResult Add(CaseStatusAddDto caseStatusAddDto)
         {
             CaseStatus caseStatus = _mapper.Map<CaseStatus>(caseStatusAddDto);

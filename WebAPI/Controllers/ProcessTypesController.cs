@@ -16,9 +16,19 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetAll")]
-        public IActionResult GetAll(int licenceId, int isActive)
+        public IActionResult GetAll()
         {
-            var result = _processTypeService.GetAll(isActive);
+            var result = _processTypeService.GetAll();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("GetAllActive")]
+        public IActionResult GetAllActive()
+        {
+            var result = _processTypeService.GetAllActive();
             if (result.Success)
             {
                 return Ok(result);

@@ -24,7 +24,7 @@ namespace Core.Utilities.Helpers
             var randomName = Guid.NewGuid().ToString();
             CheckDirectoryExists(_currentDirectory + _folderName);
             CreateImageFile(_currentDirectory + _folderName + randomName + type, file);
-            return new SuccessDataResult<string>((_folderName + randomName + type).Replace("\\", "/"), new List<string>() { });
+            return new SuccessDataResult<string>((_folderName + randomName + type).Replace("\\", "/"), "");
         }
         public static IDataResult<string> Update(IFormFile file, string imagePath)
         {
@@ -52,7 +52,7 @@ namespace Core.Utilities.Helpers
             {
                 return new SuccessResult();
             }
-            return new ErrorResult(new List<string>() { });
+            return new ErrorResult();
         }
         private static void CheckDirectoryExists(string directory)
         {

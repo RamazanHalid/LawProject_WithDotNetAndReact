@@ -1,6 +1,7 @@
 ﻿using Core.Entities.Concrete;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"");
+            optionsBuilder.UseSqlServer(@"Server=178.157.15.114;Database=HUKUK2;User Id = sa;Password=Terra2010*;");
         }
         public DbSet<Licence> Licences { get; set; }
         public DbSet<City> Cities { get; set; }
@@ -21,8 +22,6 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<CourtOffice> CourtOffices { get; set; }
         public DbSet<CourtOfficeType> CourtOfficeTypes { get; set; }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<CustomerUser> CustomerUsers { get; set; }
-        public DbSet<CustomerUserRelation> CustomerUserRelations { get; set; }
         public DbSet<LicenceUser> LicenceUsers { get; set; }
         public DbSet<PersonType> PersonTypes { get; set; }
         public DbSet<ProcessType> ProcessTypes { get; set; }
@@ -32,31 +31,89 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
+        public DbSet<OperationClaimCategory> OperationClaimCategories { get; set; }
+        public DbSet<AccountActivity> AccountActivities { get; set; }
+        public DbSet<AccountActivityStatus> AccountActivityStatuses { get; set; }
+        public DbSet<AccountActivityType> AccountActivityTypes { get; set; }
+        public DbSet<Casee> Casees { get; set; }
+        public DbSet<OrderType> OrderTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            //.OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Licence>(entity =>
             {
                 entity.ToTable("Licences");
 
-                entity.HasOne(i => i.City)
-                .WithMany(i => i.Licences)
-                .HasForeignKey(i => i.CityId)
-                .HasConstraintName("licenceCityIdFK");
-            });
+                entity.HasOne(i => i.User)
+                .WithMany(i => (ICollection<Licence>)i.Licences);
 
-            modelBuilder.Entity<Country>(entity =>
+                entity.HasMany(i => i.Casees)
+               .WithOne(i => i.Licence)
+               .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+                entity.HasMany(i => i.Customers)
+               .WithOne(i => i.Licence)
+               .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+            });
+            modelBuilder.Entity<LicenceUser>(entity =>
             {
-                entity.ToTable("Countries");
-                entity.HasMany(i => i.Cities)
-                .WithOne(i => i.Country)
-                .HasForeignKey(i => i.CountryId)
-                .HasConstraintName("cityCountryIdFK");
+                entity.ToTable("LicenceUsers");
+
+                entity.HasOne(i => i.User2)
+                .WithMany(i => (ICollection<LicenceUser>)i.LicenceUsers)
+                .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
             });
+            modelBuilder.Entity<CaseType>(entity =>
+            {
+                entity.ToTable("CaseTypes");
 
+                entity.HasMany(i => i.Casees)
+                .WithOne(i => i.CaseType)
+                .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+            });
+            modelBuilder.Entity<CourtOffice>(entity =>
+            {
+                entity.ToTable("CourtOffices");
 
+                entity.HasMany(i => i.Casees)
+                .WithOne(i => i.CourtOffice)
+                .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+            });
+            modelBuilder.Entity<CourtOfficeType>(entity =>
+            {
+                entity.ToTable("CourtOfficeTypes");
 
+                entity.HasMany(i => i.Casees)
+                .WithOne(i => i.CourtOfficeType)
+                .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+            });
+            modelBuilder.Entity<Customer>(entity =>
+            {
+                entity.ToTable("Customers");
+
+                entity.HasOne(i => i.Casee)
+                .WithOne(i => i.Customer)
+                .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+            });
         }
-
     }
+
+
+    //modelBuilder.Entity<City>(entity =>
+    //{
+    //    entity.ToTable("Cities");
+    //    entity.HasOne(i => i.Country)
+    //    .WithMany(i => i.Cities)
+    //    .HasForeignKey(i => i.CountryId)
+    //    .HasConstraintName("cityCountryIdFK");
+    //});
+
+
+
 }
+
+
+

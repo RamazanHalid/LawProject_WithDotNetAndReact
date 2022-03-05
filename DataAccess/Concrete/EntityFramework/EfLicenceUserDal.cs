@@ -16,15 +16,15 @@ namespace DataAccess.Concrete.EntityFramework
             using (var context = new HukukContext())
             {
                 return filter == null
-                    ? context.Set<LicenceUser>().Include(lu => lu.Licence).Include(lu => lu.User).ToList()
-                    : context.Set<LicenceUser>().Where(filter).Include(lu => lu.Licence).Include(lu => lu.User).ToList();
+                    ? context.Set<LicenceUser>().Include(lu => lu.Licence).Include(lu => lu.User2).ToList()
+                    : context.Set<LicenceUser>().Where(filter).Include(lu => lu.Licence).Include(lu => lu.User2).ToList();
             }
         }
         public LicenceUser GetInclude(Expression<Func<LicenceUser, bool>> filter)
         {
             using (var context = new HukukContext())
             {
-                return context.Set<LicenceUser>().Include(lu => lu.Licence).Include(lu => lu.User).FirstOrDefault(filter);
+                return context.Set<LicenceUser>().Include(lu => lu.Licence).Include(lu => lu.User2).FirstOrDefault(filter);
             }
         }
     }

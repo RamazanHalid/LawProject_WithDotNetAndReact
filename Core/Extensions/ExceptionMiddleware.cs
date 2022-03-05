@@ -45,7 +45,7 @@ namespace Core.Extensions
                 {
                     StatusCode = 400,
                     SituationCode = 2,
-                    Message = JsonConvert.DeserializeObject<List<string>>(e.Message),
+                    Message = e.Message,
                     Errors = errors
                 }.ToString());
             }
@@ -74,7 +74,7 @@ namespace Core.Extensions
                 SituationCode = 1,
                 Success = false,
                 StatusCode = httpContext.Response.StatusCode,
-                Message = new List<string> { e.Message + " \n" + e.InnerException.Message, }
+                Message = e.Message + " \n" + e.InnerException.Message
             }.ToString());
         }
     }

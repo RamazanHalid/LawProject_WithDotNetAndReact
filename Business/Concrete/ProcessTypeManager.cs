@@ -6,12 +6,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
-using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Generic;
-using System.Security.Claims;
-using System.Text;
-
 namespace Business.Concrete
 {
     public class ProcessTypeManager : IProcessTypeService
@@ -38,15 +33,19 @@ namespace Business.Concrete
         }
         //GetAll items as an User
         //Authority needed
-        [SecuredOperation("ProcessTypeGet")]
-        public IDataResult<List<ProcessTypeDto>> GetAll(int isActive)
+        [SecuredOperation("ProcessTypeGetAll")]
+        public IDataResult<List<ProcessTypeDto>> GetAll()
         {
-            List<ProcessType> processTypes;
-            if (isActive == 0 || isActive == 1)
-                processTypes = _processTypeDal.GetAll(p => p.LicenceId == _authenticatedUserInfoService.GetLicenceId()
-                && p.IsActive == Convert.ToBoolean(isActive));
-            else
-                processTypes = _processTypeDal.GetAll(p => p.LicenceId == _authenticatedUserInfoService.GetLicenceId());
+            List<ProcessType> processTypes = _processTypeDal.GetAll(p => p.LicenceId == _authenticatedUserInfoService.GetLicenceId());
+            List<ProcessTypeDto> processTypeDtos = _mapper.Map<List<ProcessTypeDto>>(processTypes);
+            return new SuccessDataResult<List<ProcessTypeDto>>(processTypeDtos, Messages.GetAllByLicenceIdSuccessfuly);
+        }
+        //GetAll items as an User
+        //Authority needed
+        [SecuredOperation("ProcessTypeGetAllActive")]
+        public IDataResult<List<ProcessTypeDto>> GetAllActive()
+        {
+            List<ProcessType> processTypes = _processTypeDal.GetAll(p => p.LicenceId == _authenticatedUserInfoService.GetLicenceId() && p.IsActive == true);
             List<ProcessTypeDto> processTypeDtos = _mapper.Map<List<ProcessTypeDto>>(processTypes);
             return new SuccessDataResult<List<ProcessTypeDto>>(processTypeDtos, Messages.GetAllByLicenceIdSuccessfuly);
         }
@@ -73,7 +72,7 @@ namespace Business.Concrete
                 return result;
             return new SuccessResult(Messages.ActivityChangedSuccessfuly);
         }
-        
+
         //Delete special item
         //Authority needed
         [SecuredOperation("ProcessTypeDelete")]

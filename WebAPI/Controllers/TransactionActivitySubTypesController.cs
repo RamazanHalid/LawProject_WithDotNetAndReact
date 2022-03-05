@@ -17,20 +17,30 @@ namespace WebAPI.Controllers
             _transactionActivitySubTypeService = transactionActivityTypeService;
         }
 
-        [HttpGet("GetAllByLicenceIdWithTransactionActivityType")]
-        public IActionResult GetAllByLicenceIdWithTransactionActivityType(int isActive)
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
         {
-            var result = _transactionActivitySubTypeService.GetAllByLicenceIdWithTransactionActivityType(isActive);
+            var result = _transactionActivitySubTypeService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
-        [HttpGet("GetByIdWithTransactionActivityType")]
-        public IActionResult GetByIdWithTransactionActivityType(int id)
+        [HttpGet("GetAllActive")]
+        public IActionResult GetAllActive()
         {
-            var result = _transactionActivitySubTypeService.GetByIdWithTransactionActivityType(id);
+            var result = _transactionActivitySubTypeService.GetAllActive();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("GetById")]
+        public IActionResult GetById(int id)
+        {
+            var result = _transactionActivitySubTypeService.GetById(id);
             if (result.Success)
             {
                 return Ok(result);

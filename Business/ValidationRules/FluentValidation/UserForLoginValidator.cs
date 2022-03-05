@@ -8,20 +8,17 @@ using System.Text.RegularExpressions;
 
 namespace Business.ValidationRules.FluentValidation
 {
-    public class LoginValidator : AbstractValidator<UserForLoginDto>
+    public class UserForLoginValidator : AbstractValidator<UserForRegisterDto>
     {
-        public LoginValidator()
+        public UserForLoginValidator()
         {
-          
+             
             RuleFor(l => l.Password).MinimumLength(1);
 
 
         }
 
-        private bool IsCellPhoneCorrectForm(string arg)
-        {
-            return  arg.StartsWith("5") || arg.Length == 10;
-        }
+       
 
     }
 

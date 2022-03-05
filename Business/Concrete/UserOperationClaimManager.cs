@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
@@ -11,11 +12,14 @@ namespace Business.Concrete
 {
     public class UserOperationClaimManager : IUserOperationClaimService
     {
-        private IUserOperationClaimDal _userOperationClaimDal;
-
-        public UserOperationClaimManager(IUserOperationClaimDal userOperationClaimDal)
+        private readonly IUserOperationClaimDal _userOperationClaimDal;
+        private readonly IMapper _mapper;
+        private readonly ICurrentUserService _currentUserService;
+        public UserOperationClaimManager(IUserOperationClaimDal userOperationClaimDal, IMapper mapper, ICurrentUserService currentUserService)
         {
             _userOperationClaimDal = userOperationClaimDal;
+            _mapper = mapper;
+            _currentUserService = currentUserService;
         }
 
         public IResult Add(UserOperationClaim userOperationClaim)

@@ -37,7 +37,6 @@ namespace Business.Concrete
             Licence licence = _mapper.Map<Licence>(licenceAddDto);
             licence.Balance = 0;
             licence.Gb = 1;
-            licence.IsApproved = false;
             licence.SmsAccountId = 1;
             licence.StartDate = DateTime.Now;
             licence = _licenceDal.AddWithReturn(licence);
@@ -101,7 +100,6 @@ namespace Business.Concrete
             licence.BillAddress = licenceUpdateDto.BillAddress;
             licence.CityId = licenceUpdateDto.CityId;
             licence.Email = licenceUpdateDto.Email;
-            licence.Image = licenceUpdateDto.Image;
             licence.PersonTypeId = licenceUpdateDto.PersonTypeId;
             licence.PhoneNumber = licenceUpdateDto.PhoneNumber;
             licence.ProfilName = licenceUpdateDto.ProfilName;

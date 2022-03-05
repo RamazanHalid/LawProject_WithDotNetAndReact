@@ -1,8 +1,5 @@
 ﻿using Business.Abstract;
-using Entities.Concrete;
-using Entities.DTOs;
 using Entities.DTOs.CaseType;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -22,6 +19,16 @@ namespace WebAPI.Controllers
         public IActionResult GetAll()
         {
             var result = _caseTypeService.GetAll();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("GetAllActive")]
+        public IActionResult GetAllActive()
+        {
+            var result = _caseTypeService.GetAllActive();
             if (result.Success)
             {
                 return Ok(result);

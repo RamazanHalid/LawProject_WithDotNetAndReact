@@ -29,12 +29,12 @@ namespace Business.Concrete
             {
                 this.ReceipentList.Add("+90" + cellPhone[i]);
             }
-            //var result = SendSms();
-            //if (result.Success)
-            //{
+            var result = SendSms();
+            if (result.Success)
+            {
                 return new SuccessResult(Messages.SmsSended);
-            //}
-            //return new ErrorResult(Messages.SmsCouldNotSend);
+            }
+            return new ErrorResult(Messages.SmsCouldNotSend);
         }
         private IResult SendSms()
         {

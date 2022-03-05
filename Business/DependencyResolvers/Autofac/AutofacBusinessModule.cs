@@ -32,6 +32,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CourtOfficeTypeManager>().As<ICourtOfficeTypeService>();
             builder.RegisterType<EfCourtOfficeTypeDal>().As<ICourtOfficeTypeDal>();
 
+            builder.RegisterType<CountryManager>().As<ICountryService>();
+            builder.RegisterType<EfCountryDal>().As<ICountryDal>();
+
             builder.RegisterType<LicenceUserManager>().As<ILicenceUserService>();
             builder.RegisterType<EfLicenceUserDal>().As<ILicenceUserDal>();
 

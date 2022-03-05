@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(HukukContext))]
-    [Migration("20220223124732_migration184")]
-    partial class migration184
+    [Migration("20220227221830_migration1016")]
+    partial class migration1016
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,9 +31,27 @@ namespace DataAccess.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OperationClaimCategoryId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("OperationClaims");
+                });
+
+            modelBuilder.Entity("Core.Entities.Concrete.OperationClaimCategory", b =>
+                {
+                    b.Property<int>("OperationClaimCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("OperationCategoryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OperationClaimCategoryId");
+
+                    b.ToTable("OperationClaimCategories");
                 });
 
             modelBuilder.Entity("Core.Entities.Concrete.User", b =>
@@ -85,10 +103,7 @@ namespace DataAccess.Migrations
                     b.Property<string>("SmsCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TitleEn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TitleTr")
+                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -117,6 +132,92 @@ namespace DataAccess.Migrations
                     b.ToTable("UserOperationClaims");
                 });
 
+            modelBuilder.Entity("Entities.Concrete.AccountActivity", b =>
+                {
+                    b.Property<int>("AccountActivityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AccountActivityStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AccountActivityTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Coast")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Expiry")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Info")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LicenceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("TaxCost")
+                        .HasColumnType("real");
+
+                    b.HasKey("AccountActivityId");
+
+                    b.HasIndex("AccountActivityStatusId");
+
+                    b.HasIndex("AccountActivityTypeId");
+
+                    b.HasIndex("LicenceId");
+
+                    b.HasIndex("OrderTypeId");
+
+                    b.ToTable("AccountActivities");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.AccountActivityStatus", b =>
+                {
+                    b.Property<int>("AccountActivityStatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AccountActivityStatusId");
+
+                    b.ToTable("AccountActivityStatuses");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.AccountActivityType", b =>
+                {
+                    b.Property<int>("AccountActivityTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AccountActivityTypeId");
+
+                    b.ToTable("AccountActivityTypes");
+                });
+
             modelBuilder.Entity("Entities.Concrete.CaseStatus", b =>
                 {
                     b.Property<int>("CaseStatusId")
@@ -127,10 +228,7 @@ namespace DataAccess.Migrations
                     b.Property<int>("CourtOfficeTypeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("DescriptionEn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DescriptionTr")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -142,6 +240,8 @@ namespace DataAccess.Migrations
                     b.HasKey("CaseStatusId");
 
                     b.HasIndex("CourtOfficeTypeId");
+
+                    b.HasIndex("LicenceId");
 
                     b.ToTable("CaseStatuses");
                 });
@@ -156,10 +256,7 @@ namespace DataAccess.Migrations
                     b.Property<int>("CourtOfficeTypeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("DescriptionEn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DescriptionTr")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -172,7 +269,70 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("CourtOfficeTypeId");
 
+                    b.HasIndex("LicenceId");
+
                     b.ToTable("CaseTypes");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.Casee", b =>
+                {
+                    b.Property<int>("CaseeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CaseNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CaseStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CaseTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourtOfficeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourtOfficeTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DecisionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Info")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LicenceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CaseeId");
+
+                    b.HasIndex("CaseStatusId");
+
+                    b.HasIndex("CaseTypeId");
+
+                    b.HasIndex("CourtOfficeId");
+
+                    b.HasIndex("CourtOfficeTypeId");
+
+                    b.HasIndex("CustomerId")
+                        .IsUnique();
+
+                    b.HasIndex("LicenceId");
+
+                    b.ToTable("Casees");
                 });
 
             modelBuilder.Entity("Entities.Concrete.City", b =>
@@ -208,10 +368,7 @@ namespace DataAccess.Migrations
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CountryNameEn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CountryNameTr")
+                    b.Property<string>("CountryName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CountryId");
@@ -244,31 +401,13 @@ namespace DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Fax")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstPhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstPhoneNumberAdd")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<int>("LicenceId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SecondPhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecondPhoneNumberAdd")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ThirdPhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ThirdPhoneNumberAdd")
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CourtOfficeId");
@@ -276,6 +415,8 @@ namespace DataAccess.Migrations
                     b.HasIndex("CityId1");
 
                     b.HasIndex("CourtOfficeTypeId");
+
+                    b.HasIndex("LicenceId");
 
                     b.ToTable("CourtOffices");
                 });
@@ -287,10 +428,7 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CourtOfficeTypeNameEn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CourtOfficeTypeNameTr")
+                    b.Property<string>("CourtOfficeTypeName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CourtOfficeTypeId");
@@ -308,35 +446,23 @@ namespace DataAccess.Migrations
                     b.Property<string>("BillAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CellPhone")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<string>("CustomerName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CustomerTypeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Fax")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsReference")
-                        .HasColumnType("bit");
-
                     b.Property<int>("LicenceId")
                         .HasColumnType("int");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaxNo")
                         .HasColumnType("nvarchar(max)");
@@ -351,95 +477,9 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("CityId");
 
+                    b.HasIndex("LicenceId");
+
                     b.ToTable("Customers");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.CustomerUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CustomerUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Fax")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsOnlineUser")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("LicenceId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MobilePhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PersonTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumberAdd")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WebSite")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CustomerUsers");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.CustomerUserRelation", b =>
-                {
-                    b.Property<int>("CustomerUserRelationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CustomerUserId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("RelationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RelationTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SideId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CustomerUserRelationId");
-
-                    b.ToTable("CustomerUserRelations");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Licence", b =>
@@ -464,14 +504,8 @@ namespace DataAccess.Migrations
                     b.Property<int>("Gb")
                         .HasColumnType("int");
 
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsApproved")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("LastBillDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("PersonTypeId")
                         .HasColumnType("int");
@@ -485,9 +519,6 @@ namespace DataAccess.Migrations
                     b.Property<int>("SmsAccountId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SmsCount")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
@@ -496,9 +527,6 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("TaxOffice")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserCount")
-                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -512,6 +540,9 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("PersonTypeId");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("Licences");
                 });
 
@@ -522,7 +553,7 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
@@ -541,7 +572,25 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("LicenceId");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("LicenceUsers");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.OrderType", b =>
+                {
+                    b.Property<int>("OrderTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("OrderTypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderTypeId");
+
+                    b.ToTable("OrderTypes");
                 });
 
             modelBuilder.Entity("Entities.Concrete.PersonType", b =>
@@ -551,10 +600,7 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("PersonTypeNameEnd")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PersonTypeNameTr")
+                    b.Property<string>("PersonTypeName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PersonTypeId");
@@ -575,13 +621,12 @@ namespace DataAccess.Migrations
                     b.Property<int>("LicenceId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProcessTypeNameEn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProcessTypeNameTr")
+                    b.Property<string>("ProcessTypeName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProcessTypeId");
+
+                    b.HasIndex("LicenceId");
 
                     b.ToTable("ProcessTypes");
                 });
@@ -599,13 +644,12 @@ namespace DataAccess.Migrations
                     b.Property<int>("LicenceId")
                         .HasColumnType("int");
 
-                    b.Property<string>("TaskTypeNameEn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TaskTypeNameTr")
+                    b.Property<string>("TaskTypeName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TaskTypeId");
+
+                    b.HasIndex("LicenceId");
 
                     b.ToTable("TaskTypes");
                 });
@@ -623,10 +667,7 @@ namespace DataAccess.Migrations
                     b.Property<int>("LicenceId")
                         .HasColumnType("int");
 
-                    b.Property<string>("TransactionAcitivitySubTypeNameEn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TransactionAcitivitySubTypeNameTr")
+                    b.Property<string>("TransactionAcitivitySubTypeName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TransactionAcitivityTypeId")
@@ -636,6 +677,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("TransactionAcitivitySubTypeId");
+
+                    b.HasIndex("LicenceId");
 
                     b.HasIndex("TransactionActivityTypeId");
 
@@ -649,10 +692,7 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("TransactionActivityTypeNameEn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TransactionActivityTypeNameTr")
+                    b.Property<string>("TransactionActivityTypeName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TransactionActivityTypeId");
@@ -660,11 +700,44 @@ namespace DataAccess.Migrations
                     b.ToTable("TransactionActivityTypes");
                 });
 
+            modelBuilder.Entity("Entities.Concrete.AccountActivity", b =>
+                {
+                    b.HasOne("Entities.Concrete.AccountActivityStatus", "AccountActivityStatus")
+                        .WithMany()
+                        .HasForeignKey("AccountActivityStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Concrete.AccountActivityType", "AccountActivityType")
+                        .WithMany()
+                        .HasForeignKey("AccountActivityTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Concrete.Licence", "Licence")
+                        .WithMany()
+                        .HasForeignKey("LicenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Concrete.OrderType", "OrderType")
+                        .WithMany()
+                        .HasForeignKey("OrderTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Entities.Concrete.CaseStatus", b =>
                 {
                     b.HasOne("Entities.Concrete.CourtOfficeType", "CourtOfficeType")
                         .WithMany()
                         .HasForeignKey("CourtOfficeTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Concrete.Licence", "Licence")
+                        .WithMany()
+                        .HasForeignKey("LicenceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -676,14 +749,53 @@ namespace DataAccess.Migrations
                         .HasForeignKey("CourtOfficeTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Entities.Concrete.Licence", "Licence")
+                        .WithMany()
+                        .HasForeignKey("LicenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Entities.Concrete.Casee", b =>
+                {
+                    b.HasOne("Entities.Concrete.CaseStatus", "CaseStatus")
+                        .WithMany()
+                        .HasForeignKey("CaseStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Concrete.CaseType", "CaseType")
+                        .WithMany("Casees")
+                        .HasForeignKey("CaseTypeId")
+                        .IsRequired();
+
+                    b.HasOne("Entities.Concrete.CourtOffice", "CourtOffice")
+                        .WithMany("Casees")
+                        .HasForeignKey("CourtOfficeId")
+                        .IsRequired();
+
+                    b.HasOne("Entities.Concrete.CourtOfficeType", "CourtOfficeType")
+                        .WithMany("Casees")
+                        .HasForeignKey("CourtOfficeTypeId")
+                        .IsRequired();
+
+                    b.HasOne("Entities.Concrete.Customer", "Customer")
+                        .WithOne("Casee")
+                        .HasForeignKey("Entities.Concrete.Casee", "CustomerId")
+                        .IsRequired();
+
+                    b.HasOne("Entities.Concrete.Licence", "Licence")
+                        .WithMany("Casees")
+                        .HasForeignKey("LicenceId")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Entities.Concrete.City", b =>
                 {
                     b.HasOne("Entities.Concrete.Country", "Country")
-                        .WithMany("Cities")
+                        .WithMany()
                         .HasForeignKey("CountryId")
-                        .HasConstraintName("cityCountryIdFK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -699,6 +811,12 @@ namespace DataAccess.Migrations
                         .HasForeignKey("CourtOfficeTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Entities.Concrete.Licence", "Licence")
+                        .WithMany()
+                        .HasForeignKey("LicenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Entities.Concrete.Customer", b =>
@@ -708,14 +826,18 @@ namespace DataAccess.Migrations
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Entities.Concrete.Licence", "Licence")
+                        .WithMany("Customers")
+                        .HasForeignKey("LicenceId")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Entities.Concrete.Licence", b =>
                 {
                     b.HasOne("Entities.Concrete.City", "City")
-                        .WithMany("Licences")
+                        .WithMany()
                         .HasForeignKey("CityId")
-                        .HasConstraintName("licenceCityIdFK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -724,9 +846,38 @@ namespace DataAccess.Migrations
                         .HasForeignKey("PersonTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Core.Entities.Concrete.User", "User")
+                        .WithOne("Licences")
+                        .HasForeignKey("Entities.Concrete.Licence", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Entities.Concrete.LicenceUser", b =>
+                {
+                    b.HasOne("Entities.Concrete.Licence", "Licence")
+                        .WithMany("LicenceUsers")
+                        .HasForeignKey("LicenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.Concrete.User", "User2")
+                        .WithOne("LicenceUsers")
+                        .HasForeignKey("Entities.Concrete.LicenceUser", "UserId")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Entities.Concrete.ProcessType", b =>
+                {
+                    b.HasOne("Entities.Concrete.Licence", "Licence")
+                        .WithMany()
+                        .HasForeignKey("LicenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Entities.Concrete.TaskType", b =>
                 {
                     b.HasOne("Entities.Concrete.Licence", "Licence")
                         .WithMany()
@@ -737,6 +888,12 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Concrete.TransactionActivitySubType", b =>
                 {
+                    b.HasOne("Entities.Concrete.Licence", "Licence")
+                        .WithMany()
+                        .HasForeignKey("LicenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Entities.Concrete.TransactionActivityType", "TransactionActivityType")
                         .WithMany()
                         .HasForeignKey("TransactionActivityTypeId");
