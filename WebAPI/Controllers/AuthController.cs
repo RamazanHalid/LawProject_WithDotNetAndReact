@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace WebAPI.Controllers
 {
@@ -14,13 +15,14 @@ namespace WebAPI.Controllers
             _authService = authService;
         }
         [HttpPost("login")]
-        public ActionResult Login(UserForLoginDto userForLoginDto, int licenceId = 0)
+        public IActionResult Login(UserForLoginDto userForLoginDto, int licenceId = 0)
         {
             var userToLogin = _authService.Login(userForLoginDto);
             if (!userToLogin.Success)
             {
                 return BadRequest(userToLogin);
             }
+            
             if (licenceId > 0)
             {
                 var result = _authService.CreateAccessToken(userToLogin.Data, licenceId);
@@ -30,20 +32,21 @@ namespace WebAPI.Controllers
                 }
                 return BadRequest(result);
             }
-            var resultAllLicences = _authService.UserAfterLogin(userToLogin.Data.Id);
-            if (resultAllLicences.Success)
+       
+            var userIdResult = _authService.UserAfterLogin(userToLogin.Data.Id);
+            if (userIdResult.Success)
             {
-                return Ok(resultAllLicences);
+                return Ok(userIdResult);
             }
-            return BadRequest(resultAllLicences);
+            return BadRequest(userIdResult);
         }
         [HttpPost("register")]
-        public ActionResult Register(UserForRegisterDto userForRegisterDto)
+        public IActionResult Register(UserForRegisterDto userForRegisterDto)
         {
             var userExists = _authService.UserExists(userForRegisterDto.CellPhone);
             if (userExists.Success)
             {
-                return BadRequest(userExists.Message);
+                return Ok(userExists);
             }
             var result = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
             if (result.Success)

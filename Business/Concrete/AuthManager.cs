@@ -28,6 +28,7 @@ namespace Business.Concrete
             _licenceService = licenceService;
             _licenceUserService = licenceUserService;
         }
+        [ValidationAspect(typeof(UserForLoginValidator))]
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;
@@ -39,8 +40,8 @@ namespace Business.Concrete
                 LastName = userForRegisterDto.LastName,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                TitleTr = userForRegisterDto.TitleTr,
-                TitleEn = userForRegisterDto.TitleEn,
+                Title = userForRegisterDto.Title,
+                CityId = userForRegisterDto.CityId,
                 IsActive = true,
                 IsApproved = false,
                 SmsCode = new Random().Next(0, 1000000).ToString("D6"),
@@ -51,6 +52,7 @@ namespace Business.Concrete
             _smsService.SendIndividualMessage(smsMessage, user.CellPhone);
             return new SuccessDataResult<User>(Messages.CellPhoneCode);
         }
+    
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
             var userToCheck = _userService.GetByCellPhone(userForLoginDto.CellPhone);
@@ -127,21 +129,9 @@ namespace Business.Concrete
             _smsService.SendIndividualMessage(smsMessage, cellPhone);
             return new SuccessResult(Messages.SmsSended);
         }
-        public IDataResult<UserOwnAndRelationalLicencesDto> UserAfterLogin(int userId)
+        public IDataResult<int> UserAfterLogin(int userId)
         {
-            var licencesResult = _licenceService.GetAllAfterLogin(userId);
-            if (!licencesResult.Success)
-                return new ErrorDataResult<UserOwnAndRelationalLicencesDto>(licencesResult.Message);
-            var licenceUserResult = _licenceUserService.GetByUserIdManualy(userId);
-            if (!licenceUserResult.Success)
-                return new ErrorDataResult<UserOwnAndRelationalLicencesDto>(licenceUserResult.Message);
-            UserOwnAndRelationalLicencesDto user = new UserOwnAndRelationalLicencesDto
-            {
-                UserId = userId,
-                UserOwnLicences = licencesResult.Data,
-                UserRealtionalLicences = licenceUserResult.Data
-            };
-            return new SuccessDataResult<UserOwnAndRelationalLicencesDto>(user);
+            return new SuccessDataResult<int>(userId);
         }
     }
 }

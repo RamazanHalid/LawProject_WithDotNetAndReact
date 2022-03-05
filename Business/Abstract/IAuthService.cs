@@ -14,10 +14,9 @@ namespace Business.Abstract
         IDataResult<User> Login(UserForLoginDto userForLoginDto);
         IResult UserExists(string cellPhone);
         IDataResult<LoginSuccessDto> CreateAccessToken(User user, int licenceId);
-
         IDataResult<User> ApprovingSelectedUser(ApprovingUserDto approvingUserDto);
         IResult ForgetPassword(string cellPhone);
         IResult UpdateUserPassword(UpdateUserPasswordDto updateUserPasswordDto);
-        IDataResult<UserOwnAndRelationalLicencesDto> UserAfterLogin(int userId);
+        IDataResult<int> UserAfterLogin(int userId);
     }
 }
