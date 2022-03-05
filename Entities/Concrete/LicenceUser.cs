@@ -13,7 +13,7 @@ namespace Entities.Concrete
         public DateTime? EndDate { get; set; }
         public bool IsActive { get; set; }
         public virtual Licence Licence { get; set; }
-        public virtual User User { get; set; }
+        public virtual User User2 { get; set; }
 
     }
 }

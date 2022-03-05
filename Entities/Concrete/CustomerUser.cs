@@ -9,22 +9,16 @@ namespace Entities.Concrete
     {
         public int CustomerUserId { get; set; }
         public int LicenceId { get; set; }
+        public virtual Licence Licence { get; set; }
         public int PersonTypeId { get; set; }
-        public string Id { get; set; }
-        public string Name { get; set; }
+        public virtual PersonType PersonType { get; set; }
+        public string FullName { get; set; }
         public string Address { get; set; }
-        public int CountryId { get; set; }
         public int CityId { get; set; }
-        public string MobilePhoneNumber { get; set; }
+        public virtual City City { get; set; }
         public string PhoneNumber { get; set; }
-        public string PhoneNumberAdd { get; set; }
-        public string Fax{ get; set; }
-        public string Email{ get; set; }
-        public bool IsOnlineUser{ get; set; }
-        public string UserName{ get; set; }
-        public string Password{ get; set; }
-        public string WebSite{ get; set; }
-        public bool IsActive{ get; set; }
+        public string Email { get; set; }
+        public bool IsActive { get; set; }
 
 
     }

@@ -10,7 +10,6 @@ namespace Entities.Concrete
     {
         [Key]
         public int TransactionActivityTypeId { get; set; }
-        public string TransactionActivityTypeNameTr { get; set; }
-        public string TransactionActivityTypeNameEn { get; set; }
+        public string TransactionActivityTypeName { get; set; }
     }
 }

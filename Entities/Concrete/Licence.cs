@@ -1,12 +1,16 @@
 ﻿using Core.Entities;
+using Core.Entities.Concrete;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+
 namespace Entities.Concrete
 {
     public class Licence : IEntity
     {
         public int LicenceId { get; set; }
         public int UserId { get; set; }
-        public string Image { get; set; }
+        public virtual User User { get; set; }
         public DateTime StartDate { get; set; }
         public int Gb { get; set; }
         public int SmsAccountId { get; set; }
@@ -21,8 +25,11 @@ namespace Entities.Concrete
         public int CityId { get; set; }
         public virtual City City { get; set; }
         public string ProfilName { get; set; }
-        public bool IsApproved { get; set; }
+        public bool IsActive { get; set; }
         public float Balance { get; set; }
-        public DateTime LastBillDate { get; set; }
+        //public virtual ICollection<Customer> Customers { get; set; }
+        public virtual ICollection<LicenceUser> LicenceUsers { get; set; }
+        public virtual ICollection<Casee> Casees { get; set; }
+        public virtual ICollection<Customer> Customers{ get; set; }
     }
 }

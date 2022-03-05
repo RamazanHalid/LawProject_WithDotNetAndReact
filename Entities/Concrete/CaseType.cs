@@ -5,15 +5,16 @@ using System.Text;
 
 namespace Entities.Concrete
 {
-    public class CaseType: IEntity
+    public class CaseType : IEntity
     {
         public int CaseTypeId { get; set; }
         public int LicenceId { get; set; }
+        public virtual Licence Licence { get; set; }
         public int CourtOfficeTypeId { get; set; }
-        public  CourtOfficeType CourtOfficeType{ get; set; }
-        public string DescriptionTr { get; set; }
-        public string DescriptionEn { get; set; }
+        public virtual CourtOfficeType CourtOfficeType { get; set; }
+        public string Description { get; set; }
         public bool IsActive { get; set; }
+        public virtual ICollection<Casee> Casees { get; set; }
 
     }
 }
