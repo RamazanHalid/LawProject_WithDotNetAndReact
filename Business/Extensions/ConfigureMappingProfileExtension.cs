@@ -4,6 +4,8 @@ using Core.Utilities.IoC;
 using Entities.Concrete;
 using Entities.DTOs;
 using Entities.DTOs.CaseType;
+using Entities.DTOs.CourtOffice;
+using Entities.DTOs.CourtOfficeType;
 using Entities.DTOs.LicenceUser;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,7 +28,9 @@ namespace Business.Extensions
             public AutoMapperMappingProfile()
             {
                 //CaseStatus
-                CreateMap<CaseStatus, CaseStatusGetDto>();
+                CreateMap<CaseStatus, CaseStatusGetDto>()
+                    .ForMember(dest=>dest.CourtOfficeTypeGetDto,x=>x.MapFrom(src=>src.CourtOfficeType))
+                    ;
                 CreateMap<CaseStatusAddDto, CaseStatus>();
                 CreateMap<CaseStatusUpdateDto, CaseStatus>();
 
@@ -49,9 +53,20 @@ namespace Business.Extensions
                 //LicenceUser
                 CreateMap<LicenceUser, LicenceUserGetDto>()
                     .ForMember(dest => dest.LicenceGetDto, x => x.MapFrom(src => src.Licence))
-                    .ForMember(dest => dest.User, x => x.MapFrom(src => src.User));
+                    .ForMember(dest => dest.User, x => x.MapFrom(src => src.User2));
                 CreateMap<LicenceUserAddDto, LicenceUser>();
-                ;
+
+                //CourtOffice
+                CreateMap<CourtOfficeUpdateDto, CourtOffice>();
+                CreateMap<CourtOfficeAddDto, CourtOffice>();
+                CreateMap<CourtOffice, CourtOfficeGetDto>();
+
+                //CourtOfficeType
+                CreateMap<CourtOfficeTypeUpdateDto, CourtOfficeType>();
+                CreateMap<CourtOfficeTypeAddDto, CourtOfficeType>();
+                CreateMap<CourtOfficeType, CourtOfficeTypeGetDto>();
+
+
             }
         }
     }

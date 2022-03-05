@@ -1,8 +1,10 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs.CourtOffice;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -13,52 +15,55 @@ namespace Business.Concrete
     public class CourtOfficeManager : ICourtOfficeService
     {
         private readonly ICourtOfficeDal _courtOfficeDal;
-
-        public CourtOfficeManager(ICourtOfficeDal courtOfficeDal)
+        private readonly IMapper _mapper;
+        private readonly ICurrentUserService _currentUserService;
+        public CourtOfficeManager(ICourtOfficeDal courtOfficeDal, IMapper mapper, ICurrentUserService currentUserService)
         {
             _courtOfficeDal = courtOfficeDal;
+            _mapper = mapper;
+            _currentUserService = currentUserService;
         }
 
-        public IResult Add(CourtOffice courtOffice)
+        public IResult Add(CourtOfficeAddDto courtOfficeAddDto)
         {
+            CourtOffice courtOffice = _mapper.Map<CourtOffice>(courtOfficeAddDto);
+            courtOffice.LicenceId = _currentUserService.GetLicenceId();
             _courtOfficeDal.Add(courtOffice);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
 
         public IResult Delete(int id)
         {
-            throw new NotImplementedException();
+            CourtOffice courtOffice = _courtOfficeDal.Get(c => c.CourtOfficeId == id);
+            if (courtOffice == null)
+                return new ErrorResult(Messages.TheItemDoesNotExists);
+            _courtOfficeDal.Delete(courtOffice);
+            return new SuccessResult(Messages.DeletedSuccessfuly);
         }
 
-        public IDataResult<List<CourtOffice>> GetAll(int courtOfficeTypeId, int isActive)
+        public IDataResult<List<CourtOfficeGetDto>> GetAll()
         {
-            List<CourtOffice> courtOffices;
-            if (isActive == 0)
-            {
-                courtOffices = _courtOfficeDal.GetAll(
-                    c => c.IsActive == false
-                    && courtOfficeTypeId > 0 ? c.CourtOfficeTypeId == courtOfficeTypeId : true);
-            }
-            else if (isActive == 1)
-            {
-                courtOffices = _courtOfficeDal.GetAll(
-                    c => c.IsActive == true
-                    && courtOfficeTypeId > 0 ? c.CourtOfficeTypeId == courtOfficeTypeId : true);
-            }
-            else
-            {
-                courtOffices = _courtOfficeDal.GetAll(
-                  c => courtOfficeTypeId > 0 ? c.CourtOfficeTypeId == courtOfficeTypeId : true);
-            }
-            return new SuccessDataResult<List<CourtOffice>>(courtOffices, Messages.GetAllSuccessfuly);
+            List<CourtOffice> courtOffices = _courtOfficeDal.GetAll(c => c.LicenceId == _currentUserService.GetLicenceId());
+            List<CourtOfficeGetDto> courtOfficeGetDtos = _mapper.Map<List<CourtOfficeGetDto>>(courtOffices);
+            return new SuccessDataResult<List<CourtOfficeGetDto>>(courtOfficeGetDtos, Messages.GetAllSuccessfuly);
         }
-        public IDataResult<CourtOffice> GetById(int id)
+        public IDataResult<List<CourtOfficeGetDto>> GetAllActive()
         {
-            return new SuccessDataResult<CourtOffice>(_courtOfficeDal.Get(c => c.CourtOfficeId == id));
+            List<CourtOffice> courtOffices = _courtOfficeDal.GetAll(c => c.LicenceId == _currentUserService.GetLicenceId() && c.IsActive == true);
+            List<CourtOfficeGetDto> courtOfficeGetDtos = _mapper.Map<List<CourtOfficeGetDto>>(courtOffices);
+            return new SuccessDataResult<List<CourtOfficeGetDto>>(courtOfficeGetDtos, Messages.GetAllSuccessfuly);
+        }
+        public IDataResult<CourtOfficeGetDto> GetById(int id)
+        {
+            CourtOffice courtOffice = _courtOfficeDal.Get(c => c.CourtOfficeId == id);
+            CourtOfficeGetDto courtOfficeGetDto = _mapper.Map<CourtOfficeGetDto>(courtOffice);
+            return new SuccessDataResult<CourtOfficeGetDto>(courtOfficeGetDto, Messages.GetByIdSuccessfuly);
         }
 
-        public IResult Update(CourtOffice courtOffice)
+        public IResult Update(CourtOfficeUpdateDto courtOfficeUpdateDto)
         {
+            CourtOffice courtOffice = _mapper.Map<CourtOffice>(courtOfficeUpdateDto);
+            courtOffice.LicenceId = _currentUserService.GetLicenceId();
             _courtOfficeDal.Update(courtOffice);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }
