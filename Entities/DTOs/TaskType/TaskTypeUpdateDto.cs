@@ -8,9 +8,8 @@ namespace Entities.DTOs
     public class TaskTypeUpdateDto : IDto
     {
         public int TaskTypeId { get; set; }
-        public string TaskTypeNameTr { get; set; }
-        public string TaskTypeNameEn { get; set; }
-        public bool IsActive { get; set; }
+        public string TaskTypeName { get; set; }
+         public bool IsActive { get; set; }
 
     }
 }

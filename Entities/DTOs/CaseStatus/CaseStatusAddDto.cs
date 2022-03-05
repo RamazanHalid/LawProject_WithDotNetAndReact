@@ -8,8 +8,7 @@ namespace Entities.DTOs
     public class CaseStatusAddDto : IDto
     {
         public int CourtOfficeTypeId { get; set; }
-        public string DescriptionTr { get; set; }
-        public string DescriptionEn { get; set; }
+        public string Description { get; set; }
         public bool IsActive { get; set; }
     }
 }

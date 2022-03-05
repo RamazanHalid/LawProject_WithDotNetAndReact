@@ -1,19 +1,13 @@
 ﻿using Core.Entities;
-using Entities.Concrete;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+using Entities.Concrete; 
 
-namespace Entities.DTOs
+namespace Entities.DTOs.TransactionActivitySubType
 {
-    public class TransactionActivitySubTypeDto : IDto
+    public class TransactionActivitySubTypeGetDto : IDto
     {
-        [Key]
         public int TransactionAcitivitySubTypeId { get; set; }
         public TransactionActivityType TransactionActivityType { get; set; }
         public string TransactionAcitivitySubTypeName { get; set; }
         public bool IsActive { get; set; }
-
     }
 }
