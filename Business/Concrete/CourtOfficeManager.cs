@@ -43,19 +43,19 @@ namespace Business.Concrete
 
         public IDataResult<List<CourtOfficeGetDto>> GetAll()
         {
-            List<CourtOffice> courtOffices = _courtOfficeDal.GetAll(c => c.LicenceId == _currentUserService.GetLicenceId());
+            List<CourtOffice> courtOffices = _courtOfficeDal.GetAllWithInclude(c => c.LicenceId == _currentUserService.GetLicenceId());
             List<CourtOfficeGetDto> courtOfficeGetDtos = _mapper.Map<List<CourtOfficeGetDto>>(courtOffices);
             return new SuccessDataResult<List<CourtOfficeGetDto>>(courtOfficeGetDtos, Messages.GetAllSuccessfuly);
         }
         public IDataResult<List<CourtOfficeGetDto>> GetAllActive()
         {
-            List<CourtOffice> courtOffices = _courtOfficeDal.GetAll(c => c.LicenceId == _currentUserService.GetLicenceId() && c.IsActive == true);
+            List<CourtOffice> courtOffices = _courtOfficeDal.GetAllWithInclude(c => c.LicenceId == _currentUserService.GetLicenceId() && c.IsActive == true);
             List<CourtOfficeGetDto> courtOfficeGetDtos = _mapper.Map<List<CourtOfficeGetDto>>(courtOffices);
             return new SuccessDataResult<List<CourtOfficeGetDto>>(courtOfficeGetDtos, Messages.GetAllSuccessfuly);
         }
         public IDataResult<CourtOfficeGetDto> GetById(int id)
         {
-            CourtOffice courtOffice = _courtOfficeDal.Get(c => c.CourtOfficeId == id);
+            CourtOffice courtOffice = _courtOfficeDal.GetWithInclude(c => c.CourtOfficeId == id);
             CourtOfficeGetDto courtOfficeGetDto = _mapper.Map<CourtOfficeGetDto>(courtOffice);
             return new SuccessDataResult<CourtOfficeGetDto>(courtOfficeGetDto, Messages.GetByIdSuccessfuly);
         }
@@ -64,6 +64,15 @@ namespace Business.Concrete
         {
             CourtOffice courtOffice = _mapper.Map<CourtOffice>(courtOfficeUpdateDto);
             courtOffice.LicenceId = _currentUserService.GetLicenceId();
+            _courtOfficeDal.Update(courtOffice);
+            return new SuccessResult(Messages.UpdatedSuccessfuly);
+        }
+        public IResult ChangeActivity(int id)
+        {
+            CourtOffice courtOffice = _courtOfficeDal.Get(c=>c.CourtOfficeId == id);
+            if(courtOffice == null)
+                return new ErrorResult(Messages.TheItemDoesNotExists);
+            courtOffice.IsActive = !courtOffice.IsActive;
             _courtOfficeDal.Update(courtOffice);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }

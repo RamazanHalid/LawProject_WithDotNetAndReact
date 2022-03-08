@@ -49,6 +49,16 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("ChangeActivity")]
+        public IActionResult ChangeActivity(int id)
+        {
+            var result = _courtOfficeService.ChangeActivity(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
         [HttpPost("Add")]
         public IActionResult Add(CourtOfficeAddDto courtOfficeType)
         {

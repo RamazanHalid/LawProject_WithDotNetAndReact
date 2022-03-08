@@ -13,5 +13,6 @@ namespace Business.Abstract
         IResult Add(CourtOfficeAddDto courtOfficeAddDto);
         IResult Update(CourtOfficeUpdateDto courtOfficeUpdateDto);
         IResult Delete(int id);
+        IResult ChangeActivity(int id);
     }
 }
