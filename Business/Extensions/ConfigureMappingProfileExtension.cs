@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Abstract;
+using Core.Entities.Concrete;
 using Core.Utilities.IoC;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -7,6 +8,9 @@ using Entities.DTOs.CaseType;
 using Entities.DTOs.CourtOffice;
 using Entities.DTOs.CourtOfficeType;
 using Entities.DTOs.LicenceUser;
+using Entities.DTOs.ProcessType;
+using Entities.DTOs.TransactionActivitySubType;
+using Entities.DTOs.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
@@ -29,10 +33,13 @@ namespace Business.Extensions
             {
                 //CaseStatus
                 CreateMap<CaseStatus, CaseStatusGetDto>()
-                    .ForMember(dest=>dest.CourtOfficeTypeGetDto,x=>x.MapFrom(src=>src.CourtOfficeType))
+                    .ForMember(dest => dest.CourtOfficeTypeGetDto, x => x.MapFrom(src => src.CourtOfficeType))
                     ;
                 CreateMap<CaseStatusAddDto, CaseStatus>();
                 CreateMap<CaseStatusUpdateDto, CaseStatus>();
+
+                //Users
+                CreateMap<User, UserForAddAnOtherLicenceInfo>();
 
                 //TaskType
                 CreateMap<CaseType, CaseTypeGetDto>();
@@ -50,6 +57,18 @@ namespace Business.Extensions
                 CreateMap<TaskTypeAddDto, TaskType>();
                 CreateMap<TaskType, TaskTypeGetDto>();
 
+                //ProcessType
+                CreateMap<ProcessTypeUpdateDto, ProcessType>();
+                CreateMap<ProcessTypeAddDto, ProcessType>();
+                CreateMap<ProcessType, ProcessTypeGetDto>();
+
+
+                //CaseType
+                CreateMap<CaseTypeUpdateDto, CaseType>();
+                CreateMap<CaseTypeAddDto, CaseType>();
+                CreateMap<CaseType, CaseTypeGetDto>()
+                    .ForMember(dst => dst.CourtOfficeTypeGetDto, x => x.MapFrom(src => src.CourtOfficeType));
+
                 //LicenceUser
                 CreateMap<LicenceUser, LicenceUserGetDto>()
                     .ForMember(dest => dest.LicenceGetDto, x => x.MapFrom(src => src.Licence))
@@ -59,12 +78,18 @@ namespace Business.Extensions
                 //CourtOffice
                 CreateMap<CourtOfficeUpdateDto, CourtOffice>();
                 CreateMap<CourtOfficeAddDto, CourtOffice>();
-                CreateMap<CourtOffice, CourtOfficeGetDto>();
+                CreateMap<CourtOffice, CourtOfficeGetDto>().ForMember(dst => dst.CourtOfficeTypeGetDto, x => x.MapFrom(src => src.CourtOfficeType))
+                    .ForMember(dst => dst.City, x => x.MapFrom(src => src.City));
 
                 //CourtOfficeType
                 CreateMap<CourtOfficeTypeUpdateDto, CourtOfficeType>();
                 CreateMap<CourtOfficeTypeAddDto, CourtOfficeType>();
                 CreateMap<CourtOfficeType, CourtOfficeTypeGetDto>();
+
+                //TransactionActivitySubType
+                CreateMap<TransactionActivitySubTypeUpdateDto, TransactionActivitySubType>();
+                CreateMap<TransactionActivitySubTypeAddDto, TransactionActivitySubType>();
+                CreateMap<TransactionActivitySubType, TransactionActivitySubTypeGetDto>();
 
 
             }

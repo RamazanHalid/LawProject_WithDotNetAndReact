@@ -32,6 +32,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CourtOfficeTypeManager>().As<ICourtOfficeTypeService>();
             builder.RegisterType<EfCourtOfficeTypeDal>().As<ICourtOfficeTypeDal>();
 
+            builder.RegisterType<CourtOfficeManager>().As<ICourtOfficeService>();
+            builder.RegisterType<EfCourtOfficeDal>().As<ICourtOfficeDal>();
+
             builder.RegisterType<CountryManager>().As<ICountryService>();
             builder.RegisterType<EfCountryDal>().As<ICountryDal>();
 
@@ -40,6 +43,9 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<CaseStatusManager>().As<ICaseStatusService>();
             builder.RegisterType<EfCaseStatusDal>().As<ICaseStatusDal>();
+
+            builder.RegisterType<ProcessTypeManager>().As<IProcessTypeService>();
+            builder.RegisterType<EfProcessTypeDal>().As<IProcessTypeDal>();
 
             builder.RegisterType<CaseTypeManager>().As<ICaseTypeService>();
             builder.RegisterType<EfCaseTypeDal>().As<ICaseTypeDal>();
