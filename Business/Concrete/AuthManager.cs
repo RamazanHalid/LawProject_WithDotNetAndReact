@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -8,6 +9,7 @@ using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JWT;
 using Entities.DTOs;
+using Entities.DTOs.User;
 using System;
 using System.Collections.Generic;
 
@@ -18,17 +20,17 @@ namespace Business.Concrete
         private readonly IUserService _userService;
         private readonly ITokenHelper _tokenHelper;
         private readonly ISmsService _smsService;
-        private readonly ILicenceService _licenceService;
-        private readonly ILicenceUserService _licenceUserService;
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper, ISmsService smsService, ILicenceService licenceService, ILicenceUserService licenceUserService)
+        private readonly ICurrentUserService _currentUserService;
+        private readonly IMapper _mapper;
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper, ISmsService smsService, ICurrentUserService currentUserService, IMapper mapper)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
             _smsService = smsService;
-            _licenceService = licenceService;
-            _licenceUserService = licenceUserService;
+            _currentUserService = currentUserService;
+            _mapper = mapper;
         }
-        [ValidationAspect(typeof(UserForLoginValidator))]
+        [ValidationAspect(typeof(UserForRegisterValidator))]
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;
@@ -45,14 +47,14 @@ namespace Business.Concrete
                 IsActive = true,
                 IsApproved = false,
                 SmsCode = new Random().Next(0, 1000000).ToString("D6"),
-                ProfileImage = ""
+                ProfileImage = "/Uploads/UserProfileIamges/NoImage.jpg"
             };
             _userService.Add(user);
             string smsMessage = $"Account approvement code: {user.SmsCode}.";
             _smsService.SendIndividualMessage(smsMessage, user.CellPhone);
             return new SuccessDataResult<User>(Messages.CellPhoneCode);
         }
-    
+        [ValidationAspect(typeof(LoginValidator))]
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
             var userToCheck = _userService.GetByCellPhone(userForLoginDto.CellPhone);
@@ -132,6 +134,24 @@ namespace Business.Concrete
         public IDataResult<int> UserAfterLogin(int userId)
         {
             return new SuccessDataResult<int>(userId);
+        }
+        public IResult UpdateUser(UpdateUserDto updateUserDto)
+        {
+            User user = _userService.GetByUserId(_currentUserService.GetUserId());
+            user.CityId = updateUserDto.CityId;
+            user.Title = updateUserDto.Title;
+            user.LastName = updateUserDto.LastName;
+            user.CountryId = updateUserDto.CountryId;
+            user.FirstName = updateUserDto.FirstName;
+            if (!string.IsNullOrEmpty(user.ProfileImage))
+                user.ProfileImage = updateUserDto.ProfileImage;
+            _userService.Update(user);
+            return new SuccessResult(Messages.UpdatedSuccessfuly);
+        }
+        public IDataResult<GetUserInfoDto> GetUserInfo()
+        {
+            GetUserInfoDto userInfo = _userService.GetUserInfoByUserId(_currentUserService.GetUserId());
+            return new SuccessDataResult<GetUserInfoDto>(userInfo);
         }
     }
 }

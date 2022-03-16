@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Helpers;
 using Entities.DTOs;
+using Entities.DTOs.User;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -22,7 +24,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(userToLogin);
             }
-            
+
             if (licenceId > 0)
             {
                 var result = _authService.CreateAccessToken(userToLogin.Data, licenceId);
@@ -32,7 +34,7 @@ namespace WebAPI.Controllers
                 }
                 return BadRequest(result);
             }
-       
+
             var userIdResult = _authService.UserAfterLogin(userToLogin.Data.Id);
             if (userIdResult.Success)
             {
@@ -79,6 +81,38 @@ namespace WebAPI.Controllers
         public ActionResult UpdateUserPassword(UpdateUserPasswordDto updateUserPasswordDto)
         {
             var result = _authService.UpdateUserPassword(updateUserPasswordDto);
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [HttpGet("GetUserInfo")]
+        public ActionResult GetUserInfo()
+        {
+            var result = _authService.GetUserInfo();
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [HttpPost("UpdateUserProfile")]
+        public ActionResult UpdateUserProfile(UpdateUserDto updateUserDto)
+        {
+            if (updateUserDto.ProfileImageFile != null)
+            {
+                var uploadImageResult = FileHelper.Add(updateUserDto.ProfileImageFile, "UserProfileImages");
+                if (uploadImageResult.Success)
+                {
+                    updateUserDto.ProfileImage = uploadImageResult.Data;
+                }
+                else
+                {
+                    return BadRequest(uploadImageResult);
+                }
+            }
+            var result = _authService.UpdateUser(updateUserDto);
             if (!result.Success)
             {
                 return BadRequest(result);

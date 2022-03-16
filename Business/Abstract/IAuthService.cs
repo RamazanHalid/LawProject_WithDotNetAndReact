@@ -2,6 +2,7 @@
 using Core.Utilities.Results;
 using Core.Utilities.Security.JWT;
 using Entities.DTOs;
+using Entities.DTOs.User;
 using System;
 using System.Text;
 
@@ -18,5 +19,7 @@ namespace Business.Abstract
         IResult ForgetPassword(string cellPhone);
         IResult UpdateUserPassword(UpdateUserPasswordDto updateUserPasswordDto);
         IDataResult<int> UserAfterLogin(int userId);
+        IResult UpdateUser(UpdateUserDto updateUserDto);
+        IDataResult<GetUserInfoDto> GetUserInfo();
     }
 }
