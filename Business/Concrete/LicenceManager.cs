@@ -8,6 +8,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.Licence;
 using System;
 using System.Collections.Generic;
 
@@ -59,13 +60,13 @@ namespace Business.Concrete
         //Get current auth user licence informations.
         //Need to LicenceGet authority.
         [SecuredOperation("LicenceGet")]
-        public IDataResult<LicenceGetDto> GetCurrentAuthUserLicence()
+        public IDataResult<LicenceGetForUpdatingDto> GetCurrentAuthUserLicence()
         {
             var licence = _licenceDal.GetByIdWithInclude(l => l.LicenceId == _authenticatedUserInfoService.GetLicenceId());
             if (licence == null)
-                return new ErrorDataResult<LicenceGetDto>(Messages.TheItemDoesNotExists);
-            LicenceGetDto licenceGetDto = _mapper.Map<LicenceGetDto>(licence);
-            return new SuccessDataResult<LicenceGetDto>(licenceGetDto, Messages.GetByIdSuccessfuly);
+                return new ErrorDataResult<LicenceGetForUpdatingDto>(Messages.TheItemDoesNotExists);
+            LicenceGetForUpdatingDto licenceGetDto = _mapper.Map<LicenceGetForUpdatingDto>(licence);
+            return new SuccessDataResult<LicenceGetForUpdatingDto>(licenceGetDto, Messages.GetByIdSuccessfuly);
         }
 
         //Just after login, lists the licences with userId.
@@ -88,6 +89,9 @@ namespace Business.Concrete
             _licenceDal.Update(licenceResult.Data);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }
+
+
+
         #region Some methods which using in this class
         //Mapping LicenceUpdateDto to Licence
         //LicenceUpdate needed for authority
@@ -106,6 +110,7 @@ namespace Business.Concrete
             licence.TaxNo = licenceUpdateDto.TaxNo;
             licence.TaxOffice = licenceUpdateDto.TaxOffice;
             licence.WebSite = licenceUpdateDto.WebSite;
+            licence.LicenceId = _authenticatedUserInfoService.GetLicenceId();
             return new SuccessDataResult<Licence>(licence);
         }
         #endregion

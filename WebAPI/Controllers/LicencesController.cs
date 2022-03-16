@@ -24,6 +24,16 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("GetForUpdating")]
+        public IActionResult GetForUpdating()
+        {
+            var result = _licenceService.GetCurrentAuthUserLicence();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
         [HttpPost("Add")]
         public IActionResult Add(LicenceAddDto licenceAddDto)
         {

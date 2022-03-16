@@ -3,6 +3,7 @@ using Core.Utilities.Results;
 using Core.Utilities.Security.JWT;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.Licence;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,7 +14,7 @@ namespace Business.Abstract
     public interface ILicenceService
     {
         IDataResult<List<LicenceAfterLoginDto>> GetAllAfterLogin(int userId);
-        IDataResult<LicenceGetDto> GetCurrentAuthUserLicence();
+        IDataResult<LicenceGetForUpdatingDto> GetCurrentAuthUserLicence();
         IResult Add(LicenceAddDto licenceAddDto);
         IResult Update(LicenceUpdateDto licenceUpdateDro);
     }

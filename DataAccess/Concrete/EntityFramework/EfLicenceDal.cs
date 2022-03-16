@@ -15,7 +15,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new HukukContext())
             {
-                return context.Set<Licence>().Include(l => l.City).ThenInclude(c => c.Country).SingleOrDefault(filter);
+                return context.Set<Licence>().Include(l => l.City).ThenInclude(c => c.Country).Include(c => c.PersonType).SingleOrDefault(filter);
             }
         }
         public List<Licence> GetAllWithInclude(Expression<Func<Licence, bool>> filter = null)
@@ -39,6 +39,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
 
         }
+     
 
     }
 }

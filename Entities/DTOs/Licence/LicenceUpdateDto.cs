@@ -5,7 +5,6 @@ namespace Entities.DTOs
 {
     public class LicenceUpdateDto : IDto
     {
-        public int LicenceId { get; set; }
         public string Image { get; set; }
         public IFormFile ImageFile { get; set; }
         public int PersonTypeId { get; set; }
