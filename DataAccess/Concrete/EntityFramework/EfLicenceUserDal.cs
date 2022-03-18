@@ -1,11 +1,11 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
+using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Entities.Concrete;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -25,6 +25,13 @@ namespace DataAccess.Concrete.EntityFramework
             using (var context = new HukukContext())
             {
                 return context.Set<LicenceUser>().Include(lu => lu.Licence).Include(lu => lu.User2).FirstOrDefault(filter);
+            }
+        }
+        public List<int> GetAllUserIdByLicenceId(int licenceId)
+        {
+            using (var context = new HukukContext())
+            {
+                return context.Set<LicenceUser>().Where(l => l.LicenceId == licenceId).Select(w => w.UserId).ToList();
             }
         }
     }

@@ -1,12 +1,6 @@
-﻿using Core.Entities.Concrete;
-using Core.Utilities.Results;
-using Core.Utilities.Security.JWT;
-using Entities.Concrete;
-using Entities.DTOs;
-using Entities.DTOs.LicenceUser;
-using System;
+﻿using Core.Utilities.Results;
+using Entities.DTOs.LicenceUserDtos;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Abstract
 {
@@ -16,9 +10,13 @@ namespace Business.Abstract
         IDataResult<List<LicenceUserGetDto>> GetAll();
         IDataResult<LicenceUserGetDto> GetById(int id);
         IResult Add(LicenceUserAddDto licenceUserAddDto);
+        IResult ChangeAcceptence(int id);
         IResult Update(LicenceUserUpdateDto licenceUser);
-        IDataResult<List<LicenceUserGetDto>> GetAllByUserId(int userId);
+        IDataResult<List<LicenceUserGetDto>> GetAllAcceptByUserId(int userId);
+        IDataResult<List<LicenceUserGetDto>> GetAllByUserId();
+
         IDataResult<List<LicenceUserGetDto>> GetByLicenceId(int licenceId);
+        IDataResult<List<int>> GetAllUserIdsRecordedUser();
 
     }
 }

@@ -1,10 +1,6 @@
 ﻿using Business.Abstract;
-using Entities.Concrete;
-using Entities.DTOs.LicenceUser;
-using Microsoft.AspNetCore.Http;
+using Entities.DTOs.LicenceUserDtos;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Security.Claims;
 
 namespace WebAPI.Controllers
 {
@@ -28,16 +24,27 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("GetAllByUserId")]
-        public IActionResult GetAllByUserId(int userId)
+        [HttpGet("GetAllAcceptedByUserId")]
+        public IActionResult GetAllAcceptedByUserId(int userId)
         {
-            var result = _licenceUser.GetAllByUserId(userId);
+            var result = _licenceUser.GetAllAcceptByUserId(userId);
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
+        [HttpGet("GetAllAuthUser")]
+        public IActionResult GetAllAuthUser()
+        {
+            var result = _licenceUser.GetAllByUserId();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpGet("GetById")]
         public IActionResult GetById(int id)
         {
@@ -50,6 +57,17 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("ChangeAcceptence")]
+        public IActionResult ChangeAcceptence(int id)
+        {
+            var result = _licenceUser.ChangeAcceptence(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
         [HttpPost("Add")]
         public IActionResult Add(LicenceUserAddDto licenceUserAddDto)
         {

@@ -5,7 +5,7 @@ using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs.LicenceUser;
+using Entities.DTOs.LicenceUserDtos;
 using System;
 using System.Collections.Generic;
 
@@ -65,9 +65,15 @@ namespace Business.Concrete
             _licenceUserDal.Update(licenceUser);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }
-        public IDataResult<List<LicenceUserGetDto>> GetAllByUserId(int userId)
+        public IDataResult<List<LicenceUserGetDto>> GetAllAcceptByUserId(int userId)
         {
-            var licenceUsers = _licenceUserDal.GetAllInclude(lu => lu.UserId == userId);
+            var licenceUsers = _licenceUserDal.GetAllInclude(lu => lu.UserId == userId && lu.IsUserAccept == true);
+            List<LicenceUserGetDto> licenceUserGetDto = _mapper.Map<List<LicenceUserGetDto>>(licenceUsers);
+            return new SuccessDataResult<List<LicenceUserGetDto>>(licenceUserGetDto, Messages.GetAllSuccessfuly);
+        }
+        public IDataResult<List<LicenceUserGetDto>> GetAllByUserId()
+        {
+            var licenceUsers = _licenceUserDal.GetAllInclude(lu => lu.UserId == _currentUserService.GetUserId());
             List<LicenceUserGetDto> licenceUserGetDto = _mapper.Map<List<LicenceUserGetDto>>(licenceUsers);
             return new SuccessDataResult<List<LicenceUserGetDto>>(licenceUserGetDto, Messages.GetAllSuccessfuly);
         }
@@ -76,6 +82,18 @@ namespace Business.Concrete
             var licenceUsers = _licenceUserDal.GetAllInclude(lu => lu.UserId == _currentUserService.GetLicenceId());
             List<LicenceUserGetDto> licenceUserGetDto = _mapper.Map<List<LicenceUserGetDto>>(_licenceUserDal);
             return new SuccessDataResult<List<LicenceUserGetDto>>(licenceUserGetDto, Messages.GetAllSuccessfuly);
+        }
+
+        public IDataResult<List<int>> GetAllUserIdsRecordedUser()
+        {
+            return new SuccessDataResult<List<int>>(_licenceUserDal.GetAllUserIdByLicenceId(_currentUserService.GetLicenceId()), Messages.GetAllSuccessfuly);
+        }
+        public IResult ChangeAcceptence(int id)
+        {
+            var licenceUser = _licenceUserDal.Get(ct => ct.LicenceUserId == id);
+            licenceUser.IsUserAccept= !licenceUser.IsUserAccept;
+            _licenceUserDal.Update(licenceUser);
+            return new SuccessResult(Messages.ActivityChangedSuccessfuly);
         }
     }
 }
