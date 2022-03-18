@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using Business.Abstract;
-using Entities.Concrete;
-using Entities.DTOs;
-using Entities.DTOs.AccountActivityType;
-using Microsoft.AspNetCore.Http;
+using Entities.DTOs.AccountActivityTypeDtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers

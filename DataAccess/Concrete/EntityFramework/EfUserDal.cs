@@ -1,14 +1,9 @@
 ﻿using Core.DataAccess.EntityFramework;
 using Core.Entities.Concrete;
 using DataAccess.Abstract;
-using System;
+using Entities.DTOs.UserDtos;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Entities.Concrete;
-using System.Linq.Expressions;
-using Entities.DTOs.User;
 
 namespace DataAccess.Concrete.EntityFramework
 {

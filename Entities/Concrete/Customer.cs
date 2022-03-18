@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using System.Collections.Generic;
 
 namespace Entities.Concrete
 {
@@ -17,7 +18,8 @@ namespace Entities.Concrete
         public int CityId { get; set; }
         public virtual City City { get; set; }
         public bool IsActive { get; set; }
-        public virtual Casee Casee { get; set; }
+        public virtual ICollection<Casee> Casees { get; set; }
+        public virtual ICollection<Eventt> Eventts { get; set; }
 
     }
 }

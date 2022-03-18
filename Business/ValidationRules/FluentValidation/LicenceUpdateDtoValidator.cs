@@ -1,8 +1,5 @@
-﻿using Entities.DTOs;
+﻿using Entities.DTOs.LicenceDtos;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Business.ValidationRules.FluentValidation

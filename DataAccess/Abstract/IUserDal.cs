@@ -1,10 +1,7 @@
 ﻿using Core.DataAccess;
 using Core.Entities.Concrete;
-using Entities.DTOs.User;
-using System;
+using Entities.DTOs.UserDtos;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
 
 namespace DataAccess.Abstract
 {

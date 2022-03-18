@@ -1,6 +1,5 @@
 ﻿using Core.Utilities.Results;
-using Entities.Concrete;
-using Entities.DTOs.CourtOffice;
+using Entities.DTOs.CourtOfficeDtos;
 using System.Collections.Generic;
 
 namespace Business.Abstract

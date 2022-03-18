@@ -2,8 +2,7 @@
 using Core.Utilities.Results;
 using Core.Utilities.Security.JWT;
 using Entities.Concrete;
-using Entities.DTOs;
-using Entities.DTOs.Licence;
+using Entities.DTOs.LicenceDtos;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,5 +1,5 @@
 ﻿using Core.Utilities.Results;
-using Entities.DTOs;
+using Entities.DTOs.TaskTypeDtos;
 using System.Collections.Generic;
 
 

@@ -1,9 +1,8 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Helpers;
 using Entities.DTOs;
-using Entities.DTOs.User;
+using Entities.DTOs.UserDtos;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace WebAPI.Controllers
 {

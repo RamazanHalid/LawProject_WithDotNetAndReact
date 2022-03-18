@@ -1,7 +1,6 @@
 ﻿using Core.Entities;
 using Core.Entities.Concrete;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Entities.Concrete
@@ -12,7 +11,7 @@ namespace Entities.Concrete
         public int UserId { get; set; }
         public virtual User User { get; set; }
         public DateTime StartDate { get; set; }
-        public int Gb { get; set; }
+        public float Gb { get; set; }
         public int SmsAccountId { get; set; }
         public int PersonTypeId { get; set; }
         public virtual PersonType PersonType { get; set; }
@@ -27,9 +26,13 @@ namespace Entities.Concrete
         public string ProfilName { get; set; }
         public bool IsActive { get; set; }
         public float Balance { get; set; }
-        //public virtual ICollection<Customer> Customers { get; set; }
         public virtual ICollection<LicenceUser> LicenceUsers { get; set; }
         public virtual ICollection<Casee> Casees { get; set; }
         public virtual ICollection<Customer> Customers{ get; set; }
+        public virtual ICollection<CustomerUser> CustomerUsers{ get; set; }
+        public virtual ICollection<CourtOffice> CourtOffices{ get; set; }
+        public virtual ICollection<Eventt> Eventts{ get; set; }
+        public virtual ICollection<Taskk> Taskks{ get; set; }
+
     }
 }

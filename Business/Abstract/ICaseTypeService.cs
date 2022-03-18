@@ -1,10 +1,6 @@
 ﻿using Core.Utilities.Results;
-using Entities.Concrete;
-using Entities.DTOs;
-using Entities.DTOs.CaseType;
-using System;
+using Entities.DTOs.CaseTypeDtos;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Abstract
 {

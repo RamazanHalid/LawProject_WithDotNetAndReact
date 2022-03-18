@@ -1,8 +1,5 @@
-﻿using Entities.DTOs;
+﻿using Entities.DTOs.CaseStatusDtos;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Business.ValidationRules.FluentValidation
 {

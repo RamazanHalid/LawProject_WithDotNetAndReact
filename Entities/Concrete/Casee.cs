@@ -1,7 +1,5 @@
 ﻿using Core.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Entities.Concrete
 {
@@ -21,10 +19,11 @@ namespace Entities.Concrete
         public int CaseStatusId { get; set; }
         public virtual CaseStatus CaseStatus { get; set; }
         public int RoleTypeId { get; set; }
+        public RoleType RoleType { get; set; }
         public string CaseNo { get; set; }
         public string Info { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime DecisionDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? DecisionDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

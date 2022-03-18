@@ -1,10 +1,7 @@
 ﻿using Core.Entities.Concrete;
 using Core.Utilities.Results;
-using Core.Utilities.Security.JWT;
 using Entities.DTOs;
-using Entities.DTOs.User;
-using System;
-using System.Text;
+using Entities.DTOs.UserDtos;
 
 namespace Business.Abstract
 {

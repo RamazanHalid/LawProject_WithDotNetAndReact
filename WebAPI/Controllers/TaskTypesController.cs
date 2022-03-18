@@ -1,7 +1,5 @@
 ﻿using Business.Abstract;
-using Entities.Concrete;
-using Entities.DTOs;
-using Microsoft.AspNetCore.Http;
+using Entities.DTOs.TaskTypeDtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -40,6 +38,16 @@ namespace WebAPI.Controllers
         public IActionResult GetById(int id)
         {
             var result = _taskTypeService.GetById(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("ChangeActivity")]
+        public IActionResult ChangeActivity(int id)
+        {
+            var result = _taskTypeService.ChangeActivity(id);
             if (result.Success)
             {
                 return Ok(result);

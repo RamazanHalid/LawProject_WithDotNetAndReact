@@ -1,8 +1,5 @@
 ﻿using Business.Abstract;
-using Entities.Concrete;
-using Entities.DTOs;
-using Entities.DTOs.TransactionActivitySubType;
-using Microsoft.AspNetCore.Http;
+using Entities.DTOs.TransactionActivitySubTypeDtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers

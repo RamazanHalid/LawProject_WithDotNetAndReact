@@ -1,9 +1,6 @@
 ﻿using Business.Abstract;
-using Entities.Concrete;
-using Entities.DTOs.CourtOffice;
-using Microsoft.AspNetCore.Http;
+using Entities.DTOs.CourtOfficeDtos;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
 {

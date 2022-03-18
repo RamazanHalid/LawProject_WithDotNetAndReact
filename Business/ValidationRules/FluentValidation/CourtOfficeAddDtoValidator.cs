@@ -1,9 +1,5 @@
-﻿using Entities.DTOs;
-using Entities.DTOs.CourtOffice;
+﻿using Entities.DTOs.CourtOfficeDtos;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Business.ValidationRules.FluentValidation

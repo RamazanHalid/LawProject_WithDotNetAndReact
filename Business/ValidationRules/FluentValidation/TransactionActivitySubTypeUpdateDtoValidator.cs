@@ -1,10 +1,5 @@
-﻿using Entities.DTOs;
-using Entities.DTOs.ProcessType;
-using Entities.DTOs.TransactionActivitySubType;
+﻿using Entities.DTOs.TransactionActivitySubTypeDtos;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Business.ValidationRules.FluentValidation
 {

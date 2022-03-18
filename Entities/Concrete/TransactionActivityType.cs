@@ -1,8 +1,5 @@
 ﻿using Core.Entities;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Entities.Concrete
 {
@@ -11,5 +8,6 @@ namespace Entities.Concrete
         [Key]
         public int TransactionActivityTypeId { get; set; }
         public string TransactionActivityTypeName { get; set; }
+        //public virtual ICollection<TransactionActivitySubType> TransactionActivitySubTypes { get; set; }
     }
 }

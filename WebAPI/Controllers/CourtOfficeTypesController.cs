@@ -1,7 +1,5 @@
 ﻿using Business.Abstract;
-using Entities.Concrete;
-using Entities.DTOs.CourtOfficeType;
-using Microsoft.AspNetCore.Http;
+using Entities.DTOs.CourtOfficeTypeDtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

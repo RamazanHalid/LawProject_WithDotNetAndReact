@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Entities.Concrete;
-using Entities.DTOs;
+using Entities.DTOs.CaseStatusDtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

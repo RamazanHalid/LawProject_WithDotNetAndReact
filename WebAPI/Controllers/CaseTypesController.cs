@@ -1,5 +1,5 @@
 ﻿using Business.Abstract;
-using Entities.DTOs.CaseType;
+using Entities.DTOs.CaseTypeDtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
