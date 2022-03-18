@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.TransactionActivitySubType;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,16 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("GetAllByTransactionActivityTypeId")]
+        public IActionResult GetAllByTransactionActivityId(int id)
+        {
+            var result = _transactionActivitySubTypeService.GetAllByTransactionActovotyId(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
         [HttpGet("GetAllActive")]
         public IActionResult GetAllActive()
         {
@@ -47,6 +58,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
         [HttpGet("Delete")]
         public IActionResult Delete(int id)
         {
@@ -57,8 +69,20 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpGet("ChangeActivity")]
+        public IActionResult ChangeActivity(int id)
+        {
+            var result = _transactionActivitySubTypeService.ChangeActivity(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpPost("Add")]
-        public IActionResult Add(TransactionActivitySubTypeDto transactionActivitySubTypeDto)
+        public IActionResult Add(TransactionActivitySubTypeAddDto transactionActivitySubTypeDto)
         {
             var result = _transactionActivitySubTypeService.Add(transactionActivitySubTypeDto);
             if (result.Success)
@@ -68,7 +92,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
         [HttpPost("Update")]
-        public IActionResult Update(TransactionActivitySubTypeDto transactionActivitySubTypeDto)
+        public IActionResult Update(TransactionActivitySubTypeUpdateDto transactionActivitySubTypeDto)
         {
             var result = _transactionActivitySubTypeService.Update(transactionActivitySubTypeDto);
             if (result.Success)

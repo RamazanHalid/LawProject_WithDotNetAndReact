@@ -5,6 +5,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.TransactionActivitySubType;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -23,57 +24,61 @@ namespace Business.Concrete
             _mapper = mapper;
             _currentUserService = currentUserService;
         }
-        public IResult Add(TransactionActivitySubTypeDto transactionActivitySubTypeDto)
+        public IResult Add(TransactionActivitySubTypeAddDto transactionActivitySubTypeAddDto)
         {
-            TransactionActivitySubType transactionActivitySubType = _mapper.Map<TransactionActivitySubType>(transactionActivitySubTypeDto);
+            TransactionActivitySubType transactionActivitySubType = _mapper.Map<TransactionActivitySubType>(transactionActivitySubTypeAddDto);
             transactionActivitySubType.LicenceId = _currentUserService.GetLicenceId();
             _transactionActivitySubTypeDal.Add(transactionActivitySubType);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
-        public IDataResult<List<TransactionActivitySubTypeDto>> GetAll()
+        public IDataResult<List<TransactionActivitySubTypeGetDto>> GetAll()
         {
             List<TransactionActivitySubType> transactionActivitySubTypes = _transactionActivitySubTypeDal
                     .GetAllWithTransactionActivityType(t => t.LicenceId == _currentUserService.GetLicenceId());
-            List<TransactionActivitySubTypeDto> transactionActivitySubTypeDtos = _mapper.Map<List<TransactionActivitySubTypeDto>>(transactionActivitySubTypes);
-            return new SuccessDataResult<List<TransactionActivitySubTypeDto>>(transactionActivitySubTypeDtos, Messages.GetAllByLicenceIdSuccessfuly);
+            List<TransactionActivitySubTypeGetDto> transactionActivitySubTypeDtos = _mapper.Map<List<TransactionActivitySubTypeGetDto>>(transactionActivitySubTypes);
+            return new SuccessDataResult<List<TransactionActivitySubTypeGetDto>>(transactionActivitySubTypeDtos, Messages.GetAllByLicenceIdSuccessfuly);
         }
-        public IDataResult<List<TransactionActivitySubTypeDto>> GetAllActive()
+        public IDataResult<List<TransactionActivitySubTypeGetDto>> GetAllByTransactionActovotyId(int id)
+        {
+            List<TransactionActivitySubType> transactionActivitySubTypes = _transactionActivitySubTypeDal
+                    .GetAllWithTransactionActivityType(t => t.LicenceId == _currentUserService.GetLicenceId() && t.TransactionActivityTypeId == id);
+            List<TransactionActivitySubTypeGetDto> transactionActivitySubTypeDtos = _mapper.Map<List<TransactionActivitySubTypeGetDto>>(transactionActivitySubTypes);
+            return new SuccessDataResult<List<TransactionActivitySubTypeGetDto>>(transactionActivitySubTypeDtos, Messages.GetAllByLicenceIdSuccessfuly);
+        }
+        public IDataResult<List<TransactionActivitySubTypeGetDto>> GetAllActive()
         {
             List<TransactionActivitySubType> transactionActivitySubTypes = _transactionActivitySubTypeDal
                     .GetAllWithTransactionActivityType(t => t.LicenceId == _currentUserService.GetLicenceId() && t.IsActive == true);
-            List<TransactionActivitySubTypeDto> transactionActivitySubTypeDtos = _mapper.Map<List<TransactionActivitySubTypeDto>>(transactionActivitySubTypes);
-            return new SuccessDataResult<List<TransactionActivitySubTypeDto>>(transactionActivitySubTypeDtos, Messages.GetAllByLicenceIdSuccessfuly);
+            List<TransactionActivitySubTypeGetDto> transactionActivitySubTypeDtos = _mapper.Map<List<TransactionActivitySubTypeGetDto>>(transactionActivitySubTypes);
+            return new SuccessDataResult<List<TransactionActivitySubTypeGetDto>>(transactionActivitySubTypeDtos, Messages.GetAllByLicenceIdSuccessfuly);
         }
-        public IDataResult<TransactionActivitySubTypeDto> GetById(int id)
+        public IDataResult<TransactionActivitySubTypeGetDto> GetById(int id)
         {
             TransactionActivitySubType transactionActivitySubType = _transactionActivitySubTypeDal
-                .GetWithTransactionActivityType(t => t.TransactionAcitivitySubTypeId == id);
-            TransactionActivitySubTypeDto transactionActivitySubTypeDto = _mapper.Map<TransactionActivitySubTypeDto>(transactionActivitySubType);
-            return new SuccessDataResult<TransactionActivitySubTypeDto>(transactionActivitySubTypeDto, Messages.GetByIdSuccessfuly);
+                .GetWithTransactionActivityType(t => t.TransactionActivitySubTypeId == id);
+            TransactionActivitySubTypeGetDto transactionActivitySubTypeDto = _mapper.Map<TransactionActivitySubTypeGetDto>(transactionActivitySubType);
+            return new SuccessDataResult<TransactionActivitySubTypeGetDto>(transactionActivitySubTypeDto, Messages.GetByIdSuccessfuly);
         }
         public IResult ChangeActivity(int id)
         {
-            var getById = GetById(id);
-            if (!getById.Success)
-                return new ErrorResult(getById.Message);
-            TransactionActivitySubTypeDto transactionActivitySubTypeDto = getById.Data;
-            TransactionActivitySubType transactionActivitySubType = _mapper.Map<TransactionActivitySubType>(transactionActivitySubTypeDto);
-            _transactionActivitySubTypeDal.Delete(transactionActivitySubType);
-            return new SuccessResult(Messages.DeletedSuccessfuly);
+            var transactionActivitySubType = _transactionActivitySubTypeDal.Get(t => t.TransactionActivitySubTypeId == id);
+            if (transactionActivitySubType == null)
+                return new ErrorResult(Messages.TheItemDoesNotExists);
+            transactionActivitySubType.IsActive = !transactionActivitySubType.IsActive;
+            _transactionActivitySubTypeDal.Update(transactionActivitySubType);
+            return new SuccessResult(Messages.ActivityChangedSuccessfuly);
         }
         public IResult Delete(int id)
         {
-            var getById = GetById(id);
-            if (!getById.Success)
-                return new ErrorResult(getById.Message);
-            TransactionActivitySubTypeDto transactionActivitySubTypeDto = getById.Data;
-            TransactionActivitySubType transactionActivitySubType = _mapper.Map<TransactionActivitySubType>(transactionActivitySubTypeDto);
-            transactionActivitySubType.LicenceId = _currentUserService.GetLicenceId();
+
+            var transactionActivitySubType = _transactionActivitySubTypeDal.Get(t => t.TransactionActivitySubTypeId == id);
+            if (transactionActivitySubType == null)
+                return new ErrorResult(Messages.TheItemDoesNotExists);
             _transactionActivitySubTypeDal.Delete(transactionActivitySubType);
             return new SuccessResult(Messages.DeletedSuccessfuly);
         }
 
-        public IResult Update(TransactionActivitySubTypeDto transactionActivitySubTypeDto)
+        public IResult Update(TransactionActivitySubTypeUpdateDto transactionActivitySubTypeDto)
         {
             TransactionActivitySubType transactionActivitySubType = _mapper.Map<TransactionActivitySubType>(transactionActivitySubTypeDto);
             transactionActivitySubType.LicenceId = _currentUserService.GetLicenceId();
