@@ -7,7 +7,7 @@ namespace Entities.Concrete
     {
         public int CustomerId { get; set; }
         public int LicenceId { get; set; }
-        public virtual Licence Licence { get; set; }
+        public Licence Licence { get; set; }
         public string CustomerName { get; set; }
         public string BillAddress { get; set; }
         public string TaxNo { get; set; }
@@ -16,10 +16,7 @@ namespace Entities.Concrete
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public int CityId { get; set; }
-        public virtual City City { get; set; }
+        public City City { get; set; }
         public bool IsActive { get; set; }
-        public virtual ICollection<Casee> Casees { get; set; }
-        public virtual ICollection<Eventt> Eventts { get; set; }
-
     }
 }

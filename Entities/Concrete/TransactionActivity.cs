@@ -8,7 +8,7 @@ namespace Entities.Concrete
     {
         public int TransactionActivityId { get; set; }
         public int TransactionActivitySubTypeId { get; set; }
-        public virtual TransactionActivitySubType TransactionActivitySubType { get; set; }
+        public  TransactionActivitySubType TransactionActivitySubType { get; set; }
         public int LicenceId { get; set; }
         public Licence Licence { get; set; }
         public int UserWhoAddId { get; set; }

@@ -6,7 +6,7 @@ namespace Entities.Concrete
     {
         public int RoleTypeId { get; set; }
         public int CourtOfficeTypeId { get; set; }
-        public virtual CourtOfficeType CourtOfficeType { get; set; }
+        public  CourtOfficeType CourtOfficeType { get; set; }
         public string RoleName { get; set; }
     }
 }

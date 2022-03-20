@@ -7,6 +7,5 @@ namespace Entities.Concrete
     {
         public int CourtOfficeTypeId { get; set; }
         public string CourtOfficeTypeName { get; set; }
-        public virtual ICollection<Casee> Casees { get; set; }
     }
 }

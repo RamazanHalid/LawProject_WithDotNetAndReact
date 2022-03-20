@@ -10,10 +10,9 @@ namespace Entities.Concrete
         public int TransactionActivityTypeId { get; set; }
         public TransactionActivityType TransactionActivityType { get; set; }
         public int LicenceId { get; set; }
-        public virtual Licence Licence { get; set; }
+        public  Licence Licence { get; set; }
         public string TransactionActivitySubTypeName { get; set; }
         public bool IsActive { get; set; }
-        //public virtual ICollection<TransactionActivity> TransactionActivities { get; set; }
 
     }
 }
