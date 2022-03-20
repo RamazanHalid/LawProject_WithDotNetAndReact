@@ -7,6 +7,7 @@ services:
     image: ramazanhalid/lawwebapi
     build : 
       context: .
+      target: prod
       dockerfile: WebAPI/Dockerfile
     ports:
       - 7070:7070
