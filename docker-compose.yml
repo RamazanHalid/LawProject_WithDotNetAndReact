@@ -1,0 +1,12 @@
+version: '3.1'
+
+
+services:
+  s_law_web_api:
+    container_name: c_law_web_api
+    image: ramazanhalid/lawwebapi
+    build : 
+      context: .
+      dockerfile: WebAPI/Dockerfile
+    ports:
+      - 80:80
