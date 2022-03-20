@@ -1,19 +1,16 @@
 ﻿using Core.Utilities.Results;
-using Entities.Concrete;
-using Entities.DTOs;
-using System;
+using Entities.DTOs.ProcessTypeDtos;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Abstract
 {
     public interface IProcessTypeService
     {
-        IDataResult<List<ProcessTypeDto>> GetAll();
-        IDataResult<List<ProcessTypeDto>> GetAllActive();
-        IDataResult<ProcessTypeDto> GetById(int id);
-        IResult Add(ProcessTypeDto processTypeDto);
-        IResult Update(ProcessTypeDto processTypeDto);
+        IDataResult<List<ProcessTypeGetDto>> GetAll();
+        IDataResult<List<ProcessTypeGetDto>> GetAllActive();
+        IDataResult<ProcessTypeGetDto> GetById(int id);
+        IResult Add(ProcessTypeAddDto processTypeAddDto);
+        IResult Update(ProcessTypeUpdateDto processTypeDto);
         IResult Delete(int id);
         IResult ChangeActivity(int id);
     }

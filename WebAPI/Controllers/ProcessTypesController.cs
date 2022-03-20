@@ -1,5 +1,5 @@
 ﻿using Business.Abstract;
-using Microsoft.AspNetCore.Http;
+using Entities.DTOs.ProcessTypeDtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -25,6 +25,29 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpPost("Add")]
+        public IActionResult Add(ProcessTypeAddDto processTypeAddDto)
+        {
+            var result = _processTypeService.Add(processTypeAddDto);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("Update")]
+        public IActionResult Update(ProcessTypeUpdateDto processTypeUpdateDto)
+        {
+            var result = _processTypeService.Update(processTypeUpdateDto);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpGet("GetAllActive")]
         public IActionResult GetAllActive()
         {

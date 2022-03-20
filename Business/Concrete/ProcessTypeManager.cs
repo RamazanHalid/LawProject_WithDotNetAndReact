@@ -5,7 +5,7 @@ using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs;
+using Entities.DTOs.ProcessTypeDtos;
 using System.Collections.Generic;
 namespace Business.Concrete
 {
@@ -24,9 +24,9 @@ namespace Business.Concrete
         //Adding new item as an User
         //Authority needed
         [SecuredOperation("ProcessTypeAdd")]
-        public IResult Add(ProcessTypeDto processTypeDto)
+        public IResult Add(ProcessTypeAddDto processTypeAddDto)
         {
-            ProcessType processType = _mapper.Map<ProcessType>(processTypeDto);
+            ProcessType processType = _mapper.Map<ProcessType>(processTypeAddDto);
             processType.LicenceId = _authenticatedUserInfoService.GetLicenceId();
             _processTypeDal.Add(processType);
             return new SuccessResult(Messages.AddedSuccessfuly);
@@ -34,42 +34,40 @@ namespace Business.Concrete
         //GetAll items as an User
         //Authority needed
         [SecuredOperation("ProcessTypeGetAll")]
-        public IDataResult<List<ProcessTypeDto>> GetAll()
+        public IDataResult<List<ProcessTypeGetDto>> GetAll()
         {
             List<ProcessType> processTypes = _processTypeDal.GetAll(p => p.LicenceId == _authenticatedUserInfoService.GetLicenceId());
-            List<ProcessTypeDto> processTypeDtos = _mapper.Map<List<ProcessTypeDto>>(processTypes);
-            return new SuccessDataResult<List<ProcessTypeDto>>(processTypeDtos, Messages.GetAllByLicenceIdSuccessfuly);
+            List<ProcessTypeGetDto> processTypeDtos = _mapper.Map<List<ProcessTypeGetDto>>(processTypes);
+            return new SuccessDataResult<List<ProcessTypeGetDto>>(processTypeDtos, Messages.GetAllByLicenceIdSuccessfuly);
         }
         //GetAll items as an User
         //Authority needed
         [SecuredOperation("ProcessTypeGetAllActive")]
-        public IDataResult<List<ProcessTypeDto>> GetAllActive()
+        public IDataResult<List<ProcessTypeGetDto>> GetAllActive()
         {
             List<ProcessType> processTypes = _processTypeDal.GetAll(p => p.LicenceId == _authenticatedUserInfoService.GetLicenceId() && p.IsActive == true);
-            List<ProcessTypeDto> processTypeDtos = _mapper.Map<List<ProcessTypeDto>>(processTypes);
-            return new SuccessDataResult<List<ProcessTypeDto>>(processTypeDtos, Messages.GetAllByLicenceIdSuccessfuly);
+            List<ProcessTypeGetDto> processTypeDtos = _mapper.Map<List<ProcessTypeGetDto>>(processTypes);
+            return new SuccessDataResult<List<ProcessTypeGetDto>>(processTypeDtos, Messages.GetAllByLicenceIdSuccessfuly);
         }
         //Get special item
         //Authority needed
-        [SecuredOperation("ProcessTypeGet")]
-        public IDataResult<ProcessTypeDto> GetById(int id)
+        [SecuredOperation("ProcessTypeGetAll")]
+        public IDataResult<ProcessTypeGetDto> GetById(int id)
         {
             ProcessType processType = _processTypeDal.Get(pt => pt.ProcessTypeId == id);
-            ProcessTypeDto processTypeDto = _mapper.Map<ProcessTypeDto>(processType);
-            return new SuccessDataResult<ProcessTypeDto>(processTypeDto, Messages.GetByIdSuccessfuly);
+            ProcessTypeGetDto processTypeDto = _mapper.Map<ProcessTypeGetDto>(processType);
+            return new SuccessDataResult<ProcessTypeGetDto>(processTypeDto, Messages.GetByIdSuccessfuly);
         }
         //Change activity special item
         //Authority needed
         [SecuredOperation("ProcessTypeUpdate")]
         public IResult ChangeActivity(int id)
         {
-            var processType = GetById(id);
-            if (!processType.Success)
-                return new ErrorResult(processType.Message);
-            processType.Data.IsActive = !processType.Data.IsActive;
-            var result = Update(processType.Data);
-            if (!result.Success)
-                return result;
+            var processType = _processTypeDal.Get(p => p.ProcessTypeId == id);
+            if (processType == null)
+                return new ErrorResult(Messages.TheItemDoesNotExists);
+            processType.IsActive = !processType.IsActive;
+            _processTypeDal.Update(processType);
             return new SuccessResult(Messages.ActivityChangedSuccessfuly);
         }
 
@@ -85,7 +83,7 @@ namespace Business.Concrete
         //Update special item
         //Authority needed
         [SecuredOperation("ProcessTypeUpdate")]
-        public IResult Update(ProcessTypeDto processTypeDto)
+        public IResult Update(ProcessTypeUpdateDto processTypeDto)
         {
             ProcessType processType = _mapper.Map<ProcessType>(processTypeDto);
             processType.LicenceId = _authenticatedUserInfoService.GetLicenceId();
