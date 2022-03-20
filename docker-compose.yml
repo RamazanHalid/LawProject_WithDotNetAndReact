@@ -9,4 +9,4 @@ services:
       context: .
       dockerfile: WebAPI/Dockerfile
     ports:
-      - 80:80
+      - 7070:7070
