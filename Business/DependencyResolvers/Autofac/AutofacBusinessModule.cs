@@ -2,16 +2,11 @@
 using Autofac.Extras.DynamicProxy;
 using Business.Abstract;
 using Business.Concrete;
-using Business.Constants;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Business.DependencyResolvers.Autofac
 {
@@ -20,56 +15,80 @@ namespace Business.DependencyResolvers.Autofac
         protected override void Load(ContainerBuilder builder)
         {
 
-            builder.RegisterType<UserManager>().As<IUserService>();
-            builder.RegisterType<EfUserDal>().As<IUserDal>();
+            builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
+            builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
 
-            builder.RegisterType<LicenceManager>().As<ILicenceService>();
-            builder.RegisterType<EfLicenceDal>().As<ILicenceDal>();
+            builder.RegisterType<LicenceManager>().As<ILicenceService>().SingleInstance();
+            builder.RegisterType<EfLicenceDal>().As<ILicenceDal>().SingleInstance();
 
-            builder.RegisterType<CityManager>().As<ICityService>();
-            builder.RegisterType<EfCityDal>().As<ICityDal>();
+            builder.RegisterType<CityManager>().As<ICityService>().SingleInstance();
+            builder.RegisterType<EfCityDal>().As<ICityDal>().SingleInstance();
 
-            builder.RegisterType<CourtOfficeTypeManager>().As<ICourtOfficeTypeService>();
-            builder.RegisterType<EfCourtOfficeTypeDal>().As<ICourtOfficeTypeDal>();
+            builder.RegisterType<CourtOfficeTypeManager>().As<ICourtOfficeTypeService>().SingleInstance();
+            builder.RegisterType<EfCourtOfficeTypeDal>().As<ICourtOfficeTypeDal>().SingleInstance();
 
-            builder.RegisterType<CourtOfficeManager>().As<ICourtOfficeService>();
-            builder.RegisterType<EfCourtOfficeDal>().As<ICourtOfficeDal>();
+            builder.RegisterType<EventTypeManager>().As<IEventTypeService>().SingleInstance();
+            builder.RegisterType<EfEventTypeDal>().As<IEventTypeDal>().SingleInstance();
 
-            builder.RegisterType<CountryManager>().As<ICountryService>();
-            builder.RegisterType<EfCountryDal>().As<ICountryDal>();
+            builder.RegisterType<EventtManager>().As<IEventtService>().SingleInstance();
+            builder.RegisterType<EfEventtDal>().As<IEventtDal>().SingleInstance();
 
-            builder.RegisterType<LicenceUserManager>().As<ILicenceUserService>();
-            builder.RegisterType<EfLicenceUserDal>().As<ILicenceUserDal>();
+            builder.RegisterType<CourtOfficeManager>().As<ICourtOfficeService>().SingleInstance();
+            builder.RegisterType<EfCourtOfficeDal>().As<ICourtOfficeDal>().SingleInstance();
 
-            builder.RegisterType<CaseStatusManager>().As<ICaseStatusService>();
-            builder.RegisterType<EfCaseStatusDal>().As<ICaseStatusDal>();
+            builder.RegisterType<CountryManager>().As<ICountryService>().SingleInstance();
+            builder.RegisterType<EfCountryDal>().As<ICountryDal>().SingleInstance();
 
-            builder.RegisterType<ProcessTypeManager>().As<IProcessTypeService>();
-            builder.RegisterType<EfProcessTypeDal>().As<IProcessTypeDal>();
+            builder.RegisterType<LicenceUserManager>().As<ILicenceUserService>().SingleInstance();
+            builder.RegisterType<EfLicenceUserDal>().As<ILicenceUserDal>().SingleInstance();
 
-            builder.RegisterType<CaseTypeManager>().As<ICaseTypeService>();
-            builder.RegisterType<EfCaseTypeDal>().As<ICaseTypeDal>();
+            builder.RegisterType<CaseStatusManager>().As<ICaseStatusService>().SingleInstance();
+            builder.RegisterType<EfCaseStatusDal>().As<ICaseStatusDal>().SingleInstance();
 
-            builder.RegisterType<TaskTypeManager>().As<ITaskTypeService>();
-            builder.RegisterType<EfTaskTypeDal>().As<ITaskTypeDal>();
+            builder.RegisterType<ProcessTypeManager>().As<IProcessTypeService>().SingleInstance();
+            builder.RegisterType<EfProcessTypeDal>().As<IProcessTypeDal>().SingleInstance();
 
-            builder.RegisterType<TransactionActivityTypeManager>().As<ITransactionActivityTypeService>();
-            builder.RegisterType<EfTransactionActivityTypeDal>().As<ITransactionActivityTypeDal>();
+            builder.RegisterType<CaseTypeManager>().As<ICaseTypeService>().SingleInstance();
+            builder.RegisterType<EfCaseTypeDal>().As<ICaseTypeDal>().SingleInstance();
 
-            builder.RegisterType<TransactionActivitySubTypeManager>().As<ITransactionActivitySubTypeService>();
-            builder.RegisterType<EfTransactionActivitySubTypeDal>().As<ITransactionActivitySubTypeDal>();
+            builder.RegisterType<CaseeManager>().As<ICaseeService>().SingleInstance();
+            builder.RegisterType<EfCaseeDal>().As<ICaseeDal>().SingleInstance();
 
-            builder.RegisterType<AuthManager>().As<IAuthService>();
+            builder.RegisterType<TaskTypeManager>().As<ITaskTypeService>().SingleInstance();
+            builder.RegisterType<EfTaskTypeDal>().As<ITaskTypeDal>().SingleInstance();
+
+            builder.RegisterType<CustomerManager>().As<ICustomerService>().SingleInstance();
+            builder.RegisterType<EfCustomerDal>().As<ICustomerDal>().SingleInstance();
+
+            builder.RegisterType<TaskStatusManager>().As<ITaskStatusService>().SingleInstance();
+            builder.RegisterType<EfTaskStatusDal>().As<ITaskStatusDal>().SingleInstance();
+
+            builder.RegisterType<TaskkManager>().As<ITaskkService>().SingleInstance();
+            builder.RegisterType<EfTaskkDal>().As<ITaskkDal>().SingleInstance();
+
+            builder.RegisterType<PersonTypeManager>().As<IPersonTypeService>().SingleInstance();
+            builder.RegisterType<EfPersonTypeDal>().As<IPersonTypeDal>().SingleInstance();
+
+            builder.RegisterType<TransactionActivityTypeManager>().As<ITransactionActivityTypeService>().SingleInstance();
+            builder.RegisterType<EfTransactionActivityTypeDal>().As<ITransactionActivityTypeDal>().SingleInstance();
+
+            builder.RegisterType<TransactionActivityManager>().As<ITransactionActivityService>().SingleInstance();
+            builder.RegisterType<EfTransactionActivityDal>().As<ITransactionActivityDal>().SingleInstance();
+
+            builder.RegisterType<TransactionActivitySubTypeManager>().As<ITransactionActivitySubTypeService>().SingleInstance();
+            builder.RegisterType<EfTransactionActivitySubTypeDal>().As<ITransactionActivitySubTypeDal>().SingleInstance();
+
+            builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
 
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
-            builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>();
-            builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationClaimDal>();
+            builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>().SingleInstance();
+            builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationClaimDal>().SingleInstance();
 
-            builder.RegisterType<OperationClaimManager>().As<IOperationClaimService>();
-            builder.RegisterType<EfOperationClaimDal>().As<IOperationClaimDal>();
+            builder.RegisterType<OperationClaimManager>().As<IOperationClaimService>().SingleInstance();
+            builder.RegisterType<EfOperationClaimDal>().As<IOperationClaimDal>().SingleInstance();
 
-            builder.RegisterType<SmsManager>().As<ISmsService>();
+            builder.RegisterType<SmsManager>().As<ISmsService>().SingleInstance();
 
             builder.RegisterType<CurrentUserManager>().As<ICurrentUserService>();
 
