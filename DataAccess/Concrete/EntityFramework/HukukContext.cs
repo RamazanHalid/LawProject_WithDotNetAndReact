@@ -10,7 +10,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"");
+            optionsBuilder.UseSqlServer(@"Server=178.157.15.114;Database=HUKUK2;User Id = sa;Password=Terra2010*");
         }
         public DbSet<Licence> Licences { get; set; }
         public DbSet<City> Cities { get; set; }
@@ -43,145 +43,298 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<SmsTemplate> SmsTemplates { get; set; }
         public DbSet<Taskk> Taskks { get; set; }
         public DbSet<TaskStatus> TaskStatuses { get; set; }
-
-
+        public DbSet<SmsAccount> SmsAccounts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            //.OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Licence>(entity =>
-            {
-                entity.ToTable("Licences");
-
-                entity.HasOne(i => i.User)
-                .WithMany(i => (ICollection<Licence>)i.Licences);
-
-                entity.HasMany(i => i.Casees)
-               .WithOne(i => i.Licence)
+            modelBuilder.Entity<Licence>()
+               .HasOne(t => t.City)
+               .WithMany()
                .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
-                entity.HasMany(i => i.Customers)
-               .WithOne(i => i.Licence)
-               .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
-                entity.HasMany(i => i.CustomerUsers)
-               .WithOne(i => i.Licence)
-               .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-
-                entity.HasMany(i => i.Eventts)
-             .WithOne(i => i.Licence)
+            modelBuilder.Entity<Licence>()
+             .HasOne(t => t.PersonType)
+             .WithMany()
              .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
 
-                entity.HasMany(i => i.Taskks)
-             .WithOne(i => i.Licence)
+
+            modelBuilder.Entity<Licence>()
+             .HasOne(t => t.User)
+             .WithMany()
              .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-            });
+
+
+            modelBuilder.Entity<City>()
+             .HasOne(t => t.Country)
+             .WithMany()
+             .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<CaseStatus>()
+             .HasOne(t => t.CourtOfficeType)
+             .WithMany()
+             .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<CaseStatus>()
+                       .HasOne(t => t.Licence)
+                       .WithMany()
+                       .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
 
 
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.ToTable("Users");
-
-                entity.HasMany(i => (ICollection<Licence>)i.Licences)
-                .WithOne(i => i.User)
-                .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-                entity.HasMany(i => (ICollection<Eventt>)i.Eventts)
-               .WithOne(i => i.User)
-                .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-            });
-            modelBuilder.Entity<TransactionActivity>(entity =>
-            {
-                entity.ToTable("TransactionActivities");
-
-                //entity.HasOne(i => i.TransactionActivitySubType)
-                //.WithMany(i => i.TransactionActivities)
-                //.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+            modelBuilder.Entity<CaseType>()
+                       .HasOne(t => t.Licence)
+                       .WithMany()
+                       .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
 
-                //entity.HasOne(i => i.UserWhoAdd)
-                //.WithMany(i => (ICollection<TransactionActivity>)i.TransactionActivities)
-                //.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-
-                //entity.HasOne(i => i.WhoApproved)
-                //.WithMany(i => (ICollection<TransactionActivity>)i.TransactionActivities2)
-                //.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-            });
-
-            modelBuilder.Entity<Taskk>(entity =>
-            {
-                entity.ToTable("Taskks");
-
-                //entity.HasOne(i => i.TaskType)
-                //.WithMany(i => i.Taskks)
-                //.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-
-              //  entity.HasOne(i => i.User)
-              //.WithMany(i => (ICollection<Taskk>)i.Taskks)
-              //.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+            modelBuilder.Entity<CaseType>()
+                     .HasOne(t => t.CourtOfficeType)
+                     .WithMany()
+                     .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
 
+            modelBuilder.Entity<CourtOffice>()
+               .HasOne(t => t.Licence)
+               .WithMany()
+               .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
-            });
 
-            modelBuilder.Entity<TransactionActivitySubType>(entity =>
-            {
-                entity.ToTable("TransactionActivitySubTypes");
+            modelBuilder.Entity<CourtOffice>()
+               .HasOne(t => t.City)
+               .WithMany()
+               .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
-                //entity.HasOne(i => i.TransactionActivityType)
-                //.WithMany(i => i.TransactionActivitySubTypes)
-                //.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-            });
 
-            modelBuilder.Entity<LicenceUser>(entity =>
-            {
-                entity.ToTable("LicenceUsers");
+            modelBuilder.Entity<CourtOffice>()
+               .HasOne(t => t.CourtOfficeType)
+               .WithMany()
+               .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
-                entity.HasOne(i => i.User2)
-                .WithMany(i => (ICollection<LicenceUser>)i.LicenceUsers)
-                .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-            });
-            modelBuilder.Entity<CaseType>(entity =>
-            {
-                entity.ToTable("CaseTypes");
+            modelBuilder.Entity<Customer>()
+               .HasOne(t => t.City)
+               .WithMany()
+               .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
-                entity.HasMany(i => i.Casees)
-                .WithOne(i => i.CaseType)
-                .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-            });
-            modelBuilder.Entity<CourtOffice>(entity =>
-            {
-                entity.ToTable("CourtOffices");
 
-                entity.HasMany(i => i.Casees)
-                .WithOne(i => i.CourtOffice)
-                .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+            modelBuilder.Entity<Customer>()
+              .HasOne(t => t.Licence)
+              .WithMany()
+              .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
-                entity.HasOne(i => i.Licence)
-                .WithMany(i => i.CourtOffices)
-                .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-            });
-            modelBuilder.Entity<CourtOfficeType>(entity =>
-            {
-                entity.ToTable("CourtOfficeTypes");
 
-                entity.HasMany(i => i.Casees)
-                .WithOne(i => i.CourtOfficeType)
-                .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-            });
-            modelBuilder.Entity<Customer>(entity =>
-            {
-                entity.ToTable("Customers");
 
-                //entity.HasOne(i => i.Casee)
-                //.WithOne(i => i.Customer)
-                //.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-                entity.HasMany(i => i.Eventts)
-                .WithOne(i => i.Customer)
-                .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-            });
+            modelBuilder.Entity<ProcessType>()
+              .HasOne(t => t.Licence)
+              .WithMany()
+              .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+
+            modelBuilder.Entity<TaskType>()
+              .HasOne(t => t.Licence)
+              .WithMany()
+              .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+
+            modelBuilder.Entity<TransactionActivity>()
+          .HasOne(t => t.Licence)
+          .WithMany()
+          .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+
+            modelBuilder.Entity<TransactionActivity>()
+          .HasOne(t => t.TransactionActivitySubType)
+          .WithMany()
+          .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<TransactionActivity>()
+          .HasOne(t => t.UserWhoAdd)
+          .WithMany()
+          .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<TransactionActivity>()
+       .HasOne(t => t.WhoApproved)
+       .WithMany()
+       .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<TransactionActivitySubType>()
+       .HasOne(t => t.Licence)
+       .WithMany()
+       .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<TransactionActivitySubType>()
+.HasOne(t => t.TransactionActivityType)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<AccountActivity>()
+.HasOne(t => t.Licence)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<AccountActivity>()
+.HasOne(t => t.OrderType)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<AccountActivity>()
+.HasOne(t => t.AccountActivityStatus)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<AccountActivity>()
+.HasOne(t => t.AccountActivityType)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+
+            modelBuilder.Entity<Casee>()
+.HasOne(t => t.CaseStatus)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<Casee>()
+.HasOne(t => t.CaseType)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<Casee>()
+.HasOne(t => t.CourtOffice)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<Casee>()
+.HasOne(t => t.CourtOfficeType)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<Casee>()
+.HasOne(t => t.Customer)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+            modelBuilder.Entity<Casee>()
+ .HasOne(t => t.Licence)
+ .WithMany()
+ .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<Casee>()
+.HasOne(t => t.RoleType)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<CustomerUser>()
+.HasOne(t => t.Licence)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<CustomerUser>()
+.HasOne(t => t.City)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<CustomerUser>()
+.HasOne(t => t.PersonType)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<Eventt>()
+.HasOne(t => t.Casee)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<Eventt>()
+.HasOne(t => t.Creator)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<Eventt>()
+.HasOne(t => t.Customer)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<Eventt>()
+.HasOne(t => t.EventType)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<Eventt>()
+.HasOne(t => t.Licence)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<Eventt>()
+.HasOne(t => t.User)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+            modelBuilder.Entity<RoleType>()
+.HasOne(t => t.CourtOfficeType)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+            modelBuilder.Entity<SmsTemplate>()
+.HasOne(t => t.Licence)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+            modelBuilder.Entity<Taskk>()
+.HasOne(t => t.Licence)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<Taskk>()
+.HasOne(t => t.Casee)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<Taskk>()
+.HasOne(t => t.Creator)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<Taskk>()
+.HasOne(t => t.Customer)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<Taskk>()
+.HasOne(t => t.TaskStatus)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<Taskk>()
+.HasOne(t => t.TaskType)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<Taskk>()
+.HasOne(t => t.User)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<SmsAccount>()
+.HasOne(t => t.Licence)
+.WithMany()
+.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+
         }
     }
 

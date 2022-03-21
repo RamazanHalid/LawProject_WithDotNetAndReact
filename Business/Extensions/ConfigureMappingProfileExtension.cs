@@ -12,6 +12,7 @@ using Entities.DTOs.EventTypeDtos;
 using Entities.DTOs.LicenceDtos;
 using Entities.DTOs.LicenceUserDtos;
 using Entities.DTOs.ProcessTypeDtos;
+using Entities.DTOs.SmsAccountDtos;
 using Entities.DTOs.TaskkDtos;
 using Entities.DTOs.TaskStatusDtos;
 using Entities.DTOs.TaskTypeDtos;
@@ -49,7 +50,7 @@ namespace Business.Extensions
                 CreateMap<CaseType, CaseTypeGetDto>();
                 CreateMap<CaseStatusAddDto, CaseType>();
                 CreateMap<CaseTypeUpdateDto, CaseType>();
-                  //Eventt
+                //Eventt
                 CreateMap<Eventt, EventtGetDto>();
                 CreateMap<EventtAddDto, Eventt>();
                 CreateMap<EventtUpdateDto, Eventt>();
@@ -105,7 +106,8 @@ namespace Business.Extensions
                 //CourtOffice
                 CreateMap<CourtOfficeUpdateDto, CourtOffice>();
                 CreateMap<CourtOfficeAddDto, CourtOffice>();
-                CreateMap<CourtOffice, CourtOfficeGetDto>().ForMember(dst => dst.CourtOfficeTypeGetDto, x => x.MapFrom(src => src.CourtOfficeType))
+                CreateMap<CourtOffice, CourtOfficeGetDto>()
+                    .ForMember(dst => dst.CourtOfficeTypeGetDto, x => x.MapFrom(src => src.CourtOfficeType))
                     .ForMember(dst => dst.City, x => x.MapFrom(src => src.City));
 
                 //CourtOfficeType
@@ -117,6 +119,10 @@ namespace Business.Extensions
                 CreateMap<CustomerUpdateDto, Customer>();
                 CreateMap<CustomerAddDto, Customer>();
                 CreateMap<Customer, CustomerGetDto>();
+
+                //SmsAccount
+                CreateMap<SmsAccountAddDto, SmsAccount>();
+                CreateMap<SmsAccount, SmsAccountGetDto>();
 
                 //TransactionActivitySubType
                 CreateMap<TransactionActivitySubTypeUpdateDto, TransactionActivitySubType>();

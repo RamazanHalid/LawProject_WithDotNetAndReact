@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using Business.Abstract;
-using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs.CourtOfficeType;
+using Entities.DTOs.CourtOfficeTypeDtos;
 using System.Collections.Generic;
 
 namespace Business.Concrete

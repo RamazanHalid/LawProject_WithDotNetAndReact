@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs.CourtOffice;
-using System;
+using Entities.DTOs.CourtOfficeDtos;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
 
 namespace Business.Concrete
 {
@@ -23,7 +22,7 @@ namespace Business.Concrete
             _mapper = mapper;
             _currentUserService = currentUserService;
         }
-
+        [ValidationAspect(typeof(CourtOfficeAddDtoValidator))]
         public IResult Add(CourtOfficeAddDto courtOfficeAddDto)
         {
             CourtOffice courtOffice = _mapper.Map<CourtOffice>(courtOfficeAddDto);
@@ -59,7 +58,7 @@ namespace Business.Concrete
             CourtOfficeGetDto courtOfficeGetDto = _mapper.Map<CourtOfficeGetDto>(courtOffice);
             return new SuccessDataResult<CourtOfficeGetDto>(courtOfficeGetDto, Messages.GetByIdSuccessfuly);
         }
-
+        [ValidationAspect(typeof(CourtOfficeUpdateDtoValidator))]
         public IResult Update(CourtOfficeUpdateDto courtOfficeUpdateDto)
         {
             CourtOffice courtOffice = _mapper.Map<CourtOffice>(courtOfficeUpdateDto);
@@ -69,8 +68,8 @@ namespace Business.Concrete
         }
         public IResult ChangeActivity(int id)
         {
-            CourtOffice courtOffice = _courtOfficeDal.Get(c=>c.CourtOfficeId == id);
-            if(courtOffice == null)
+            CourtOffice courtOffice = _courtOfficeDal.Get(c => c.CourtOfficeId == id);
+            if (courtOffice == null)
                 return new ErrorResult(Messages.TheItemDoesNotExists);
             courtOffice.IsActive = !courtOffice.IsActive;
             _courtOfficeDal.Update(courtOffice);

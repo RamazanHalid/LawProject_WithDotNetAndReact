@@ -2,10 +2,12 @@
 using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs.CaseType;
+using Entities.DTOs.CaseTypeDtos;
 using System.Collections.Generic;
 namespace Business.Concrete
 {
@@ -23,7 +25,7 @@ namespace Business.Concrete
         //Get all Case Types as an user
         //Authority needed
         [SecuredOperation("CaseTypeGetAll")]
-        public IDataResult<List<CaseTypeGetDto>> GetAll()
+        public IDataResult<List<CaseTypeGetDto>> GetAll(int licenceId)
         {
             List<CaseType> caseTypes = _caseTypeDal.GetAllWithInclude(c => c.LicenceId == _currentUserInfoService.GetLicenceId());
             List<CaseTypeGetDto> caseTypeGetDto = _mapper.Map<List<CaseTypeGetDto>>(caseTypes);
@@ -40,7 +42,7 @@ namespace Business.Concrete
         }
         //Get Case Type
         //Authority needed
-        [SecuredOperation("CaseTypeGet")]
+        [SecuredOperation("CaseTypeGetAll")]
         public IDataResult<CaseTypeGetDto> GetById(int id)
         {
             CaseType caseType = _caseTypeDal.GetByIdWithInclude(ct => ct.CaseTypeId == id);
@@ -52,6 +54,8 @@ namespace Business.Concrete
         //Add Case Type as an user
         //Authority needed
         [SecuredOperation("CaseTypeAdd")]
+        [ValidationAspect(typeof(CaseTypeAddDtoValidator))]
+
         public IResult Add(CaseTypeAddDto caseTypeAddDto)
         {
             CaseType caseType = _mapper.Map<CaseType>(caseTypeAddDto);
@@ -83,6 +87,7 @@ namespace Business.Concrete
         //Update Case Type as an user
         //Authority needed
         [SecuredOperation("CaseTypeUpdate")]
+        [ValidationAspect(typeof(CaseTypeUpdateDtoValidator))]
         public IResult Update(CaseTypeUpdateDto caseTypeUpdateDto)
         {
             CaseType caseType = _mapper.Map<CaseType>(caseTypeUpdateDto);

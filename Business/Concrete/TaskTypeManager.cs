@@ -5,10 +5,8 @@ using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs;
-using System;
+using Entities.DTOs.TaskTypeDtos;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Concrete
 {
@@ -40,22 +38,22 @@ namespace Business.Concrete
         [SecuredOperation("TaskTypeGetAll")]
         public IDataResult<List<TaskTypeGetDto>> GetAll()
         {
-            List<TaskType> taskTypes = _taskTypeDal.GetAll(tp => tp.LicenceId == _authenticatedUserInfoService.GetUserId());
+            List<TaskType> taskTypes = _taskTypeDal.GetAll(tp => tp.LicenceId == _authenticatedUserInfoService.GetLicenceId());
             List<TaskTypeGetDto> taskTypeGetDtos = _mapper.Map<List<TaskTypeGetDto>>(taskTypes);
             return new SuccessDataResult<List<TaskTypeGetDto>>(taskTypeGetDtos, Messages.GetAllSuccessfuly);
         }
         //Get all active items as an user
         //Authority needed
-        [SecuredOperation("TaskTypeGetAll")]
+        [SecuredOperation("TaskTypeGetAllActive")]
         public IDataResult<List<TaskTypeGetDto>> GetAllActive()
         {
-            List<TaskType> taskTypes = _taskTypeDal.GetAll(tp => tp.LicenceId == _authenticatedUserInfoService.GetUserId() && tp.IsActive == true);
+            List<TaskType> taskTypes = _taskTypeDal.GetAll(tp => tp.LicenceId == _authenticatedUserInfoService.GetLicenceId() && tp.IsActive == true);
             List<TaskTypeGetDto> taskTypeGetDtos = _mapper.Map<List<TaskTypeGetDto>>(taskTypes);
             return new SuccessDataResult<List<TaskTypeGetDto>>(taskTypeGetDtos, Messages.GetAllSuccessfuly);
         }
         //Get special item 
         //Authority needed
-        [SecuredOperation("TaskTypeGet")]
+        [SecuredOperation("TaskTypeGetAll")]
         public IDataResult<TaskTypeGetDto> GetById(int id)
         {
             TaskType taskType = _taskTypeDal.Get(tp => tp.TaskTypeId == id);

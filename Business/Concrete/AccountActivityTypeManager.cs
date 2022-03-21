@@ -5,7 +5,7 @@ using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs.AccountActivityType;
+using Entities.DTOs.AccountActivityTypeDtos;
 using System.Collections.Generic;
 
 namespace Business.Concrete

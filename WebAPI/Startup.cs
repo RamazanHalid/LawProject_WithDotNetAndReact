@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using WebAPI.Hubs;
 
 namespace WebAPI
 {
@@ -27,6 +28,7 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddControllers();
             services.ConfigureMapping();
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
@@ -98,6 +100,7 @@ options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.
             services.AddDependencyResolvers(new ICoreModule[] {
                new CoreModule()
             });
+            services.AddSignalR();
 
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -128,6 +131,7 @@ options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<UserSearchingHub>("/usersearchinghub");
             });
         }
     }

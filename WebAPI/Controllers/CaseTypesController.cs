@@ -9,16 +9,17 @@ namespace WebAPI.Controllers
     public class CaseTypesController : ControllerBase
     {
         private ICaseTypeService _caseTypeService;
-
-        public CaseTypesController(ICaseTypeService caseTypeService)
+        private ICurrentUserService _currentUserService;
+        public CaseTypesController(ICaseTypeService caseTypeService, ICurrentUserService currentUserService)
         {
             _caseTypeService = caseTypeService;
+            _currentUserService = currentUserService;
         }
 
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
-            var result = _caseTypeService.GetAll();
+            var result = _caseTypeService.GetAll(15);
             if (result.Success)
             {
                 return Ok(result);

@@ -6,7 +6,7 @@ namespace Business.Abstract
 {
     public interface ICaseTypeService
     {
-        IDataResult<List<CaseTypeGetDto>> GetAll();
+        IDataResult<List<CaseTypeGetDto>> GetAll(int licenceId);
         IDataResult<List<CaseTypeGetDto>> GetAllActive();
         IDataResult<CaseTypeGetDto> GetById(int id);
         IResult Add(CaseTypeAddDto caseTypeDto);

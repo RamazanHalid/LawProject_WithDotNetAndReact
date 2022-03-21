@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs;
-using Entities.DTOs.TransactionActivitySubType;
-using Microsoft.AspNetCore.Http;
-using System;
+using Entities.DTOs.TransactionActivitySubTypeDtos;
 using System.Collections.Generic;
-using System.Security.Claims;
 
 namespace Business.Concrete
 {

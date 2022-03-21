@@ -1,10 +1,12 @@
-﻿using Castle.DynamicProxy;
+﻿using Business.Abstract;
+using Castle.DynamicProxy;
 using Core.Extensions;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 
 namespace Business.BusinessAspects.Autofac
 {
@@ -13,12 +15,10 @@ namespace Business.BusinessAspects.Autofac
     {
         private string[] _roles;
         private IHttpContextAccessor _httpContextAccessor;
-
         public SecuredOperation(string roles)
         {
             _roles = roles.Split(',');
             _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
-
         }
         protected override void OnBefore(IInvocation invocation)
         {

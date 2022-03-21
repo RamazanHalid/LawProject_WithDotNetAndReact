@@ -1,13 +1,9 @@
 ﻿using Business.Abstract;
-using Business.Constants;
 using Core.Utilities.IoC;
-using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 
 namespace Business.Concrete
 {
@@ -17,8 +13,8 @@ namespace Business.Concrete
         public CurrentUserManager()
         {
             _httpContextAccessor = _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
-        }
-
+         }
+  
         public int GetLicenceId()
         {
             if (IsAuth())

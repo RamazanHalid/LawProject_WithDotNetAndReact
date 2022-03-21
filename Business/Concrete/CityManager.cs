@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -21,7 +22,6 @@ namespace Business.Concrete
             _cityDal.Add(city);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
-
         public IDataResult<List<City>> GetAll(int countryId)
         {
             if (countryId > 0)

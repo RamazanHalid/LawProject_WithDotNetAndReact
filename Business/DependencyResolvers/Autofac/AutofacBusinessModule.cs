@@ -33,6 +33,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EventtManager>().As<IEventtService>().SingleInstance();
             builder.RegisterType<EfEventtDal>().As<IEventtDal>().SingleInstance();
 
+            builder.RegisterType<SmsAccountManager>().As<ISmsAccountService>().SingleInstance();
+            builder.RegisterType<EfSmsAccountDal>().As<ISmsAccountDal>().SingleInstance();
+
             builder.RegisterType<CourtOfficeManager>().As<ICourtOfficeService>().SingleInstance();
             builder.RegisterType<EfCourtOfficeDal>().As<ICourtOfficeDal>().SingleInstance();
 

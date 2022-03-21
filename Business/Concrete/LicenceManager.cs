@@ -7,8 +7,8 @@ using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs;
-using Entities.DTOs.Licence;
+using Entities.DTOs.LicenceDtos;
+using Entities.DTOs.SmsAccountDtos;
 using System;
 using System.Collections.Generic;
 
@@ -21,13 +21,15 @@ namespace Business.Concrete
         private readonly ICurrentUserService _authenticatedUserInfoService;
         private readonly IOperationClaimService _operationClaimService;
         private readonly IUserOperationClaimService _userOperationClaimService;
-        public LicenceManager(ILicenceDal licenceDal, IMapper mapper, ICurrentUserService authenticatedUserInfoService, IOperationClaimService operationClaimService, IUserOperationClaimService userOperationClaimService)
+        private readonly ISmsAccountService _smsAccountService;
+        public LicenceManager(ILicenceDal licenceDal, IMapper mapper, ICurrentUserService authenticatedUserInfoService, IOperationClaimService operationClaimService, IUserOperationClaimService userOperationClaimService, ISmsAccountService smsAccountService)
         {
             _licenceDal = licenceDal;
             _mapper = mapper;
             _authenticatedUserInfoService = authenticatedUserInfoService;
             _operationClaimService = operationClaimService;
             _userOperationClaimService = userOperationClaimService;
+            _smsAccountService = smsAccountService;
         }
 
         //Add new licence as an user.
@@ -54,6 +56,12 @@ namespace Business.Concrete
                 if (!result.Success)
                     return result;
             }
+
+            _smsAccountService.Add(new SmsAccountAddDto()
+            {
+                LicenceId = licence.LicenceId
+            });
+
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
 
