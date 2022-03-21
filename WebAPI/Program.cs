@@ -28,6 +28,7 @@ namespace WebAPI
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseUrls("http://*:7070");
                     webBuilder.UseStartup<Startup>();
                 });
     }

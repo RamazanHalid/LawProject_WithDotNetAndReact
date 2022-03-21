@@ -119,7 +119,7 @@ options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.
 
             app.ConfigureCustomExceptionMiddleware();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
