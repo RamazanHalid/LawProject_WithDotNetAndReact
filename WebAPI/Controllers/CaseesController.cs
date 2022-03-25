@@ -66,8 +66,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("ChangeActivity")]
-        public IActionResult ChangeActivity(int id, int caseStatusId)
+        [HttpGet("ChangeStatus")]
+        public IActionResult ChangeStatus(int id, int caseStatusId)
         {
             var result = _caseeService.ChangeStatus(id, caseStatusId);
             if (result.Success)

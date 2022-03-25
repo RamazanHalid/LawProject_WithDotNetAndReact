@@ -12,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using WebAPI.Hubs;
 
 namespace WebAPI
 {
@@ -131,7 +130,6 @@ options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<UserSearchingHub>("/usersearchinghub");
             });
         }
     }
