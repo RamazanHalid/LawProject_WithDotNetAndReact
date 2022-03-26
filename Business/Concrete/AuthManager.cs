@@ -22,13 +22,23 @@ namespace Business.Concrete
         private readonly ISmsService _smsService;
         private readonly ICurrentUserService _currentUserService;
         private readonly IMapper _mapper;
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper, ISmsService smsService, ICurrentUserService currentUserService, IMapper mapper)
+        private readonly ILicenceService _licenceService;
+        private readonly ILicenceUserService _licenceUserService;
+        public AuthManager(IUserService userService,
+            ITokenHelper tokenHelper,
+            ISmsService smsService,
+            ICurrentUserService currentUserService,
+            IMapper mapper,
+            ILicenceService licenceService,
+            ILicenceUserService licenceUserService)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
             _smsService = smsService;
             _currentUserService = currentUserService;
             _mapper = mapper;
+            _licenceService = licenceService;
+            _licenceUserService = licenceUserService;
         }
         [ValidationAspect(typeof(UserForRegisterValidator))]
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
@@ -152,6 +162,14 @@ namespace Business.Concrete
         {
             GetUserInfoDto userInfo = _userService.GetUserInfoByUserId(_currentUserService.GetUserId());
             return new SuccessDataResult<GetUserInfoDto>(userInfo);
+        }
+
+        public IResult CheckLicenceExistance(int userId, int licenceId)
+        {
+            var result = _licenceUserService.CheckLicenceBelongToUser(userId, licenceId).Success || _licenceService.CheckLicenceBelongToUser(userId, licenceId).Success;
+            if (result)
+                return new SuccessResult("This user can use this licence");
+            return new ErrorResult("This user can not use this licence");
         }
     }
 }

@@ -11,6 +11,7 @@ namespace WebAPI.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
+
         public AuthController(IAuthService authService)
         {
             _authService = authService;
@@ -26,6 +27,9 @@ namespace WebAPI.Controllers
 
             if (licenceId > 0)
             {
+                var checkLicenceExistance = _authService.CheckLicenceExistance(userToLogin.Data.Id, licenceId);
+                if (!checkLicenceExistance.Success)
+                    return BadRequest(checkLicenceExistance);
                 var result = _authService.CreateAccessToken(userToLogin.Data, licenceId);
                 if (result.Success)
                 {

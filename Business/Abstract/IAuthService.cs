@@ -18,5 +18,6 @@ namespace Business.Abstract
         IDataResult<int> UserAfterLogin(int userId);
         IResult UpdateUser(UpdateUserDto updateUserDto);
         IDataResult<GetUserInfoDto> GetUserInfo();
+        IResult CheckLicenceExistance(int userId, int licenceId);
     }
 }
