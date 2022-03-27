@@ -7,6 +7,7 @@ namespace Business.Abstract
     public interface ICaseeService
     {
         IDataResult<List<CaseeGetDto>> GetAll();
+        IDataResult<List<CaseeGetDto>> GetAllByCustomerId(int customerId);
         IDataResult<CaseeGetDto> GetById(int id);
         IResult Add(CaseeAddDto caseeDto);
         IResult Update(CaseeUpdateDto caseeDto);

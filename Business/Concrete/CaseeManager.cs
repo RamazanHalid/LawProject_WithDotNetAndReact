@@ -63,6 +63,13 @@ namespace Business.Concrete
             List<CaseeGetDto> caseeDtos = _mapper.Map<List<CaseeGetDto>>(caseees);
             return new SuccessDataResult<List<CaseeGetDto>>(caseeDtos, Messages.GetAllSuccessfuly);
         }
+        [SecuredOperation("CaseeGetAll")]
+        public IDataResult<List<CaseeGetDto>> GetAllByCustomerId(int customerId)
+        {
+            List<Casee> caseees = _caseeDal.GetAllWithInclude(c => c.LicenceId == _authenticatedUserInfoService.GetLicenceId() && c.CustomerId == customerId);
+            List<CaseeGetDto> caseeDtos = _mapper.Map<List<CaseeGetDto>>(caseees);
+            return new SuccessDataResult<List<CaseeGetDto>>(caseeDtos, Messages.GetAllSuccessfuly);
+        }
 
         //Needed to authority as a lawyer or licence owner.
         [SecuredOperation("CaseeGetAll")]

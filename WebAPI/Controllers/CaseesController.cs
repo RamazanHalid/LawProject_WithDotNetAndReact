@@ -26,6 +26,17 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("GetAllByCustomerId")]
+        public IActionResult GetAllByCustomerId(int customerId)
+        {
+            var result = _caseeService.GetAllByCustomerId(customerId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpGet("GetById")]
         public IActionResult GetById(int id)
         {
