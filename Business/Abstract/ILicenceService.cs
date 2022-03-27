@@ -16,5 +16,7 @@ namespace Business.Abstract
         IDataResult<LicenceGetForUpdatingDto> GetCurrentAuthUserLicence();
         IResult Add(LicenceAddDto licenceAddDto);
         IResult Update(LicenceUpdateDto licenceUpdateDro);
+        IResult CheckLicenceBelongToUser(int userId, int licenceId);
+        IResult AddBalance(int licenceId, float balance);
     }
 }

@@ -91,9 +91,16 @@ namespace Business.Concrete
         public IResult ChangeAcceptence(int id)
         {
             var licenceUser = _licenceUserDal.Get(ct => ct.LicenceUserId == id);
-            licenceUser.IsUserAccept= !licenceUser.IsUserAccept;
+            licenceUser.IsUserAccept = !licenceUser.IsUserAccept;
             _licenceUserDal.Update(licenceUser);
             return new SuccessResult(Messages.ActivityChangedSuccessfuly);
+        }
+        public IResult CheckLicenceBelongToUser(int userId, int licenceId)
+        {
+            bool doesItExist = _licenceUserDal.DoesItExist(l => l.UserId == userId && l.LicenceId == licenceId);
+            if (doesItExist)
+                return new SuccessResult(Messages.TheItemExists);
+            return new ErrorResult(Messages.TheItemDoesNotExists);
         }
     }
 }

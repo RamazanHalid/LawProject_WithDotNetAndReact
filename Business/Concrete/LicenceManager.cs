@@ -98,7 +98,23 @@ namespace Business.Concrete
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }
 
+        public IResult CheckLicenceBelongToUser(int userId, int licenceId)
+        {
+            bool doesItExist = _licenceDal.DoesItExist(l => l.UserId == userId && l.LicenceId == licenceId);
+            if (doesItExist)
+                return new SuccessResult(Messages.TheItemExists);
+            return new ErrorResult(Messages.TheItemDoesNotExists);
+        }
+        public IResult AddBalance(int licenceId, float balance)
+        {
+            var licence = _licenceDal.Get(l => l.LicenceId == licenceId);
 
+            if (licence == null)
+                return new ErrorResult(Messages.TheItemDoesNotExists);
+            licence.Balance += balance;
+            _licenceDal.Update(licence);
+            return new SuccessResult(Messages.UpdatedSuccessfuly);
+        }
 
         #region Some methods which using in this class
         //Mapping LicenceUpdateDto to Licence

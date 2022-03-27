@@ -14,7 +14,7 @@ namespace Business.Abstract
         IResult Update(LicenceUserUpdateDto licenceUser);
         IDataResult<List<LicenceUserGetDto>> GetAllAcceptByUserId(int userId);
         IDataResult<List<LicenceUserGetDto>> GetAllByUserId();
-
+        IResult CheckLicenceBelongToUser(int userId, int licenceId);
         IDataResult<List<LicenceUserGetDto>> GetByLicenceId(int licenceId);
         IDataResult<List<int>> GetAllUserIdsRecordedUser();
 
