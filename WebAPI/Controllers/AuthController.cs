@@ -3,6 +3,7 @@ using Core.Utilities.Helpers;
 using Entities.DTOs;
 using Entities.DTOs.UserDtos;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace WebAPI.Controllers
 {
@@ -70,6 +71,18 @@ namespace WebAPI.Controllers
             }
             return Ok(approvingUserResult);
         }
+
+        [HttpGet("ApproveEmail")]
+        public ActionResult ApproveEmail(int userId, Guid approveGuid)
+        {
+            var approvingUserResult = _authService.ApprovingSelectedUserEmail(userId, approveGuid);
+            if (!approvingUserResult.Success)
+            {
+                return BadRequest(approvingUserResult);
+            }
+            return Ok(approvingUserResult);
+        }
+
         [HttpPost("ForgetPassword")]
         public ActionResult ForgetPassword(string cellPhone)
         {

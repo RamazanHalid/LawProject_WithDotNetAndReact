@@ -24,13 +24,14 @@ namespace Business.Concrete
         private readonly IMapper _mapper;
         private readonly ILicenceService _licenceService;
         private readonly ILicenceUserService _licenceUserService;
+        private readonly IEmailService _emailService;
         public AuthManager(IUserService userService,
             ITokenHelper tokenHelper,
             ISmsService smsService,
             ICurrentUserService currentUserService,
             IMapper mapper,
             ILicenceService licenceService,
-            ILicenceUserService licenceUserService)
+            ILicenceUserService licenceUserService, IEmailService emailService)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
@@ -39,6 +40,7 @@ namespace Business.Concrete
             _mapper = mapper;
             _licenceService = licenceService;
             _licenceUserService = licenceUserService;
+            _emailService = emailService;
         }
         [ValidationAspect(typeof(UserForRegisterValidator))]
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
@@ -55,9 +57,11 @@ namespace Business.Concrete
                 Title = userForRegisterDto.Title,
                 CityId = userForRegisterDto.CityId,
                 IsActive = true,
-                IsApproved = false,
+                IsCellPhoneApproved = false,
+                IsEmailApproved = false,
                 SmsCode = new Random().Next(0, 1000000).ToString("D6"),
-                ProfileImage = "/Uploads/UserProfileIamges/NoImage.jpg"
+                ProfileImage = "/Uploads/UserProfileIamges/NoImage.jpg",
+                ApproveGuid = Guid.NewGuid(),
             };
             _userService.Add(user);
             string smsMessage = $"Account approvement code: {user.SmsCode}.";
@@ -72,11 +76,30 @@ namespace Business.Concrete
                 return new ErrorDataResult<User>(Messages.UserDoesNotExistMessage);
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
                 return new ErrorDataResult<User>(Messages.WrongPassword);
-            if (!userToCheck.IsApproved)
+            if (!userToCheck.IsCellPhoneApproved)
             {
                 string smsMessage = $"Account approvement code: {userToCheck.SmsCode}.";
                 _smsService.SendIndividualMessage(smsMessage, userToCheck.CellPhone);
                 throw new UnApprovedAccountException();
+            }
+            if (!userToCheck.IsEmailApproved)
+            {
+                //string emailMessage = $"Account approvement" +
+                //    $" code: <a target='_blank' href='https://webapi.emlakofisimden.com/api/Auth/ApproveEmail?userId={userToCheck.Id}&approveGuid={userToCheck.ApproveGuid}'> " +
+                //    $"Click here for approve your account </a>";
+
+                string emailMessage = $"Account approvement" +
+                    $" code: <a target='_blank' href='https://webapi.emlakofisimden.com/api/Auth/ApproveEmail?userId={userToCheck.Id}&approveGuid={userToCheck.ApproveGuid}'> " +
+                    $"Click here for approve your account </a>";
+
+
+                _emailService.Send(new Entities.EmailContent
+                {
+                    Message = emailMessage,
+                    Subject = "Approve Email",
+                    To = userToCheck.Email
+                });
+                return new ErrorDataResult<User>("Your have Approve your email! Check your emails!");
             }
             if (!userToCheck.IsActive)
                 return new ErrorDataResult<User>(Messages.UnactivceAccount);
@@ -111,7 +134,20 @@ namespace Business.Concrete
             if (user.SmsCode != approvingUserDto.SmsCode)
                 return new ErrorDataResult<User>(Messages.WrongSmsCode);
 
-            user.IsApproved = true;
+            user.IsCellPhoneApproved = true;
+            _userService.Update(user);
+            return new SuccessDataResult<User>(Messages.AccountApproved);
+        }
+        public IDataResult<User> ApprovingSelectedUserEmail(int userId, Guid approveGuid)
+        {
+            var isUserExists = _userService.GetByUserId(userId);
+            if (isUserExists == null)
+                return new ErrorDataResult<User>("User not found");
+            var user = isUserExists;
+            if (user.ApproveGuid != approveGuid)
+                return new ErrorDataResult<User>(Messages.WrongSmsCode);
+
+            user.IsEmailApproved = true;
             _userService.Update(user);
             return new SuccessDataResult<User>(Messages.AccountApproved);
         }

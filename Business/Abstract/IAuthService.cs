@@ -2,6 +2,7 @@
 using Core.Utilities.Results;
 using Entities.DTOs;
 using Entities.DTOs.UserDtos;
+using System;
 
 namespace Business.Abstract
 {
@@ -19,5 +20,6 @@ namespace Business.Abstract
         IResult UpdateUser(UpdateUserDto updateUserDto);
         IDataResult<GetUserInfoDto> GetUserInfo();
         IResult CheckLicenceExistance(int userId, int licenceId);
+        IDataResult<User> ApprovingSelectedUserEmail(int userId, Guid approveGuid);
     }
 }
