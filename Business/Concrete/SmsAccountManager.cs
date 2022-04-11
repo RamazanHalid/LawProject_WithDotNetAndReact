@@ -22,7 +22,7 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("SmsAccountAdd")]
+        //[SecuredOperation("SmsAccountAdd")]
         public IResult Add(SmsAccountAddDto smsAccountAddDto)
         {
             SmsAccount smsAccount = _mapper.Map<SmsAccount>(smsAccountAddDto);
@@ -32,7 +32,7 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("SmsAccountUpdate")]
+        //[SecuredOperation("SmsAccountUpdate")]
         public IResult IncreaseCountOfSms(int id, int smsCount)
         {
             var smsAccount = _smsAccountDal.Get(c => c.SmsAccountId == id);
@@ -44,7 +44,7 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("SmsAccountDelete")]
+        //[SecuredOperation("SmsAccountDelete")]
         public IResult Delete(int id)
         {
             var smsAccount = _smsAccountDal.Get(cs => cs.SmsAccountId == id);
@@ -55,7 +55,7 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("SmsAccountGetAll")]
+        //[SecuredOperation("SmsAccountGetAll")]
         public IDataResult<List<SmsAccountGetDto>> GetAll()
         {
             List<SmsAccount> smsAccountes = _smsAccountDal.GetAll(c => c.LicenceId == _authenticatedUserInfoService.GetLicenceId());
@@ -64,7 +64,7 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("SmsAccountGetAll")]
+        //[SecuredOperation("SmsAccountGetAll")]
         public IDataResult<SmsAccountGetDto> GetById(int id)
         {
             var smsAccount = _smsAccountDal.Get(cs => cs.SmsAccountId == id);
@@ -72,6 +72,11 @@ namespace Business.Concrete
             if (smsAccount == null)
                 return new ErrorDataResult<SmsAccountGetDto>(Messages.TheItemDoesNotExists);
             return new SuccessDataResult<SmsAccountGetDto>(smsAccountDto, Messages.GetByIdSuccessfuly);
+        }
+        public IDataResult<SmsAccount> GetByLicenceId(int licenceId)
+        {
+            var smsAccount = _smsAccountDal.Get(cs => cs.LicenceId == licenceId);
+             return new SuccessDataResult<SmsAccount>(smsAccount, Messages.GetByIdSuccessfuly);
         }
     }
 }
