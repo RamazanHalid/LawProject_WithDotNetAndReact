@@ -36,10 +36,21 @@ namespace DataAccess.Concrete.EntityFramework
                 return context.Set<TransactionActivity>()
                                 .Include(c => c.TransactionActivitySubType)
                                  .ThenInclude(c => c.TransactionActivityType)
-                                 .Include(c => c.UserWhoAdd) 
-                                 .Include(c => c.WhoApproved) 
+                                 .Include(c => c.UserWhoAdd)
+                                 .Include(c => c.WhoApproved)
                                  .SingleOrDefault(filter)
                                  ;
+            }
+        }
+        public float GetSum(Expression<Func<TransactionActivity, float>> filterSum, Expression<Func<TransactionActivity, bool>> filter = null)
+        {
+            using (var context = new HukukContext())
+            {
+                return filter == null ? context.Set<TransactionActivity>()
+                                    .Sum(filterSum)
+                                   : context.Set<TransactionActivity>()
+                                    .Where(filter)
+                                    .Sum(filterSum);
             }
         }
     }

@@ -77,5 +77,37 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("TotalBalance")]
+        public IActionResult TotalBalance()
+        {
+            var result = _accountActivityService.TotalBalance();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("TotalExpense")]
+        public IActionResult TotalExpense()
+        {
+            var result = _accountActivityService.TotalExpense();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("TotalIncome")]
+        public IActionResult TotalIncome()
+        {
+            var result = _accountActivityService.TotalIncome();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
     }
 }

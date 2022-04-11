@@ -10,5 +10,6 @@ namespace DataAccess.Abstract
     {
         List<TransactionActivity> GetAllWithInclude(Expression<Func<TransactionActivity, bool>> filter = null);
         TransactionActivity GetWithInclude(Expression<Func<TransactionActivity, bool>> filter);
+        float GetSum(Expression<Func<TransactionActivity, float>> filterSum, Expression<Func<TransactionActivity, bool>> filter = null);
     }
 }

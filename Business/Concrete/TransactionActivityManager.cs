@@ -75,5 +75,28 @@ namespace Business.Concrete
             _transactionActivityDal.Update(transactionActivity);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }
+
+        public IDataResult<int> GetCountByLicenceId(int licenceId)
+        {
+            var countObj = _transactionActivityDal.GetCount(cs => cs.LicenceId == licenceId);
+            return new SuccessDataResult<int>(countObj, Messages.GetCountSuccessfuly);
+        }
+
+        public IDataResult<float> TotalBalance()
+        {
+            float expenseSum = _transactionActivityDal.GetSum(r => r.Amount, w => w.IsItExpense == true && w.LicenceId == _currentUserService.GetLicenceId());
+            float incomingSum = _transactionActivityDal.GetSum(r => r.Amount, w => w.IsItExpense == false && w.LicenceId == _currentUserService.GetLicenceId());
+            return new SuccessDataResult<float>(incomingSum - expenseSum, Messages.GetCountSuccessfuly);
+        }
+        public IDataResult<float> TotalExpense()
+        {
+            float expenseSum = _transactionActivityDal.GetSum(r => r.Amount, w => w.IsItExpense == true && w.LicenceId == _currentUserService.GetLicenceId());
+            return new SuccessDataResult<float>(expenseSum, Messages.GetCountSuccessfuly);
+        }
+        public IDataResult<float> TotalIncome()
+        {
+            float incomingSum = _transactionActivityDal.GetSum(r => r.Amount, w => w.IsItExpense == false && w.LicenceId == _currentUserService.GetLicenceId());
+            return new SuccessDataResult<float>(incomingSum, Messages.GetCountSuccessfuly);
+        }
     }
 }

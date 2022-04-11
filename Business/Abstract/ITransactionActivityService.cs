@@ -12,5 +12,9 @@ namespace Business.Abstract
         IResult Add(TransactionActivityAddDto transactionActivityAddDto);
         IResult Update(TransactionActivityUpdateDto transactionActivityUpdateDto);
         IResult Delete(int id);
+        IDataResult<int> GetCountByLicenceId(int licenceId);
+        IDataResult<float> TotalBalance();
+        IDataResult<float> TotalIncome();
+        IDataResult<float> TotalExpense();
     }
 }
