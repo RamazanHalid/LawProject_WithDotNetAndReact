@@ -14,12 +14,72 @@ namespace Business.Concrete
         public string Message { get; set; }
         public List<string> ReceipentList { get; set; }
         public string ReceipentListId { get; set; }
-        public SmsManager()
+        private readonly ICustomerService _customerService;
+        private readonly ILicenceUserService _licenceUserService;
+        public SmsManager(ICustomerService customerService, ILicenceUserService licenceUserService)
         {
+            _customerService = customerService;
+            _licenceUserService = licenceUserService;
         }
         private string api = "http://api.iletimerkezi.com/v1/send-sms";
         private string userName = "5433232164";
         private string userPassword = "Terra2010";
+
+        public IResult SendSmsToMembers(string message, List<int> ids)
+        {
+            List<string> members = new List<string>();
+            foreach (var item in ids)
+            {
+                var re = _licenceUserService.GetById(item);
+                if (!re.Success)
+                    return re;
+                members.Add(re.Data.CellPhone);
+            }
+            var result = SendMessageWithList(message, members);
+            if (!result.Success)
+            {
+                return result;
+            }
+            return new SuccessResult("Message Sended");
+        }
+
+        public IResult SendSmsToCustomers(string message, List<int> ids)
+        {
+                      List<string> members = new List<string>();
+            foreach (var item in ids)
+            {
+                var re = _customerService.GetById(item);
+                if (!re.Success)
+                    return re;
+                members.Add(re.Data.PhoneNumber);
+            }
+            var result = SendMessageWithList(message, members);
+            if (!result.Success)
+            {
+                return result;
+            }
+            return new SuccessResult("Message Sended");
+        }
+
+
+
+        public IResult SendMessageWithList(string message, List<string> numberList)
+        {
+            this.Message = message;
+            this.ReceipentList = new List<string>();
+         
+            foreach (var item in numberList)
+            {
+                this.ReceipentList.Add("+90" + item);
+            }
+            this.Message = message;
+            var result = SendSms();
+            if (result.Success)
+            {
+                return new SuccessResult(Messages.SmsSended);
+            }
+            return new ErrorResult(Messages.SmsCouldNotSend);
+        }
 
         public IResult SendIndividualMessage(string message, params string[] cellPhone)
         {
