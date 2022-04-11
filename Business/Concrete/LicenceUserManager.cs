@@ -45,7 +45,7 @@ namespace Business.Concrete
         }
         //Get user belogs to current licence
         //Authory needed
-        [SecuredOperation("LicenceUserGet")]
+        //[SecuredOperation("LicenceUserGet")]
         public IDataResult<LicenceUserGetDto> GetById(int id)
         {
             LicenceUser licenceUser = _licenceUserDal.GetInclude(lu => lu.LicenceUserId == id);
@@ -101,6 +101,11 @@ namespace Business.Concrete
             if (doesItExist)
                 return new SuccessResult(Messages.TheItemExists);
             return new ErrorResult(Messages.TheItemDoesNotExists);
+        }
+        public IDataResult<int> GetCountByLicenceId(int licenceId)
+        {
+            var countObj = _licenceUserDal.GetCount(cs => cs.LicenceId == licenceId);
+            return new SuccessDataResult<int>(countObj, Messages.GetCountSuccessfuly);
         }
     }
 }

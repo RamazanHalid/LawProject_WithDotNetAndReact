@@ -17,6 +17,7 @@ namespace Business.Abstract
         IResult CheckLicenceBelongToUser(int userId, int licenceId);
         IDataResult<List<LicenceUserGetDto>> GetByLicenceId(int licenceId);
         IDataResult<List<int>> GetAllUserIdsRecordedUser();
+        IDataResult<int> GetCountByLicenceId(int licenceId);
 
     }
 }
