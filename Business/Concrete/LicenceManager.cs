@@ -22,7 +22,11 @@ namespace Business.Concrete
         private readonly IOperationClaimService _operationClaimService;
         private readonly IUserOperationClaimService _userOperationClaimService;
         private readonly ISmsAccountService _smsAccountService;
-        public LicenceManager(ILicenceDal licenceDal, IMapper mapper, ICurrentUserService authenticatedUserInfoService, IOperationClaimService operationClaimService, IUserOperationClaimService userOperationClaimService, ISmsAccountService smsAccountService)
+        private readonly ICaseeService _caseeService;
+        private readonly ITransactionActivityService _transactionActivityService;
+        private readonly ILicenceUserService _licenceUserService;
+        private readonly ICustomerService _customerService;
+        public LicenceManager(ILicenceDal licenceDal, IMapper mapper, ICurrentUserService authenticatedUserInfoService, IOperationClaimService operationClaimService, IUserOperationClaimService userOperationClaimService, ISmsAccountService smsAccountService, ICaseeService caseeService, ITransactionActivityService transactionActivityService, ILicenceUserService licenceUserService, ICustomerService customerService)
         {
             _licenceDal = licenceDal;
             _mapper = mapper;
@@ -30,6 +34,10 @@ namespace Business.Concrete
             _operationClaimService = operationClaimService;
             _userOperationClaimService = userOperationClaimService;
             _smsAccountService = smsAccountService;
+            _caseeService = caseeService;
+            _transactionActivityService = transactionActivityService;
+            _licenceUserService = licenceUserService;
+            _customerService = customerService;
         }
 
         //Add new licence as an user.
@@ -76,6 +84,13 @@ namespace Business.Concrete
             LicenceGetForUpdatingDto licenceGetDto = _mapper.Map<LicenceGetForUpdatingDto>(licence);
             return new SuccessDataResult<LicenceGetForUpdatingDto>(licenceGetDto, Messages.GetByIdSuccessfuly);
         }
+        public IDataResult<Licence> GetById(int id)
+        {
+            var licence = _licenceDal.GetByIdWithInclude(l => l.LicenceId == id);
+            if (licence == null)
+                return new ErrorDataResult<Licence>(Messages.TheItemDoesNotExists);
+            return new SuccessDataResult<Licence>(licence);
+        }
 
         //Just after login, lists the licences with userId.
         //No need authority.
@@ -114,6 +129,23 @@ namespace Business.Concrete
             licence.Balance += balance;
             _licenceDal.Update(licence);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
+        }
+        public IDataResult<CountOfLicenceInfo> GetCountInfo()
+        {
+            int licenceId = _authenticatedUserInfoService.GetLicenceId();
+            var licence = _licenceDal.Get(l => l.LicenceId == licenceId);
+            var smsAccouint = _smsAccountService.GetByLicenceId(licenceId);
+            return new SuccessDataResult<CountOfLicenceInfo>(new CountOfLicenceInfo
+            {
+                Case = _caseeService.GetCountByLicenceId(licenceId).Data,
+                Client = _customerService.GetCountByLicenceId(licenceId).Data,
+                CurrentBalance = licence.Balance,
+                CurrentlyUsedDiskSpace = 0,
+                NumberOfMember = _licenceUserService.GetCountByLicenceId(licenceId).Data,
+                Sms = _smsAccountService.GetByLicenceId(licenceId).Data.SmsCount,
+                TotalDiskSpace = licence.Gb,
+                TransactionActivity = _transactionActivityService.GetCountByLicenceId(licenceId).Data
+            }, Messages.GetAllSuccessfuly);
         }
 
         #region Some methods which using in this class

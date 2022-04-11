@@ -13,6 +13,18 @@ namespace WebAPI.Controllers
         {
             _licenceService = licenceService;
         }
+
+        [HttpGet("GetLicenceInfoCounts")]
+        public IActionResult GetLicenceInfoCounts()
+        {
+            var result = _licenceService.GetCountInfo();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpGet("GetAllByUserId")]
         public IActionResult GetAllByUserId(int userId)
         {
@@ -36,7 +48,7 @@ namespace WebAPI.Controllers
         [HttpPost("Add")]
         public IActionResult Add(LicenceAddDto licenceAddDto)
         {
-           
+
             var result = _licenceService.Add(licenceAddDto);
             if (result.Success)
             {

@@ -18,5 +18,7 @@ namespace Business.Abstract
         IResult Update(LicenceUpdateDto licenceUpdateDro);
         IResult CheckLicenceBelongToUser(int userId, int licenceId);
         IResult AddBalance(int licenceId, float balance);
+        IDataResult<CountOfLicenceInfo> GetCountInfo();
+        IDataResult<Licence> GetById(int id);
     }
 }
