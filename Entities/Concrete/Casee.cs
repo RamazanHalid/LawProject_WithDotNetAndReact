@@ -22,6 +22,8 @@ namespace Entities.Concrete
         public RoleType RoleType { get; set; }
         public string CaseNo { get; set; }
         public string Info { get; set; }
+        public bool IsEnd { get; set; }
+        public bool HasItBeenDecide { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? DecisionDate { get; set; }
         public DateTime? EndDate { get; set; }

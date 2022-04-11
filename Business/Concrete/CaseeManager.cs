@@ -90,5 +90,11 @@ namespace Business.Concrete
             _caseeDal.Update(casee);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }
+        public IDataResult<int> GetCountByLicenceId(int licenceId)
+        {
+            var caseeCount = _caseeDal.GetCount(cs => cs.LicenceId == licenceId);
+            return new SuccessDataResult<int>(caseeCount, Messages.GetByIdSuccessfuly);
+        }
+
     }
 }

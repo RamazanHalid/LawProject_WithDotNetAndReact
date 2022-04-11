@@ -13,5 +13,6 @@ namespace Business.Abstract
         IResult Update(CaseeUpdateDto caseeDto);
         IResult Delete(int id);
         IResult ChangeStatus(int id, int caseStatusId);
+        IDataResult<int> GetCountByLicenceId(int licenceId);
     }
 }
