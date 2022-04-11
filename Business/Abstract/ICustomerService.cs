@@ -13,5 +13,6 @@ namespace Business.Abstract
         IResult Add(CustomerAddDto customerAddDto);
         IResult Update(CustomerUpdateDto customerUpdateDro);
         IResult ChangeActivity(int id);
+        IDataResult<int> GetCountByLicenceId(int licenceId);
     }
 }

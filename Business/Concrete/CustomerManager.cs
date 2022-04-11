@@ -72,7 +72,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CustomerGetDto>>(customerDtos, Messages.GetAllSuccessfuly);
         }
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("CustomerGetAll")]
+        //[SecuredOperation("CustomerGetAll")]
         public IDataResult<CustomerGetDto> GetById(int id)
         {
             var customer = _customerDal.GetByIdWithInclude(cs => cs.CustomerId == id);
@@ -88,6 +88,11 @@ namespace Business.Concrete
             customer.LicenceId = _authenticatedUserInfoService.GetLicenceId();
             _customerDal.Update(customer);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
+        }
+        public IDataResult<int> GetCountByLicenceId(int licenceId)
+        {
+            var countObj = _customerDal.GetCount(cs => cs.LicenceId == licenceId);
+            return new SuccessDataResult<int>(countObj, Messages.GetCountSuccessfuly);
         }
     }
 }
