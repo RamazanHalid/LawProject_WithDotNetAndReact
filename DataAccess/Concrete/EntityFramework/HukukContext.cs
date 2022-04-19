@@ -10,7 +10,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=178.157.15.114;Database=HUKUK2;User Id = sa;Password=Terra2010*");
+            optionsBuilder.UseSqlServer(@"");
         }
         public DbSet<Licence> Licences { get; set; }
         public DbSet<City> Cities { get; set; }
@@ -44,13 +44,64 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Taskk> Taskks { get; set; }
         public DbSet<TaskStatus> TaskStatuses { get; set; }
         public DbSet<SmsAccount> SmsAccounts { get; set; }
+        public DbSet<OperationClaimGroup> OperationClaimGroups { get; set; }
+        public DbSet<PaymentHistory> PaymentHistories { get; set; }
+        public DbSet<CreditCardReminder> CreditCardReminders { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<CasesDocument> CasesDocuments { get; set; }
+        public DbSet<ContactInformation> ContactInformations { get; set; }
+        public DbSet<SmsOrder> SmsOrders { get; set; }
+        public DbSet<SmsHistory> SmsHistories { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Licence>()
-               .HasOne(t => t.City)
-               .WithMany()
+            modelBuilder.Entity<SmsHistory>()
+         .HasOne(t => t.Licence)
+         .WithMany()
+         .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<CasesDocument>()
+         .HasOne(t => t.Creator)
+         .WithMany()
+         .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<CasesDocument>()
+         .HasOne(t => t.Casee)
+         .WithMany()
+         .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+
+
+            modelBuilder.Entity<Notification>()
+         .HasOne(t => t.Licence)
+         .WithMany()
+         .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<Notification>()
+         .HasOne(t => t.User)
+         .WithMany()
+         .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<PaymentHistory>()
+           .HasOne(t => t.Licence)
+           .WithMany();
+
+            modelBuilder.Entity<PaymentHistory>()
+           .HasOne(t => t.Licence)
+           .WithMany()
+           .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<OperationClaimGroup>()
+               .HasMany(t => t.OperationClaims)
+               .WithOne()
                .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<Licence>()
+         .HasOne(t => t.City)
+         .WithMany()
+         .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
 
             modelBuilder.Entity<Licence>()
