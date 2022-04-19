@@ -27,6 +27,27 @@ namespace Business.Concrete
             _userOperationClaimDal.Add(userOperationClaim);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
+        public IResult AddAsList(int userId, List<int> operationClaimsId)
+        {
+            var allOperationClaimsSelectedUser = GetAllByUserId(userId).Data;
+            _userOperationClaimDal.DeleteAsList(allOperationClaimsSelectedUser);
+
+            int licenceId = _currentUserService.GetLicenceId();
+            List<UserOperationClaim> deneme = new List<UserOperationClaim>();
+            foreach (var operationClaimId in operationClaimsId)
+            {
+                deneme.Add(new UserOperationClaim
+                {
+                    LicenceId = licenceId,
+                    OperationClaimId = operationClaimId,
+                    UserId = userId
+
+                });
+
+            }
+            _userOperationClaimDal.AddAsList(deneme);
+            return new SuccessResult(Messages.AddedSuccessfuly);
+        }
 
         public IResult Delete(int id)
         {
@@ -36,9 +57,13 @@ namespace Business.Concrete
             _userOperationClaimDal.Delete(userOperationClaim);
             return new SuccessResult(Messages.DeletedSuccessfuly);
         }
-        public IDataResult<List<UserOperationClaim>> GetAll()
+        public IDataResult<List<UserOperationClaim>> GetAllByUserId(int userId)
         {
-            return new SuccessDataResult<List<UserOperationClaim>>(_userOperationClaimDal.GetAll(), Messages.GetAllSuccessfuly);
+            return new SuccessDataResult<List<UserOperationClaim>>(_userOperationClaimDal.GetAll(t => t.UserId == userId && t.LicenceId == _currentUserService.GetLicenceId()), Messages.GetAllSuccessfuly);
+        }
+        public IDataResult<List<int>> GetAllIds(int userId)
+        {
+            return new SuccessDataResult<List<int>>(_userOperationClaimDal.GetAllIds(t => t.UserId == userId && t.LicenceId == _currentUserService.GetLicenceId()), Messages.GetAllSuccessfuly);
         }
 
         public IDataResult<UserOperationClaim> GetById(int id)
