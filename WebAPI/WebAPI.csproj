@@ -30,6 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Uploads\CasesDocuments\" />
     <Folder Include="Uploads\LicenceImages\" />
     <Folder Include="Uploads\UserProfileImages\" />
   </ItemGroup>

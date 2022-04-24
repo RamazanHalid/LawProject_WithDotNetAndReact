@@ -1,0 +1,16 @@
+﻿using Core.Entities;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Entities.Concrete
+{
+    public class SmsOrder : IEntity
+    {
+        public int Id { get; set; }
+        public int SmsCount { get; set; }
+        public float Price { get; set; }
+        public float PricePerUnit { get; set; }
+        public string Name { get; set; }
+    }
+}

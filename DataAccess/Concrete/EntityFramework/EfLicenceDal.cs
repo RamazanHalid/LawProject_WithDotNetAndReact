@@ -1,6 +1,7 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs.LicenceDtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace DataAccess.Concrete.EntityFramework
                     : context.Set<Licence>().Include(l => l.City).ThenInclude(c => c.Country).Include(c => c.PersonType).Where(filter).ToList();
             }
         }
+
         public Licence AddWithReturn(Licence licence)
         {
             //IDisposable pattern implementation of c#
@@ -37,9 +39,6 @@ namespace DataAccess.Concrete.EntityFramework
                 context.SaveChanges();
                 return licence;
             }
-
         }
-     
-
     }
 }

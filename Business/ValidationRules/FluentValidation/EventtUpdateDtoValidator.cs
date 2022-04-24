@@ -12,7 +12,8 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(c => c.EventTypeId).GreaterThan(0);
             RuleFor(c => c.CaseeId).GreaterThan(0);
             RuleFor(c => c.IsActive).NotNull();
-            RuleFor(c => c.Date).GreaterThanOrEqualTo(DateTime.Now);
+            RuleFor(c => c.StartDate).GreaterThanOrEqualTo(DateTime.Now);
+            RuleFor(c => c.EndDate).GreaterThanOrEqualTo(DateTime.Now);
             RuleFor(c => c.EventTypeId).GreaterThan(0);
             RuleFor(c => c.UserId).GreaterThan(0);
             RuleFor(c => c.CustomerId).GreaterThan(0);

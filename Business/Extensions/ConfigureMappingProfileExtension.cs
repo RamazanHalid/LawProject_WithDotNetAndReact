@@ -1,18 +1,24 @@
 ﻿using AutoMapper;
 using Core.Entities.Concrete;
+using Core.Utilities.Security.Encryption;
 using Entities.Concrete;
 using Entities.DTOs.CaseeDtos;
+using Entities.DTOs.CasesDocumentDtos;
 using Entities.DTOs.CaseStatusDtos;
 using Entities.DTOs.CaseTypeDtos;
 using Entities.DTOs.CourtOfficeDtos;
 using Entities.DTOs.CourtOfficeTypeDtos;
+using Entities.DTOs.CreditCardReminderDtos;
 using Entities.DTOs.CustomerDtos;
 using Entities.DTOs.EventtDtos;
 using Entities.DTOs.EventTypeDtos;
 using Entities.DTOs.LicenceDtos;
 using Entities.DTOs.LicenceUserDtos;
 using Entities.DTOs.ProcessTypeDtos;
+using Entities.DTOs.RoleTypeDtos;
 using Entities.DTOs.SmsAccountDtos;
+using Entities.DTOs.SmsOrderDtos;
+using Entities.DTOs.SmsTemplateDtos;
 using Entities.DTOs.TaskkDtos;
 using Entities.DTOs.TaskStatusDtos;
 using Entities.DTOs.TaskTypeDtos;
@@ -45,20 +51,48 @@ namespace Business.Extensions
 
                 //Users
                 CreateMap<User, UserForAddAnOtherLicenceInfo>();
+                CreateMap<User, UserForLicenceUserGetDto>();
 
                 //TaskType
                 CreateMap<CaseType, CaseTypeGetDto>();
                 CreateMap<CaseStatusAddDto, CaseType>();
                 CreateMap<CaseTypeUpdateDto, CaseType>();
+                //CreditCardReminder
+                CreateMap<CreditCardReminder, CreditCardReminderGetDto>()
+                    .ForMember(dst => dst.Content, x => x.MapFrom(src => src.FullName + $" **** **** **** {src.CreditCardNo.Substring(src.CreditCardNo.Length - 4)}"));
+
+                ;
+                CreateMap<CreditCardReminderAddDto, CreditCardReminder>();
+                CreateMap<CreditCardReminderUpdateDto, CreditCardReminder>();
+                CreateMap<CreditCardReminder, CreditCardReminderGetDetailsDto>();
                 //Eventt
                 CreateMap<Eventt, EventtGetDto>();
                 CreateMap<EventtAddDto, Eventt>();
                 CreateMap<EventtUpdateDto, Eventt>();
+                //SmsOrder
+                CreateMap<SmsOrder, SmsOrderGetDto>();
+                CreateMap<SmsOrderAddDto, SmsOrder>();
+                CreateMap<SmsOrderUpdateDto, SmsOrder>();
+
+                //CasesDocument
+                CreateMap<CasesDocument, CasesDocumentGetDto>();
+                CreateMap<EventtAddDto, CasesDocument>();
+                CreateMap<CasesDocumentUpdateDto, CasesDocument>();
 
                 //Casee
                 CreateMap<Casee, CaseeGetDto>();
                 CreateMap<CaseeAddDto, Casee>();
                 CreateMap<CaseeUpdateDto, Casee>();
+
+                //RoleType
+                CreateMap<RoleType, RoleTypeGetDto>();
+                CreateMap<RoleTypeAddDto, RoleType>();
+                CreateMap<RoleTypeUpdateDto, RoleType>();
+
+                //RoleType
+                CreateMap<SmsTemplate, SmsTemplateGetDto>();
+                CreateMap<SmsTemplateAddDto, SmsTemplate>();
+                CreateMap<SmsTemplateUpdateDto, SmsTemplate>();
 
                 //Licence
                 CreateMap<LicenceAddDto, Licence>();

@@ -85,8 +85,17 @@ namespace Business.Concrete
         [SecuredOperation("EventtUpdate")]
         public IResult Update(EventtUpdateDto eventtUpdateDto)
         {
-            Eventt eventt = _mapper.Map<Eventt>(eventtUpdateDto);
-            eventt.LicenceId = _authenticatedUserInfoService.GetLicenceId();
+            Eventt eventt = _eventtDal.Get(e => e.EventtId == eventtUpdateDto.EventtId);
+            if (eventt == null)
+                return new ErrorResult(Messages.TheItemDoesNotExists);
+            eventt.CaseeId = eventtUpdateDto.CaseeId;
+            eventt.EndDate = eventtUpdateDto.EndDate;
+            eventt.StartDate = eventtUpdateDto.StartDate;
+            eventt.UserId = eventtUpdateDto.UserId;
+            eventt.IsActive = eventtUpdateDto.IsActive;
+            eventt.Info = eventtUpdateDto.Info;
+            eventt.EventTypeId = eventtUpdateDto.EventTypeId;
+            eventt.CustomerId = eventtUpdateDto.CustomerId;
             _eventtDal.Update(eventt);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }

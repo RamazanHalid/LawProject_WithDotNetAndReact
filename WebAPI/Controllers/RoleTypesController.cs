@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Entities;
 using Entities.DTOs.RoleTypeDtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -10,13 +11,17 @@ namespace WebAPI.Controllers
     public class RoleTypesController : ControllerBase
     {
         private IRoleTypeService _roleTypeService;
-        public RoleTypesController(IRoleTypeService roleTypeService)
+        private readonly IEmailService _emailService;
+        public RoleTypesController(IRoleTypeService roleTypeService, IEmailService emailService)
         {
             _roleTypeService = roleTypeService;
+            _emailService = emailService;
         }
         [HttpGet("GetAllByCourtOfficeTypeId")]
         public async Task<IActionResult> GetAll(int courtOfficeTypeId)
         {
+           
+
             var result = _roleTypeService.GetAllByCourtOfficeTypeId(courtOfficeTypeId);
             if (result.Success)
             {

@@ -73,7 +73,7 @@ namespace Core.Extensions
                 SituationCode = 1,
                 Success = false,
                 StatusCode = httpContext.Response.StatusCode,
-                Message = e.Message + " \n" + e.InnerException.Message
+                Message = e.Message
             }.ToString());
         }
     }

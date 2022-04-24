@@ -1,4 +1,4 @@
-using Business.Extensions;
+    using Business.Extensions;
 using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.IoC;
@@ -7,11 +7,14 @@ using Core.Utilities.Security.JWT;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.IO;
 
 namespace WebAPI
 {
@@ -28,7 +31,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers( );
             services.ConfigureMapping();
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver());
@@ -39,6 +42,7 @@ options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
+         
             services.AddSwaggerGen(swagger =>
             {
                 //This is to generate the Default UI of Swagger Documentation  
@@ -99,6 +103,7 @@ options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.
             services.AddDependencyResolvers(new ICoreModule[] {
                new CoreModule()
             });
+    
             services.AddSignalR();
 
         }
@@ -119,7 +124,14 @@ options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.
             app.ConfigureCustomExceptionMiddleware();
 
             //app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseStaticFiles(
+                //new StaticFileOptions
+                //{
+                //    FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Uploads")),
+                //    RequestPath = "/Uploads",
+                //}
+
+            );
 
             app.UseRouting();
 

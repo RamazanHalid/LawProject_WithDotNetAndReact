@@ -15,5 +15,6 @@ namespace Entities.DTOs.TaskkDtos
         public DateTime? EndDate { get; set; }
         public bool IsActive { get; set; }
         public int TaskTypeId { get; set; }
+        public int TaskStatusId { get; set; }
     }
 }

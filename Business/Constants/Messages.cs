@@ -38,5 +38,8 @@ namespace Business.Constants
         public static string PasswordChangedSuccessfuly = "Password changed successfuly!";
         public static string UnauthenticatedUser = "You must be logged in to do this.";
         public static string OnlyLicenceOwnerCanChange = "Only licence owner can update the licence";
+
+        public static string GetCountFailed = "Get counf of entity failed";
+        public static string GetCountSuccessfuly = "Get counf of entity successfuly";
     }
 }

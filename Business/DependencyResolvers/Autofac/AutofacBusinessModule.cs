@@ -18,17 +18,45 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
 
+
+            builder.RegisterType<ContactInformationManager>().As<IContactInformationService>().SingleInstance();
+            builder.RegisterType<EfContactInformationDal>().As<IContactInformationDal>().SingleInstance();
+
+
+
+            builder.RegisterType<SmsHistoryManager>().As<ISmsHistoryService>().SingleInstance();
+            builder.RegisterType<EfSmsHistoryDal>().As<ISmsHistoryDal>().SingleInstance();
+
+
+            builder.RegisterType<SmsOrderManager>().As<ISmsOrderService>().SingleInstance();
+            builder.RegisterType<EfSmsOrderDal>().As<ISmsOrderDal>().SingleInstance();
+
+            builder.RegisterType<NotificationManager>().As<INotificationService>().SingleInstance();
+            builder.RegisterType<EfNotificationDal>().As<INotificationDal>().SingleInstance();
+
+            builder.RegisterType<OperationClaimGroupManager>().As<IOperationClaimGroupService>().SingleInstance();
+            builder.RegisterType<EfOperationClaimGroupDal>().As<IOperationClaimGroupDal>().SingleInstance();
+
             builder.RegisterType<LicenceManager>().As<ILicenceService>().SingleInstance();
             builder.RegisterType<EfLicenceDal>().As<ILicenceDal>().SingleInstance();
 
             builder.RegisterType<CityManager>().As<ICityService>().SingleInstance();
             builder.RegisterType<EfCityDal>().As<ICityDal>().SingleInstance();
 
+            builder.RegisterType<SmsTemplateManager>().As<ISmsTemplateService>().SingleInstance();
+            builder.RegisterType<EfSmsTemplateDal>().As<ISmsTemplateDal>().SingleInstance();
+
+            builder.RegisterType<CreditCardReminderManager>().As<ICreditCardReminderService>().SingleInstance();
+            builder.RegisterType<EfCreditCardReminderDal>().As<ICreditCardReminderDal>().SingleInstance();
+
             builder.RegisterType<CourtOfficeTypeManager>().As<ICourtOfficeTypeService>().SingleInstance();
             builder.RegisterType<EfCourtOfficeTypeDal>().As<ICourtOfficeTypeDal>().SingleInstance();
 
             builder.RegisterType<EventTypeManager>().As<IEventTypeService>().SingleInstance();
             builder.RegisterType<EfEventTypeDal>().As<IEventTypeDal>().SingleInstance();
+
+            builder.RegisterType<RoleTypeManager>().As<IRoleTypeService>().SingleInstance();
+            builder.RegisterType<EfRoleTypeDal>().As<IRoleTypeDal>().SingleInstance();
 
             builder.RegisterType<EventtManager>().As<IEventtService>().SingleInstance();
             builder.RegisterType<EfEventtDal>().As<IEventtDal>().SingleInstance();
@@ -66,6 +94,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<TaskStatusManager>().As<ITaskStatusService>().SingleInstance();
             builder.RegisterType<EfTaskStatusDal>().As<ITaskStatusDal>().SingleInstance();
 
+            builder.RegisterType<CasesDocumentManager>().As<ICasesDocumentService>().SingleInstance();
+            builder.RegisterType<EfCasesDocumentDal>().As<ICasesDocumentDal>().SingleInstance();
+
             builder.RegisterType<TaskkManager>().As<ITaskkService>().SingleInstance();
             builder.RegisterType<EfTaskkDal>().As<ITaskkDal>().SingleInstance();
 
@@ -80,6 +111,17 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<TransactionActivitySubTypeManager>().As<ITransactionActivitySubTypeService>().SingleInstance();
             builder.RegisterType<EfTransactionActivitySubTypeDal>().As<ITransactionActivitySubTypeDal>().SingleInstance();
+
+            builder.RegisterType<PaymentManager>().As<IPaymentService>().SingleInstance();
+
+            builder.RegisterType<EmailManager>().As<IEmailService>();
+
+
+            builder.RegisterType<PaymentHistoryManager>().As<IPaymentHistoryService>().SingleInstance();
+            builder.RegisterType<EfPaymentHistoryDal>().As<IPaymentHistoryDal>().SingleInstance();
+
+
+
 
             builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
 

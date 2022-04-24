@@ -65,7 +65,9 @@ namespace Core.DataAccess.EntityFramework
         {
             using (TContext context = new TContext())
             {
-                return context.Set<TEntity>().Where(filter).Count();
+                return filter == null
+                   ? context.Set<TEntity>().Count()
+                   : context.Set<TEntity>().Where(filter).Count();
             }
         }
     }

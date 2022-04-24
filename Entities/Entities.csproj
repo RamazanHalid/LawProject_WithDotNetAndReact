@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="DTOs\AccountActivityTypeeDtos\" />
+    <Folder Include="DTOs\OperationClaimGroupDtos\" />
   </ItemGroup>
 
 </Project>

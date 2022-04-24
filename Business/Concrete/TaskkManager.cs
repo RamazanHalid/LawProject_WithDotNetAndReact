@@ -28,7 +28,6 @@ namespace Business.Concrete
             Taskk taskk = _mapper.Map<Taskk>(taskkAddDto);
             taskk.LicenceId = _currentUserService.GetLicenceId();
             taskk.CreatorId = _currentUserService.GetUserId();
-            taskk.TaskStatusId = _taskStatusService.GetAll().Data[0].TaskStatusId;
             _taskkDal.Add(taskk);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
@@ -85,6 +84,7 @@ namespace Business.Concrete
             taskk.UserId = taskkUpdateDto.UserId;
             taskk.IsActive = taskkUpdateDto.IsActive;
             taskk.TaskTypeId = taskkUpdateDto.TaskTypeId;
+            taskk.TaskStatusId = taskkUpdateDto.TaskStatusId;
             _taskkDal.Update(taskk);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }
