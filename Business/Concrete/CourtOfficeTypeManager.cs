@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -18,6 +19,8 @@ namespace Business.Concrete
             _courtOfficeTypeDal = courtOfficeTypeDal;
             _mapper = mapper;
         }
+
+        [SecuredOperation("admin")]
         public IResult Add(CourtOfficeTypeAddDto courtOfficeTypeAddDto)
         {
             CourtOfficeType courtOfficeType = _mapper.Map<CourtOfficeType>(courtOfficeTypeAddDto);
@@ -38,6 +41,7 @@ namespace Business.Concrete
             CourtOfficeTypeGetDto courtOfficeTypeGetDto = _mapper.Map<CourtOfficeTypeGetDto>(courtOfficeType);
             return new SuccessDataResult<CourtOfficeTypeGetDto>(Messages.GetByIdSuccessfuly);
         }
+        [SecuredOperation("admin")]
         public IResult Delete(int id)
         {
             var courtOfficeType = _courtOfficeTypeDal.Get(c => c.CourtOfficeTypeId == id);
@@ -46,7 +50,7 @@ namespace Business.Concrete
             _courtOfficeTypeDal.Delete(courtOfficeType);
             return new SuccessResult(Messages.DeletedSuccessfuly);
         }
-
+        [SecuredOperation("admin")]
         public IResult Update(CourtOfficeTypeUpdateDto courtOfficeTypeUpdateDto)
         {
             CourtOfficeType courtOfficeType = _mapper.Map<CourtOfficeType>(courtOfficeTypeUpdateDto);

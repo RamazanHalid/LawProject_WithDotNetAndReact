@@ -24,7 +24,7 @@ namespace Business.Concrete
 
         //Adding new item as an User
         //Authority needed
-        //[SecuredOperation("CreditCardReminderAdd")]
+        [SecuredOperation("LicenceOwner")]
         public IResult Add(CreditCardReminderAddDto creditCardReminderAddDto)
         {
             CreditCardReminder creditCardReminder = _mapper.Map<CreditCardReminder>(creditCardReminderAddDto);
@@ -35,7 +35,7 @@ namespace Business.Concrete
         }
         //GetAll items as an User
         //Authority needed
-        //[SecuredOperation("CreditCardReminderGetAll")]
+        [SecuredOperation("LicenceOwner")]
         public IDataResult<List<CreditCardReminderGetDto>> GetAll()
         {
             List<CreditCardReminder> creditCardReminders = _creditCardReminderDal.GetAllWithDecrypted(p => p.LicenceId == _authenticatedUserInfoService.GetLicenceId());
@@ -45,34 +45,40 @@ namespace Business.Concrete
 
         //Get special item
         //Authority needed
-        //[SecuredOperation("CreditCardReminderGetAll")]
+        [SecuredOperation("LicenceOwner")]
         public IDataResult<CreditCardReminderGetDetailsDto> GetById(int id)
         {
-            CreditCardReminder creditCardReminder = _creditCardReminderDal.GetWithDecrypted(pt => pt.Id == id);
+            CreditCardReminder creditCardReminder = _creditCardReminderDal.GetWithDecrypted(pt => pt.Id == id && pt.LicenceId == _authenticatedUserInfoService.GetLicenceId());
+            if (creditCardReminder == null)
+                return new ErrorDataResult<CreditCardReminderGetDetailsDto>(Messages.TheItemDoesNotExists);
             CreditCardReminderGetDetailsDto creditCardReminderDto = _mapper.Map<CreditCardReminderGetDetailsDto>(creditCardReminder);
             return new SuccessDataResult<CreditCardReminderGetDetailsDto>(creditCardReminderDto, Messages.GetByIdSuccessfuly);
         }
 
+        //Check the creadit card info added before
+        [SecuredOperation("LicenceOwner")]
         public IDataResult<bool> CheckTheCardIsExist(string creditCardNo)
         {
             var creditCardReminder = _creditCardReminderDal.GetAllWithDecrypted();
             var re = creditCardReminder.Find(e => e.CreditCardNo == creditCardNo);
             if (re == null)
-                return new SuccessDataResult<bool>(false,Messages.TheItemDoesNotExists);
+                return new SuccessDataResult<bool>(false, Messages.TheItemDoesNotExists);
             return new SuccessDataResult<bool>(true, Messages.TheItemExists);
         }
         //Delete special item
         //Authority needed
-        //[SecuredOperation("CreditCardReminderDelete")]
+        [SecuredOperation("LicenceOwner")]
         public IResult Delete(int id)
         {
-            var creditCardReminder = _creditCardReminderDal.Get(pt => pt.Id == id);
+            var creditCardReminder = _creditCardReminderDal.Get(pt => pt.Id == id && pt.LicenceId == _authenticatedUserInfoService.GetLicenceId());
+            if (creditCardReminder == null)
+                return new ErrorResult(Messages.TheItemDoesNotExists);
             _creditCardReminderDal.Delete(creditCardReminder);
             return new SuccessResult(Messages.DeletedSuccessfuly);
         }
         //Update special item
         //Authority needed
-        //[SecuredOperation("CreditCardReminderUpdate")]
+        [SecuredOperation("LicenceOwner")]
         public IResult Update(CreditCardReminderUpdateDto creditCardReminderDto)
         {
             CreditCardReminder creditCardReminder = _mapper.Map<CreditCardReminder>(creditCardReminderDto);
