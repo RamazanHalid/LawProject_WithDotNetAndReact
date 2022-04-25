@@ -2,6 +2,8 @@
 using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,7 +24,8 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("CustomerAdd")]
+        [SecuredOperation("LicenceOwner,CustomerAdd")]
+        [ValidationAspect(typeof(CustomerAddDtoValidator))]
          public IResult Add(CustomerAddDto customerAddDto)
         {
             Customer customer = _mapper.Map<Customer>(customerAddDto);
@@ -32,7 +35,7 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("CustomerUpdate")]
+        [SecuredOperation("LicenceOwner,CustomerUpdate")]
         public IResult ChangeActivity(int id)
         {
             var customer = _customerDal.Get(c => c.CustomerId == id);
@@ -44,7 +47,7 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("CustomerDelete")]
+        [SecuredOperation("LicenceOwner,CustomerDelete")]
         public IResult Delete(int id)
         {
             var customer = _customerDal.Get(cs => cs.CustomerId == id);
@@ -55,7 +58,7 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("CustomerGetAll")]
+        [SecuredOperation("LicenceOwner,CustomerGetAll")]
         public IDataResult<List<CustomerGetDto>> GetAll()
         {
             List<Customer> customeres = _customerDal.GetAllWithInclude(c => c.LicenceId == _authenticatedUserInfoService.GetLicenceId());
@@ -63,7 +66,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CustomerGetDto>>(customerDtos, Messages.GetAllSuccessfuly);
         }
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("CustomerGetAllActive")]
+        [SecuredOperation("LicenceOwner,CustomerGetAllActive")]
         public IDataResult<List<CustomerGetDto>> GetAllActive()
         {
             List<Customer> customeres = _customerDal.GetAllWithInclude(
@@ -72,7 +75,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CustomerGetDto>>(customerDtos, Messages.GetAllSuccessfuly);
         }
         //Needed to authority as a lawyer or licence owner.
-        //[SecuredOperation("CustomerGetAll")]
+        [SecuredOperation("LicenceOwner,CustomerGetAll")]
         public IDataResult<CustomerGetDto> GetById(int id)
         {
             var customer = _customerDal.GetByIdWithInclude(cs => cs.CustomerId == id);
@@ -81,7 +84,9 @@ namespace Business.Concrete
                 return new ErrorDataResult<CustomerGetDto>(Messages.TheItemDoesNotExists);
             return new SuccessDataResult<CustomerGetDto>(customerDto, Messages.GetByIdSuccessfuly);
         }
-        [SecuredOperation("CustomerUpdate")]
+        //Update the customer informartions
+        [SecuredOperation("LicenceOwner,CustomerUpdate")]
+        [ValidationAspect(typeof(CustomerUpdateDtoValidator))]
         public IResult Update(CustomerUpdateDto customerUpdateDto)
         {
             Customer customer = _mapper.Map<Customer>(customerUpdateDto);
@@ -89,6 +94,9 @@ namespace Business.Concrete
             _customerDal.Update(customer);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }
+
+        //Get count of Customer who belongs to selected licence id 
+        [SecuredOperation("LicenceOwner,admin")]
         public IDataResult<int> GetCountByLicenceId(int licenceId)
         {
             var countObj = _customerDal.GetCount(cs => cs.LicenceId == licenceId);

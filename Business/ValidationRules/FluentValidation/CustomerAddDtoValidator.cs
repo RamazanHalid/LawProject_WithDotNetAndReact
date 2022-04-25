@@ -8,15 +8,15 @@ namespace Business.ValidationRules.FluentValidation
     {
         public CustomerAddDtoValidator()
         {
-            RuleFor(c => c.CustomerName).MinimumLength(2);
-            RuleFor(c => c.CityId).GreaterThan(0);
+            RuleFor(c => c.CustomerName).NotEmpty().MaximumLength(200);
+            RuleFor(c => c.CityId).NotEmpty().GreaterThan(0);
             RuleFor(c => c.IsActive).NotNull();
-            RuleFor(c => c.BillAddress).MinimumLength(15);
-            RuleFor(c => c.WebSite).MinimumLength(10);
+            RuleFor(c => c.BillAddress).NotEmpty().MaximumLength(250);
+            RuleFor(c => c.WebSite).NotEmpty().MaximumLength(100);
             RuleFor(c => c.PhoneNumber).Must(CheckPhoneNumber);
-            RuleFor(c => c.TaxNo).MinimumLength(3);
-            RuleFor(c => c.TaxOffice).MinimumLength(3);
-            RuleFor(c => c.Email).EmailAddress();
+            RuleFor(c => c.TaxNo).NotEmpty().MaximumLength(20);
+            RuleFor(c => c.TaxOffice).NotEmpty().MaximumLength(60);
+            RuleFor(c => c.Email).NotEmpty().EmailAddress();
         }
 
         public bool CheckPhoneNumber(string arg)
