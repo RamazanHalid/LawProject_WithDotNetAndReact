@@ -1,4 +1,4 @@
-    using Business.Extensions;
+using Business.Extensions;
 using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.IoC;
@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.IO;
@@ -31,7 +32,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers( );
+            services.AddControllers();
             services.ConfigureMapping();
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver());
@@ -42,7 +43,7 @@ options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
-         
+
             services.AddSwaggerGen(swagger =>
             {
                 //This is to generate the Default UI of Swagger Documentation  
@@ -103,8 +104,9 @@ options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.
             services.AddDependencyResolvers(new ICoreModule[] {
                new CoreModule()
             });
-    
+
             services.AddSignalR();
+            services.AddLogging();
 
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -125,11 +127,11 @@ options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.
 
             //app.UseHttpsRedirection();
             app.UseStaticFiles(
-                //new StaticFileOptions
-                //{
-                //    FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Uploads")),
-                //    RequestPath = "/Uploads",
-                //}
+            //new StaticFileOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Uploads")),
+            //    RequestPath = "/Uploads",
+            //}
 
             );
 

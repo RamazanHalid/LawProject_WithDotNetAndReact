@@ -3,6 +3,7 @@ using Core.Utilities.Helpers;
 using Entities.DTOs;
 using Entities.DTOs.UserDtos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace WebAPI.Controllers
@@ -12,14 +13,21 @@ namespace WebAPI.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
+        private readonly ILogger<AuthController> logger;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, ILogger<AuthController> logger)
         {
             _authService = authService;
+            this.logger = logger;
         }
         [HttpPost("login")]
         public IActionResult Login(UserForLoginDto userForLoginDto, int licenceId = 0)
         {
+            logger.LogInformation("Info");
+            logger.LogTrace("Trace");
+            logger.LogDebug("Debug");
+            logger.LogWarning("Warning");
+            logger.LogError("Error");
             var userToLogin = _authService.Login(userForLoginDto);
             if (!userToLogin.Success)
             {

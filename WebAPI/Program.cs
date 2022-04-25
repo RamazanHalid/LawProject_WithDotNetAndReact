@@ -22,6 +22,13 @@ namespace WebAPI
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureLogging(i =>
+                {
+                    i.ClearProviders();
+                    i.AddDebug();
+                    i.SetMinimumLevel(LogLevel.Debug);
+                    i.AddConsole();
+                })
                 .ConfigureContainer<ContainerBuilder>(builder =>
                 {
                     builder.RegisterModule(new AutofacBusinessModule());

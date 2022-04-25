@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -17,16 +20,24 @@ namespace Business.Concrete
             _courtOfficeTypeDal = courtOfficeTypeDal;
             _mapper = mapper;
         }
+        
+        //Create new Contact info from Contact Us part
+        [ValidationAspect(typeof(ContactInfoAddDtoValidator))]
         public IResult Add(ContactInformation entity)
         {
             _courtOfficeTypeDal.Add(entity);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
+
+        //List all Contact Informartion as admin
+        [SecuredOperation("admin")]
         public IDataResult<List<ContactInformation>> GetAll()
         {
             List<ContactInformation> courtOfficeTypes = _courtOfficeTypeDal.GetAll();
             return new SuccessDataResult<List<ContactInformation>>(courtOfficeTypes, Messages.GetAllSuccessfuly);
         }
+        //Get special  Contact Informartion as admin
+        [SecuredOperation("admin")]
         public IDataResult<ContactInformation> GetById(int id)
         {
             var contactInformation = _courtOfficeTypeDal.Get(c => c.Id == id);
@@ -34,6 +45,8 @@ namespace Business.Concrete
                 return new ErrorDataResult<ContactInformation>(Messages.TheItemDoesNotExists);
             return new SuccessDataResult<ContactInformation>(contactInformation, Messages.GetByIdSuccessfuly);
         }
+        // Delete Contact Info as admin
+        [SecuredOperation("admin")]
         public IResult Delete(int id)
         {
             var courtOfficeType = _courtOfficeTypeDal.Get(c => c.Id == id);
