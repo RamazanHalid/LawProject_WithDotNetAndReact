@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using Entities;
 using Entities.DTOs;
@@ -18,7 +21,9 @@ namespace Business.Concrete
             _customerService = customerService;
             _licenceUserService = licenceUserService;
         }
-
+        //Sending mail to selected Customers by customer Ids
+        [SecuredOperation("LicenceOwner,SendEmailToCustomer")]
+        [ValidationAspect(typeof(SendMessageWithIdsValidator))]
         public IResult SendEmailToCustomers(SendMessageWithIds sendMessageWithIds)
         {
             List<string> recipients = new List<string>();
@@ -40,6 +45,9 @@ namespace Business.Concrete
                 return result;
             return new SuccessResult("Emails Sended");
         }
+        //Sending mail to selected Customers by customer Ids
+        [SecuredOperation("LicenceOwner,SendEmailToMember")]
+        [ValidationAspect(typeof(SendMessageWithIdsValidator))]
         public IResult SendEmailToMembers(SendMessageWithIds sendMessageWithIds)
         {
             List<string> recipients = new List<string>();
@@ -61,7 +69,7 @@ namespace Business.Concrete
                 return result;
             return new SuccessResult("Emails Sended");
         }
-
+        [ValidationAspect(typeof(EmailContentValidator))]
         public IResult Send(EmailContent emailContent)
         {
             var smtpClient = new SmtpClient("smtp.gmail.com")
@@ -81,7 +89,7 @@ namespace Business.Concrete
             smtpClient.Send(mailMessage);
             return new SuccessResult("Email Sended");
         }
-
+        [ValidationAspect(typeof(EmailMultipleReciverValidator))]
         public IResult SendMessageWithList(EmailMultipleReciver emailMultipleReciver)
         {
             var smtpClient = new SmtpClient("smtp.gmail.com")
