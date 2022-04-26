@@ -16,7 +16,7 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(c => c.EventTypeId).GreaterThan(0);
             RuleFor(c => c.UserId).GreaterThan(0);
             RuleFor(c => c.CustomerId).GreaterThan(0);
-            RuleFor(c => c.Info).MinimumLength(10);
+            RuleFor(c => c.Info).NotEmpty().MaximumLength(500);
         }
     }
 }

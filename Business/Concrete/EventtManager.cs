@@ -2,6 +2,8 @@
 using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,7 +24,8 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("EventtAdd")]
+        [SecuredOperation("LicenceOwner,EventtAdd")]
+        [ValidationAspect(typeof(EventtAddDtoValidator))]
         public IResult Add(EventtAddDto eventtAddDto)
         {
             Eventt eventt = _mapper.Map<Eventt>(eventtAddDto);
@@ -33,7 +36,7 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("EventtUpdate")]
+        [SecuredOperation("LicenceOwner,EventtUpdate")]
         public IResult ChangeActivity(int id)
         {
             var eventt = _eventtDal.Get(c => c.EventtId == id);
@@ -45,7 +48,7 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("EventtDelete")]
+        [SecuredOperation("LicenceOwner,EventtDelete")]
         public IResult Delete(int id)
         {
             var eventt = _eventtDal.Get(cs => cs.EventtId == id);
@@ -56,7 +59,7 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("EventtGetAll")]
+        [SecuredOperation("LicenceOwner,EventtGetAll")]
         public IDataResult<List<EventtGetDto>> GetAll()
         {
             List<Eventt> eventtes = _eventtDal.GetAllWithInclude(c => c.LicenceId == _authenticatedUserInfoService.GetLicenceId());
@@ -64,7 +67,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<EventtGetDto>>(eventtDtos, Messages.GetAllSuccessfuly);
         }
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("EventtGetAllActive")]
+        [SecuredOperation("LicenceOwner,EventtGetAllActive")]
         public IDataResult<List<EventtGetDto>> GetAllActive()
         {
             List<Eventt> eventtes = _eventtDal.GetAllWithInclude(
@@ -73,7 +76,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<EventtGetDto>>(eventtDtos, Messages.GetAllSuccessfuly);
         }
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("EventtGetAll")]
+        [SecuredOperation("LicenceOwner,EventtGetAll")]
         public IDataResult<EventtGetDto> GetById(int id)
         {
             var eventt = _eventtDal.GetByIdWithInclude(cs => cs.EventtId == id);
@@ -82,7 +85,8 @@ namespace Business.Concrete
                 return new ErrorDataResult<EventtGetDto>(Messages.TheItemDoesNotExists);
             return new SuccessDataResult<EventtGetDto>(eventtDto, Messages.GetByIdSuccessfuly);
         }
-        [SecuredOperation("EventtUpdate")]
+        [SecuredOperation("LicenceOwner,EventtUpdate")]
+        [ValidationAspect(typeof(EventtUpdateDtoValidator))]
         public IResult Update(EventtUpdateDto eventtUpdateDto)
         {
             Eventt eventt = _eventtDal.Get(e => e.EventtId == eventtUpdateDto.EventtId);
