@@ -2,6 +2,8 @@
 using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -24,7 +26,8 @@ namespace Business.Concrete
         }
         //Adding new user to current licence as an user
         //Authority needed
-        [SecuredOperation("LicenceUserAdd")]
+        [SecuredOperation("LicenceOwner,LicenceUserAdd")]
+        [ValidationAspect(typeof(LicenceUserAddDtoValidator))]
         public IResult Add(LicenceUserAddDto licenceUserAddDto)
         {
             LicenceUser licenceUser = _mapper.Map<LicenceUser>(licenceUserAddDto);
@@ -35,7 +38,7 @@ namespace Business.Concrete
         }
         //Get all users belogs to current licence
         //Authory needed
-        [SecuredOperation("LicenceUserGetAll")]
+        [SecuredOperation("LicenceOwner,LicenceUserGetAll")]
         public IDataResult<List<LicenceUserGetDto>> GetAll()
         {
             List<LicenceUser> licenceUsers = _licenceUserDal
@@ -45,7 +48,7 @@ namespace Business.Concrete
         }
         //Get user belogs to current licence
         //Authory needed
-        //[SecuredOperation("LicenceUserGet")]
+        [SecuredOperation("LicenceOwner,LicenceUserGetAll")]
         public IDataResult<LicenceUserGetDto> GetById(int id)
         {
             LicenceUser licenceUser = _licenceUserDal.GetInclude(lu => lu.LicenceUserId == id);
@@ -55,6 +58,7 @@ namespace Business.Concrete
         //Update user belogs to current licence
         //Authory needed
         [SecuredOperation("LicenceUserUpdate")]
+        [ValidationAspect(typeof(LicenceUserUpdateDtoValidator))]
         public IResult Update(LicenceUserUpdateDto licenceUserUpdateDto)
         {
             LicenceUser licenceUser = _licenceUserDal.Get(lu => lu.LicenceUserId == licenceUserUpdateDto.LicenceUserId);
@@ -65,32 +69,39 @@ namespace Business.Concrete
             _licenceUserDal.Update(licenceUser);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }
+
+        //List all Licence User who accpeted by user id 
         public IDataResult<List<LicenceUserGetDto>> GetAllAcceptByUserId(int userId)
         {
             var licenceUsers = _licenceUserDal.GetAllInclude(lu => lu.UserId == userId && lu.IsUserAccept == true);
             List<LicenceUserGetDto> licenceUserGetDto = _mapper.Map<List<LicenceUserGetDto>>(licenceUsers);
             return new SuccessDataResult<List<LicenceUserGetDto>>(licenceUserGetDto, Messages.GetAllSuccessfuly);
         }
+        //List all licence users by auth user id
         public IDataResult<List<LicenceUserGetDto>> GetAllByUserId()
         {
             var licenceUsers = _licenceUserDal.GetAllInclude(lu => lu.UserId == _currentUserService.GetUserId());
             List<LicenceUserGetDto> licenceUserGetDto = _mapper.Map<List<LicenceUserGetDto>>(licenceUsers);
             return new SuccessDataResult<List<LicenceUserGetDto>>(licenceUserGetDto, Messages.GetAllSuccessfuly);
         }
+        //List all licence users by licence id
         public IDataResult<List<LicenceUserGetDto>> GetByLicenceId(int licenceId)
         {
             var licenceUsers = _licenceUserDal.GetAllInclude(lu => lu.UserId == _currentUserService.GetLicenceId());
             List<LicenceUserGetDto> licenceUserGetDto = _mapper.Map<List<LicenceUserGetDto>>(_licenceUserDal);
             return new SuccessDataResult<List<LicenceUserGetDto>>(licenceUserGetDto, Messages.GetAllSuccessfuly);
         }
-
+        [SecuredOperation("LicenceOwner")]
         public IDataResult<List<int>> GetAllUserIdsRecordedUser()
         {
             return new SuccessDataResult<List<int>>(_licenceUserDal.GetAllUserIdByLicenceId(_currentUserService.GetLicenceId()), Messages.GetAllSuccessfuly);
         }
+        [SecuredOperation("LicenceOwner")]
         public IResult ChangeAcceptence(int id)
         {
-            var licenceUser = _licenceUserDal.Get(ct => ct.LicenceUserId == id);
+            var licenceUser = _licenceUserDal.Get(ct => ct.LicenceUserId == id && ct.UserId == _currentUserService.GetUserId());
+            if (licenceUser == null)
+                return new ErrorResult(Messages.TheItemDoesNotExists);
             licenceUser.IsUserAccept = !licenceUser.IsUserAccept;
             _licenceUserDal.Update(licenceUser);
             return new SuccessResult(Messages.ActivityChangedSuccessfuly);
@@ -102,6 +113,7 @@ namespace Business.Concrete
                 return new SuccessResult(Messages.TheItemExists);
             return new ErrorResult(Messages.TheItemDoesNotExists);
         }
+        [SecuredOperation("LicenceOwner")]
         public IDataResult<int> GetCountByLicenceId(int licenceId)
         {
             var countObj = _licenceUserDal.GetCount(cs => cs.LicenceId == licenceId);
