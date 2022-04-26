@@ -2,6 +2,8 @@
 using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -20,7 +22,9 @@ namespace Business.Concrete
             _mapper = mapper;
             _authenticatedUserInfoService = authenticatedUserInfoService;
         }
-
+        //Addding new sms template order
+        [SecuredOperation("LicenceOwner")]
+        [ValidationAspect(typeof(SmsTemplateAddDtoValidator))]
         public IResult Add(SmsTemplateAddDto smsTemplateAddDto)
         {
             SmsTemplate smsTemplate = _mapper.Map<SmsTemplate>(smsTemplateAddDto);
@@ -28,6 +32,9 @@ namespace Business.Concrete
             _smsTemplateDal.Add(smsTemplate);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
+        //Updating the sms template order
+        [SecuredOperation("LicenceOwner")]
+        [ValidationAspect(typeof(SmsTemplateUpdateDtoValidator))]
         public IResult Update(SmsTemplateUpdateDto smsTemplateUpdateDto)
         {
             SmsTemplate smsTemplate = _smsTemplateDal.Get(s => s.SmsTemplateId == smsTemplateUpdateDto.SmsTemplateId);
@@ -38,6 +45,7 @@ namespace Business.Concrete
             _smsTemplateDal.Update(smsTemplate);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }
+        [SecuredOperation("LicenceOwner")]
         public IResult Delete(int id)
         {
             var smsTemplate = _smsTemplateDal.Get(cs => cs.SmsTemplateId == id);
@@ -47,6 +55,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.DeletedSuccessfuly);
         }
 
+        [SecuredOperation("LicenceOwner")]
         public IDataResult<List<SmsTemplateGetDto>> GetAll()
         {
             List<SmsTemplate> smsTemplatees = _smsTemplateDal.GetAll(c => c.LicenceId == _authenticatedUserInfoService.GetLicenceId());
@@ -54,6 +63,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<SmsTemplateGetDto>>(smsTemplateDtos, Messages.GetAllSuccessfuly);
         }
 
+        [SecuredOperation("LicenceOwner")]
         public IDataResult<SmsTemplateGetDto> GetById(int id)
         {
             var smsTemplate = _smsTemplateDal.Get(cs => cs.SmsTemplateId == id);

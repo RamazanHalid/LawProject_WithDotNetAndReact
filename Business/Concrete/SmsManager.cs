@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Results;
 using System;
@@ -25,6 +26,7 @@ namespace Business.Concrete
         private string userName = "5433232164";
         private string userPassword = "Terra2010";
 
+        [SecuredOperation("LicenceOwner,SendSms")]
         public IResult SendSmsToMembers(string message, List<int> ids)
         {
             List<string> members = new List<string>();
@@ -42,10 +44,12 @@ namespace Business.Concrete
             }
             return new SuccessResult("Message Sended");
         }
-
+        [SecuredOperation("LicenceOwner,SendSms")]
         public IResult SendSmsToCustomers(string message, List<int> ids)
         {
-                      List<string> members = new List<string>();
+            if (ids.Count == 0 || ids== null)
+                return new ErrorResult("There are not any number in the list!");
+            List<string> members = new List<string>();
             foreach (var item in ids)
             {
                 var re = _customerService.GetById(item);
@@ -62,12 +66,14 @@ namespace Business.Concrete
         }
 
 
-
+        [SecuredOperation("LicenceOwner,SendSms")]
         public IResult SendMessageWithList(string message, List<string> numberList)
         {
+            if (numberList.Count == 0 || numberList == null)
+                return new ErrorResult("There are not any number in the list!");
             this.Message = message;
             this.ReceipentList = new List<string>();
-         
+
             foreach (var item in numberList)
             {
                 this.ReceipentList.Add("+90" + item);
@@ -80,9 +86,11 @@ namespace Business.Concrete
             }
             return new ErrorResult(Messages.SmsCouldNotSend);
         }
-
+        [SecuredOperation("LicenceOwner,SendSms")]
         public IResult SendIndividualMessage(string message, params string[] cellPhone)
         {
+            if (cellPhone.Length == 0 || cellPhone == null)
+                return new ErrorResult("There are not any number in the list!");
             this.Message = message;
             this.ReceipentList = new List<string>();
             for (int i = 0; i < cellPhone.Length; i++)

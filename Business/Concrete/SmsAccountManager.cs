@@ -31,8 +31,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
 
-        //Needed to authority as a lawyer or licence owner.
-        //[SecuredOperation("SmsAccountUpdate")]
+        //Increase count of message.
         public IResult IncreaseCountOfSms(int id, int smsCount)
         {
             var smsAccount = _smsAccountDal.Get(c => c.SmsAccountId == id);

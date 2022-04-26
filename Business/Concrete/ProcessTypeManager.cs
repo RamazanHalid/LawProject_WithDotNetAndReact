@@ -23,7 +23,7 @@ namespace Business.Concrete
 
         //Adding new item as an User
         //Authority needed
-        [SecuredOperation("ProcessTypeAdd")]
+        [SecuredOperation("LicenceOwner,ProcessTypeAdd")]
         public IResult Add(ProcessTypeAddDto processTypeAddDto)
         {
             ProcessType processType = _mapper.Map<ProcessType>(processTypeAddDto);
@@ -33,7 +33,7 @@ namespace Business.Concrete
         }
         //GetAll items as an User
         //Authority needed
-        [SecuredOperation("ProcessTypeGetAll")]
+        [SecuredOperation("LicenceOwner,ProcessTypeGetAll")]
         public IDataResult<List<ProcessTypeGetDto>> GetAll()
         {
             List<ProcessType> processTypes = _processTypeDal.GetAll(p => p.LicenceId == _authenticatedUserInfoService.GetLicenceId());
@@ -42,7 +42,7 @@ namespace Business.Concrete
         }
         //GetAll items as an User
         //Authority needed
-        [SecuredOperation("ProcessTypeGetAllActive")]
+        [SecuredOperation("LicenceOwner,ProcessTypeGetAllActive")]
         public IDataResult<List<ProcessTypeGetDto>> GetAllActive()
         {
             List<ProcessType> processTypes = _processTypeDal.GetAll(p => p.LicenceId == _authenticatedUserInfoService.GetLicenceId() && p.IsActive == true);
@@ -51,19 +51,21 @@ namespace Business.Concrete
         }
         //Get special item
         //Authority needed
-        [SecuredOperation("ProcessTypeGetAll")]
+        [SecuredOperation("LicenceOwner,ProcessTypeGetAll")]
         public IDataResult<ProcessTypeGetDto> GetById(int id)
         {
-            ProcessType processType = _processTypeDal.Get(pt => pt.ProcessTypeId == id);
+            ProcessType processType = _processTypeDal.Get(pt => pt.ProcessTypeId == id && pt.LicenceId == _authenticatedUserInfoService.GetLicenceId());
+            if (processType == null)
+                return new ErrorDataResult<ProcessTypeGetDto>(Messages.TheItemDoesNotExists);
             ProcessTypeGetDto processTypeDto = _mapper.Map<ProcessTypeGetDto>(processType);
             return new SuccessDataResult<ProcessTypeGetDto>(processTypeDto, Messages.GetByIdSuccessfuly);
         }
         //Change activity special item
         //Authority needed
-        [SecuredOperation("ProcessTypeUpdate")]
+        [SecuredOperation("LicenceOwner,ProcessTypeUpdate")]
         public IResult ChangeActivity(int id)
         {
-            var processType = _processTypeDal.Get(p => p.ProcessTypeId == id);
+            var processType = _processTypeDal.Get(p => p.ProcessTypeId == id && p.LicenceId == _authenticatedUserInfoService.GetLicenceId());
             if (processType == null)
                 return new ErrorResult(Messages.TheItemDoesNotExists);
             processType.IsActive = !processType.IsActive;
@@ -73,16 +75,18 @@ namespace Business.Concrete
 
         //Delete special item
         //Authority needed
-        [SecuredOperation("ProcessTypeDelete")]
+        [SecuredOperation("LicenceOwner,ProcessTypeDelete")]
         public IResult Delete(int id)
         {
-            var processType = _processTypeDal.Get(pt => pt.ProcessTypeId == id);
+            var processType = _processTypeDal.Get(pt => pt.ProcessTypeId == id && pt.LicenceId == _authenticatedUserInfoService.GetLicenceId());
+            if (processType == null)
+                return new ErrorResult(Messages.TheItemDoesNotExists);
             _processTypeDal.Delete(processType);
             return new SuccessResult(Messages.DeletedSuccessfuly);
         }
         //Update special item
         //Authority needed
-        [SecuredOperation("ProcessTypeUpdate")]
+        [SecuredOperation("LicenceOwner,ProcessTypeUpdate")]
         public IResult Update(ProcessTypeUpdateDto processTypeDto)
         {
             ProcessType processType = _mapper.Map<ProcessType>(processTypeDto);
