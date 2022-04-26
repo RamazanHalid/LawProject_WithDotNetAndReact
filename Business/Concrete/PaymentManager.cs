@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using Entities;
 using Entities.Concrete;
@@ -50,7 +53,8 @@ namespace Business.Concrete
             _emailService = emailService;
             _userService = userService;
         }
-
+        [SecuredOperation("LicenceOwner")]
+        [ValidationAspect(typeof(PaymentDetailValidator))]
         public IResult MakePayment(PaymentDetail paymentDetail)
         {
             var bankCreditCard = CreditCardsInBankSimulation.Find(w => w.CreditCardNo == paymentDetail.CreditCardNo);

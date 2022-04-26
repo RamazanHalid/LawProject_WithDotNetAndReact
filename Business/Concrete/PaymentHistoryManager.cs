@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -23,6 +24,7 @@ namespace Business.Concrete
             _paymentHistoryDal.Add(paymentHistory);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
+        [SecuredOperation("LicenceOwner")]
         public IDataResult<List<PaymentHistory>> GetAll()
         {
             return new SuccessDataResult<List<PaymentHistory>>(_paymentHistoryDal.GetAll(p => p.LicenceId == _currentUserService.GetLicenceId()), Messages.GetAllSuccessfuly);
