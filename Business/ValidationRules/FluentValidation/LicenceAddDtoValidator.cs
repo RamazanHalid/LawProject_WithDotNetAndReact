@@ -10,14 +10,13 @@ namespace Business.ValidationRules.FluentValidation
         {
             RuleFor(c => c.PersonTypeId).GreaterThan(0);
             RuleFor(c => c.CityId).GreaterThan(0);
-            RuleFor(c => c.UserId).GreaterThan(0);
-            RuleFor(c => c.BillAddress).MinimumLength(15);
-            RuleFor(c => c.WebSite).MinimumLength(10);
-            RuleFor(c => c.PhoneNumber).Must(CheckPhoneNumber);
-            RuleFor(c => c.ProfilName).MinimumLength(5);
-            RuleFor(c => c.TaxNo).MinimumLength(3);
-            RuleFor(c => c.TaxOffice).MinimumLength(3);
-            RuleFor(c => c.Email).EmailAddress();
+            RuleFor(c => c.BillAddress).NotEmpty().MaximumLength(200);
+            RuleFor(c => c.WebSite).NotEmpty().MaximumLength(50);
+            RuleFor(c => c.PhoneNumber).Must(CheckPhoneNumber).WithMessage("Number must be 11 digits!");
+            RuleFor(c => c.ProfilName).NotEmpty().MaximumLength(50);
+            RuleFor(c => c.TaxNo).NotEmpty().MaximumLength(10);
+            RuleFor(c => c.TaxOffice).NotEmpty().MaximumLength(50);
+            RuleFor(c => c.Email).NotEmpty().EmailAddress();
         }
 
         public bool CheckPhoneNumber(string arg)

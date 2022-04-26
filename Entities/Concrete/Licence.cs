@@ -11,8 +11,8 @@ namespace Entities.Concrete
         public int UserId { get; set; }
         public  User User { get; set; }
         public DateTime StartDate { get; set; }
+        public bool IsMain { get; set; }
         public float Gb { get; set; }
-        public int SmsAccountId { get; set; }
         public int PersonTypeId { get; set; }
         public  PersonType PersonType { get; set; }
         public string BillAddress { get; set; }

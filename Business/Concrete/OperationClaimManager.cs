@@ -19,5 +19,9 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<OperationClaim>>(_operationClaimDal.GetAll(o => o.OperationClaimCategoryId == operationClaimCategoryId));
         }
+        public IDataResult<OperationClaim> GetByName(string claimsName)
+        {
+            return new SuccessDataResult<OperationClaim>(_operationClaimDal.Get(o => o.Name == claimsName));
+        }
     }
 }

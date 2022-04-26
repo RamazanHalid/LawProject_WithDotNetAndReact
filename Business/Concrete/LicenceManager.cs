@@ -2,6 +2,8 @@
 using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -41,30 +43,34 @@ namespace Business.Concrete
         }
 
         //Add new licence as an user.
-        //No need authority.
+        [SecuredOperation("LicenceOwner")]
         public IResult Add(LicenceAddDto licenceAddDto)
         {
-            BusinessRules.Run(DoesLicenceProfileNameExist(licenceAddDto.ProfilName));
+            var result = AddForSystem(licenceAddDto);
+            return result;
+        }
+        [ValidationAspect(typeof(LicenceAddDtoValidator))]
+        public IResult AddForSystem(LicenceAddDto licenceAddDto)
+        {
+            var rules = BusinessRules.Run(DoesLicenceProfileNameExist(licenceAddDto.ProfilName));
+            bool doesItFirstLicence = DoesItFirstLicence(licenceAddDto.UserId).Success;
+            if (!rules.Success)
+                return rules;
             Licence licence = _mapper.Map<Licence>(licenceAddDto);
             licence.Balance = 0;
             licence.Gb = 1;
-            licence.SmsAccountId = 1;
+            licence.IsMain = doesItFirstLicence;
             licence.StartDate = DateTime.Now;
             licence = _licenceDal.AddWithReturn(licence);
-            //Change here later. It will be GetAllByCategoryName!
-            var defaultClaims = _operationClaimService.GetAllByCategoryId(1);
-            foreach (var claim in defaultClaims.Data)
+            var defaultClaims = _operationClaimService.GetByName("LicenceOwner");
+            var result = _userOperationClaimService.Add(new UserOperationClaim
             {
-                var result = _userOperationClaimService.Add(new UserOperationClaim
-                {
-                    LicenceId = licence.LicenceId,
-                    UserId = licenceAddDto.UserId,
-                    OperationClaimId = claim.Id
-                });
-                if (!result.Success)
-                    return result;
-            }
-
+                LicenceId = licence.LicenceId,
+                UserId = licenceAddDto.UserId,
+                OperationClaimId = defaultClaims.Data.Id
+            });
+            if (!result.Success)
+                return result;
             _smsAccountService.Add(new SmsAccountAddDto()
             {
                 LicenceId = licence.LicenceId
@@ -72,10 +78,9 @@ namespace Business.Concrete
 
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
-
         //Get current auth user licence informations.
         //Need to LicenceGet authority.
-        [SecuredOperation("LicenceGet")]
+        [SecuredOperation("LicenceOwner")]
         public IDataResult<LicenceGetForUpdatingDto> GetCurrentAuthUserLicence()
         {
             var licence = _licenceDal.GetByIdWithInclude(l => l.LicenceId == _authenticatedUserInfoService.GetLicenceId());
@@ -84,6 +89,7 @@ namespace Business.Concrete
             LicenceGetForUpdatingDto licenceGetDto = _mapper.Map<LicenceGetForUpdatingDto>(licence);
             return new SuccessDataResult<LicenceGetForUpdatingDto>(licenceGetDto, Messages.GetByIdSuccessfuly);
         }
+        //Get Special licence by licence Id
         public IDataResult<Licence> GetById(int id)
         {
             var licence = _licenceDal.GetByIdWithInclude(l => l.LicenceId == id);
@@ -103,7 +109,8 @@ namespace Business.Concrete
 
         //Update current licence infoarmations!
         //LicenceUpdate needed for authority
-        [SecuredOperation("LicenceUpdate")]
+        [SecuredOperation("LicenceOwner")]
+        [ValidationAspect(typeof(LicenceAddDtoValidator))]
         public IResult Update(LicenceUpdateDto licenceUpdateDto)
         {
             var licenceResult = LicenceUpdateDtoToLicence(licenceUpdateDto);
@@ -120,6 +127,7 @@ namespace Business.Concrete
                 return new SuccessResult(Messages.TheItemExists);
             return new ErrorResult(Messages.TheItemDoesNotExists);
         }
+        [SecuredOperation("LicenceOwner")]
         public IResult AddBalance(int licenceId, float balance)
         {
             var licence = _licenceDal.Get(l => l.LicenceId == licenceId);
@@ -130,6 +138,7 @@ namespace Business.Concrete
             _licenceDal.Update(licence);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }
+        [SecuredOperation("LicenceOwner")]
         public IDataResult<CountOfLicenceInfo> GetCountInfo()
         {
             int licenceId = _authenticatedUserInfoService.GetLicenceId();
@@ -152,6 +161,7 @@ namespace Business.Concrete
         //Mapping LicenceUpdateDto to Licence
         //LicenceUpdate needed for authority
         [SecuredOperation("LicenceUpdate")]
+        [ValidationAspect(typeof(LicenceUpdateDtoValidator))]
         private IDataResult<Licence> LicenceUpdateDtoToLicence(LicenceUpdateDto licenceUpdateDto)
         {
             Licence licence = _licenceDal.Get(l => l.LicenceId == _authenticatedUserInfoService.GetLicenceId());//Get current licence
@@ -175,6 +185,17 @@ namespace Business.Concrete
         {
             bool result = _licenceDal.DoesItExist(l => l.ProfilName == profileName);
             if (result)
+            {
+                return new SuccessResult(Messages.TheItemExists);
+            }
+            return new ErrorResult(Messages.TheItemDoesNotExists);
+
+
+        }
+        public IResult DoesItFirstLicence(int userId)
+        {
+            int result = _licenceDal.GetCount(l => l.UserId == userId);
+            if (result == 0)
             {
                 return new SuccessResult(Messages.TheItemExists);
             }

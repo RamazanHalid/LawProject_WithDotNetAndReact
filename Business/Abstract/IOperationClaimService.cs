@@ -6,6 +6,7 @@ namespace Business.Abstract
 {
     public interface IOperationClaimService
     {
+        IDataResult<OperationClaim> GetByName(string claimsName);
         IDataResult<List<OperationClaim>> GetAllByCategoryId(int operationClaimCategoryId);
     }
 }
