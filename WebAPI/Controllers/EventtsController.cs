@@ -27,6 +27,18 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("GetAllLastEventsByNumber")]
+        public IActionResult GetAllLastEventsByNumber(int number)
+        {
+            var result = _eventtService.GetAllLastEventsByNumber(number);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpGet("GetAllActive")]
         public IActionResult GetAllActive()
         {

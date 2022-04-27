@@ -12,6 +12,7 @@ namespace Business.Abstract
         IResult Add(EventtAddDto eventtAddDto);
         IResult Update(EventtUpdateDto eventtUpdateDto);
         IResult Delete(int id);
+        IDataResult<List<EventtGetDto>> GetAllLastEventsByNumber(int number);
         IResult ChangeActivity(int id);
 
     }

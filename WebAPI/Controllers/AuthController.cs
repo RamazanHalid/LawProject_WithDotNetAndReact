@@ -22,12 +22,7 @@ namespace WebAPI.Controllers
         }
         [HttpPost("login")]
         public IActionResult Login(UserForLoginDto userForLoginDto, int licenceId = 0)
-        {
-            logger.LogInformation("Info");
-            logger.LogTrace("Trace");
-            logger.LogDebug("Debug");
-            logger.LogWarning("Warning");
-            logger.LogError("Error");
+        { 
             var userToLogin = _authService.Login(userForLoginDto);
             if (!userToLogin.Success)
             {

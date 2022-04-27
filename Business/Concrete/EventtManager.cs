@@ -67,6 +67,14 @@ namespace Business.Concrete
             return new SuccessDataResult<List<EventtGetDto>>(eventtDtos, Messages.GetAllSuccessfuly);
         }
         //Needed to authority as a lawyer or licence owner.
+        [SecuredOperation("LicenceOwner,EventtGetAll")]
+        public IDataResult<List<EventtGetDto>> GetAllLastEventsByNumber(int number)
+        {
+            List<Eventt> eventtes = _eventtDal.GetAllWithIncludeLastEventsByNumber(number,c => c.LicenceId == _authenticatedUserInfoService.GetLicenceId());
+            List<EventtGetDto> eventtDtos = _mapper.Map<List<EventtGetDto>>(eventtes);
+            return new SuccessDataResult<List<EventtGetDto>>(eventtDtos, Messages.GetAllSuccessfuly);
+        }
+        //Needed to authority as a lawyer or licence owner.
         [SecuredOperation("LicenceOwner,EventtGetAllActive")]
         public IDataResult<List<EventtGetDto>> GetAllActive()
         {

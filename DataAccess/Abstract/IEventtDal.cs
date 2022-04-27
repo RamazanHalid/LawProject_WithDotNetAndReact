@@ -10,5 +10,6 @@ namespace DataAccess.Abstract
     {
         List<Eventt> GetAllWithInclude(Expression<Func<Eventt, bool>> filter = null);
         Eventt GetByIdWithInclude(Expression<Func<Eventt, bool>> filter);
+        List<Eventt> GetAllWithIncludeLastEventsByNumber(int number, Expression<Func<Eventt, bool>> filter = null);
     }
 }
