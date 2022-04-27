@@ -25,6 +25,7 @@ namespace Business.Concrete
         {
             CasesDocument casesDocument = _mapper.Map<CasesDocument>(casesDocumentAddDto);
             casesDocument.CreatedDate = DateTime.Now;
+            casesDocument.LicenceId = _authenticatedUserInfoService.GetLicenceId();
             casesDocument.CreatorId = _authenticatedUserInfoService.GetUserId();
             _casesDocumentDal.Add(casesDocument);
             return new SuccessResult(Messages.AddedSuccessfuly);

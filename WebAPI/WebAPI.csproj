@@ -34,6 +34,7 @@
     <Folder Include="Uploads\CasesDocuments\" />
     <Folder Include="Uploads\LicenceImages\" />
     <Folder Include="Uploads\UserProfileImages\" />
+    <Folder Include="wwwroot\CasesDocuments\" />
   </ItemGroup>
 
 

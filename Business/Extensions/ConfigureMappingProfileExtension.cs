@@ -76,7 +76,7 @@ namespace Business.Extensions
 
                 //CasesDocument
                 CreateMap<CasesDocument, CasesDocumentGetDto>();
-                CreateMap<EventtAddDto, CasesDocument>();
+                CreateMap<CasesDocumentAddDto, CasesDocument>();
                 CreateMap<CasesDocumentUpdateDto, CasesDocument>();
 
                 //Casee

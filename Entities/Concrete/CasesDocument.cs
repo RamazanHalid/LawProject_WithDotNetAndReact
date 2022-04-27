@@ -13,6 +13,8 @@ namespace Entities.Concrete
         public DateTime CreatedDate { get; set; }
         public int CreatorId { get; set; }
         public User Creator { get; set; }
+        public int LicenceId { get; set; }
+        public Licence Licence { get; set; }
         public int CaseeId { get; set; }
         public Casee Casee { get; set; }
     }

@@ -9,7 +9,6 @@ namespace Entities.DTOs.EventtDtos
         public int CustomerId { get; set; }
         public int CaseeId { get; set; }
         public string Title { get; set; }
-
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int UserId { get; set; }

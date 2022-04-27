@@ -9,7 +9,7 @@ namespace Core.Utilities.Helpers
 {
     public class FileHelper
     {
-        private static string _currentDirectory = Environment.CurrentDirectory + "\\Uploads";
+        private static string _currentDirectory = Environment.CurrentDirectory + "\\wwwroot";
         private static string _folderName = "";
 
         public static IDataResult<string> Add(IFormFile file, string fileName)
@@ -24,7 +24,7 @@ namespace Core.Utilities.Helpers
             var randomName = Guid.NewGuid().ToString();
             CheckDirectoryExists(_currentDirectory + _folderName);
             CreateImageFile(_currentDirectory + _folderName + randomName + type, file);
-            return new SuccessDataResult<string>(("Uploads" + _folderName + randomName + type).Replace("\\", "/"), "");
+            return new SuccessDataResult<string>((_folderName + randomName + type).Replace("\\", "/"), "");
         }
         public static IDataResult<string> Update(IFormFile file, string imagePath)
         {
