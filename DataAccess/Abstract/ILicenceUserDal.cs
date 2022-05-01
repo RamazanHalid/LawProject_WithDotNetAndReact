@@ -1,4 +1,5 @@
 ﻿using Core.DataAccess;
+using Core.Entities.Concrete;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace DataAccess.Abstract
         List<LicenceUser> GetAllInclude(Expression<Func<LicenceUser, bool>> filter = null);
         LicenceUser GetInclude(Expression<Func<LicenceUser, bool>> filter);
         List<int> GetAllUserIdByLicenceId(int licenceId);
+        List<User> GetAllUsersRecordedToTheLicence(Expression<Func<LicenceUser, bool>> filter = null);
     }
 }

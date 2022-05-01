@@ -50,6 +50,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  Title = user.Title,
                                  CellPhone = user.CellPhone,
                                  Date = user.Date,
+                                 Email = user.Email
                              };
                              //on country.CountryId equals city.CountryId  
                 return result.FirstOrDefault();

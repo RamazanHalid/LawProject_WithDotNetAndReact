@@ -3,6 +3,7 @@ using Core.Entities.Concrete;
 using Core.Utilities.Security.Encryption;
 using Entities.Concrete;
 using Entities.DTOs.CaseeDtos;
+using Entities.DTOs.CaseIngonereUserDtos;
 using Entities.DTOs.CasesDocumentDtos;
 using Entities.DTOs.CaseStatusDtos;
 using Entities.DTOs.CaseTypeDtos;
@@ -52,6 +53,11 @@ namespace Business.Extensions
                 //Users
                 CreateMap<User, UserForAddAnOtherLicenceInfo>();
                 CreateMap<User, UserForLicenceUserGetDto>();
+                CreateMap<User, GetAllUserListForIgnoreUserList>();
+
+                //CaseIgnoreUser
+                CreateMap<CaseIgnoreUserAddDto, CaseIgnoreUser>();
+                CreateMap<CaseIgnoreUser, CaseIgnoreGetDto>();
 
                 //TaskType
                 CreateMap<CaseType, CaseTypeGetDto>();

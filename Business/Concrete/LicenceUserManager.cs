@@ -8,6 +8,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs.LicenceUserDtos;
+using Entities.DTOs.UserDtos;
 using System;
 using System.Collections.Generic;
 
@@ -118,6 +119,15 @@ namespace Business.Concrete
         {
             var countObj = _licenceUserDal.GetCount(cs => cs.LicenceId == licenceId);
             return new SuccessDataResult<int>(countObj, Messages.GetCountSuccessfuly);
+        }
+        [SecuredOperation("LicenceOwner")]
+        public IDataResult<List<GetAllUserListForIgnoreUserList>> UsersForIgnore()
+        {
+            var userList = _licenceUserDal.GetAllUsersRecordedToTheLicence(l => l.LicenceId == _currentUserService.GetLicenceId());
+            if (userList == null)
+                return new ErrorDataResult<List<GetAllUserListForIgnoreUserList>>(Messages.TheItemDoesNotExists);
+            List<GetAllUserListForIgnoreUserList> newUserList = _mapper.Map<List<GetAllUserListForIgnoreUserList>>(userList);
+            return new SuccessDataResult<List<GetAllUserListForIgnoreUserList>>(newUserList);
         }
     }
 }

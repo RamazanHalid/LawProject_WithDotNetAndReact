@@ -1,5 +1,7 @@
 ﻿using Core.Entities;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Entities.Concrete
 {
@@ -24,6 +26,7 @@ namespace Entities.Concrete
         public string Info { get; set; }
         public bool IsEnd { get; set; }
         public bool HasItBeenDecide { get; set; }
+        public virtual ICollection<CaseIgnoreUser> CaseIgnoreUsers { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? DecisionDate { get; set; }
         public DateTime? EndDate { get; set; }

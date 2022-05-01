@@ -14,12 +14,14 @@ namespace Business.Concrete
         IUserDal _userDal;
         private readonly ILicenceUserService _licenceUserService;
         private readonly IMapper _mapper;
+        private readonly ICurrentUserService _currentUserService;
 
-        public UserManager(IUserDal userDal, ILicenceUserService licenceUserService, IMapper mapper)
+        public UserManager(IUserDal userDal, ILicenceUserService licenceUserService, IMapper mapper, ICurrentUserService currentUserService)
         {
             _userDal = userDal;
             _licenceUserService = licenceUserService;
             _mapper = mapper;
+            _currentUserService = currentUserService;
         }
 
         public List<OperationClaim> GetClaims(User user, int licenceId)
@@ -60,6 +62,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<UserForAddAnOtherLicenceInfo>>(idsResult.Message);
             }
+            idsResult.Data.Add(_currentUserService.GetUserId());
             List<User> users = _userDal.ListAllUserExceptSomeIds(idsResult.Data);
             if (users == null)
                 return new ErrorDataResult<List<UserForAddAnOtherLicenceInfo>>(Messages.TheItemDoesNotExists);

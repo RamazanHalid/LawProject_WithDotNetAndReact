@@ -1,4 +1,5 @@
 ﻿using Core.DataAccess.EntityFramework;
+using Core.Entities.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,13 @@ namespace DataAccess.Concrete.EntityFramework
             using (var context = new HukukContext())
             {
                 return context.Set<LicenceUser>().Where(l => l.LicenceId == licenceId).Select(w => w.UserId).ToList();
+            }
+        }
+        public List<User> GetAllUsersRecordedToTheLicence(Expression<Func<LicenceUser, bool>> filter = null)
+        {
+            using (var context = new HukukContext())
+            {
+                return context.Set<LicenceUser>().Where(filter).Select(w => w.User2).ToList();
             }
         }
     }

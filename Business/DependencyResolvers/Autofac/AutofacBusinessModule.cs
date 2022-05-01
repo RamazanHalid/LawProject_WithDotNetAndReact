@@ -22,6 +22,10 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<ContactInformationManager>().As<IContactInformationService>().SingleInstance();
             builder.RegisterType<EfContactInformationDal>().As<IContactInformationDal>().SingleInstance();
 
+            
+            builder.RegisterType<CaseIgnoreUserManager>().As<ICaseIgnoreUserService>().SingleInstance();
+            builder.RegisterType<EfCaseIgnoreUserDal>().As<ICaseIgnoreUserDal>().SingleInstance();
+
 
 
             builder.RegisterType<SmsHistoryManager>().As<ISmsHistoryService>().SingleInstance();

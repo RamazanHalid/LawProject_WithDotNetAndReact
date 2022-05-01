@@ -52,8 +52,30 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<ContactInformation> ContactInformations { get; set; }
         public DbSet<SmsOrder> SmsOrders { get; set; }
         public DbSet<SmsHistory> SmsHistories { get; set; }
+        public DbSet<CaseIgnoreUser> CaseIgnoreUsers{ get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
+
+            modelBuilder.Entity<CaseIgnoreUser>()
+         .HasOne(t => t.Licence)
+         .WithMany()
+         .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            
+            modelBuilder.Entity<CaseIgnoreUser>()
+         .HasOne(t => t.User)
+         .WithMany()
+         .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            
+            modelBuilder.Entity<CaseIgnoreUser>()
+         .HasOne(t => t.Casee)
+         .WithMany(w=>w.CaseIgnoreUsers)
+         .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
 
             modelBuilder.Entity<SmsHistory>()
          .HasOne(t => t.Licence)

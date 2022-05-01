@@ -6,7 +6,7 @@ namespace Entities.DTOs.CasesDocumentDtos
 {
     public class CasesDocumentGetDto : IDto
     {
-        public int CaseDocumentId { get; set; }
+        public int CasesDocumentId { get; set; }
         public string Title { get; set; }
         public string Details { get; set; }
         public string DocumentPath { get; set; }

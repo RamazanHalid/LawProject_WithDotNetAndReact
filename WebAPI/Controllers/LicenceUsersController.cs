@@ -24,6 +24,16 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("UsersForIgnore")]
+        public IActionResult UsersForIgnore()
+        {
+            var result = _licenceUser.UsersForIgnore();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
         [HttpGet("GetAllAcceptedByUserId")]
         public IActionResult GetAllAcceptedByUserId(int userId)
         {

@@ -1,5 +1,7 @@
-﻿using Core.Utilities.Results;
+﻿using Business.BusinessAspects.Autofac;
+using Core.Utilities.Results;
 using Entities.DTOs.LicenceUserDtos;
+using Entities.DTOs.UserDtos;
 using System.Collections.Generic;
 
 namespace Business.Abstract
@@ -18,6 +20,7 @@ namespace Business.Abstract
         IDataResult<List<LicenceUserGetDto>> GetByLicenceId(int licenceId);
         IDataResult<List<int>> GetAllUserIdsRecordedUser();
         IDataResult<int> GetCountByLicenceId(int licenceId);
-
+        [SecuredOperation("LicenceOwner")]
+        IDataResult<List<GetAllUserListForIgnoreUserList>> UsersForIgnore();
     }
 }

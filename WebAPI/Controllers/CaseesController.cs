@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Entities.DTOs.CaseeDtos;
+using Entities.DTOs.CaseIngonereUserDtos;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace WebAPI.Controllers
 {
@@ -9,10 +11,12 @@ namespace WebAPI.Controllers
     public class CaseesController : ControllerBase
     {
         private ICaseeService _caseeService;
+        private ICaseIgnoreUserService _caseIgnoreUserService;
 
-        public CaseesController(ICaseeService caseeService)
+        public CaseesController(ICaseeService caseeService, ICaseIgnoreUserService caseIgnoreUserService)
         {
             _caseeService = caseeService;
+            _caseIgnoreUserService = caseIgnoreUserService;
         }
 
         [HttpGet("GetAll")]
@@ -57,6 +61,19 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+
+        [HttpPost("DeleteRange")]
+        public IActionResult DeleteRange(List<CaseIgnoreUserAddDto> caseeAddDto)
+        {
+            var result = _caseIgnoreUserService.AddWithRange(caseeAddDto);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpPost("Update")]
         public IActionResult Update(CaseeUpdateDto caseeUpdateDto)
         {

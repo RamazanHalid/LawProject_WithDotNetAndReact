@@ -1,11 +1,13 @@
 ﻿using Core.Entities;
 using Entities.Concrete;
+using Entities.DTOs.CaseIngonereUserDtos;
 using Entities.DTOs.CaseStatusDtos;
 using Entities.DTOs.CaseTypeDtos;
 using Entities.DTOs.CourtOfficeDtos;
 using Entities.DTOs.CourtOfficeTypeDtos;
 using Entities.DTOs.CustomerDtos;
 using System;
+using System.Collections.Generic;
 
 namespace Entities.DTOs.CaseeDtos
 {
@@ -17,6 +19,7 @@ namespace Entities.DTOs.CaseeDtos
         public CustomerGetDto Customer { get; set; }
         public CaseTypeGetDto CaseType { get; set; }
         public CaseStatusGetDto CaseStatus { get; set; }
+        public List<CaseIgnoreGetDto> CaseIgnoreUsers { get; set; }
         public int RoleTypeId { get; set; }
         public string CaseNo { get; set; }
         public string Info { get; set; }
