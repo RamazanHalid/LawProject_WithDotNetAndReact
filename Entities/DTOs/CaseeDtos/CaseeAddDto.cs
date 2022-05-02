@@ -9,7 +9,7 @@ namespace Entities.DTOs.CaseeDtos
     {
         public int CourtOfficeTypeId { get; set; }
         public int CourtOfficeId { get; set; }
-        public List<CaseIgnoreUserAddDto> CaseIgnoreUsers { get; set; }
+        public List<int> CaseIgnoreUserIds { get; set; }
         public int CustomerId { get; set; }
         public int CaseTypeId { get; set; }
         public int CaseStatusId { get; set; }

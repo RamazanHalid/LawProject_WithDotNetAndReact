@@ -34,12 +34,12 @@ namespace Business.Concrete
             casee.LicenceId = _authenticatedUserInfoService.GetLicenceId();
             var newCasee = _caseeDal.AddWithReturn(casee);
             List<CaseIgnoreUserAddDto> caseIgnoreUserAddDtos = new List<CaseIgnoreUserAddDto>();
-            for (int i = 0; i < caseeAddDto.CaseIgnoreUsers.Count; i++)
+            for (int i = 0; i < caseeAddDto.CaseIgnoreUserIds.Count; i++)
             {
                 caseIgnoreUserAddDtos.Add(new CaseIgnoreUserAddDto
                 {
                     CaseeId = newCasee.CaseeId,
-                    UserId = caseeAddDto.CaseIgnoreUsers[i].UserId
+                    UserId = caseeAddDto.CaseIgnoreUserIds[i]
                 });
             }
             _caseIgnoreUserService.AddWithRange(caseIgnoreUserAddDtos);
