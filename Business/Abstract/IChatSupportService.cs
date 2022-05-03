@@ -8,7 +8,10 @@ namespace Business.Abstract
     {
         IDataResult<List<ChatSupportListAsAdmin>> GetAllSelectedUserMessageAsAdmin(int userId, int licenceId);
         IDataResult<List<ChatSupportListAsUser>> GetAllMessageAsUser();
-        IResult AddAsAdmin(ChatSupportListAsAdmin chatSupportListAsAdmin);
+        IResult AddAsAdmin(ChatSupportAddAsAdmin chatSupportListAsAdmin);
         IResult AddAsUser(ChatSupportAddAsUser chatSupportAddAsUser);
-    }
+        IResult MakeItReadAsuser();
+        IResult MakeItReadAsAdmin(int userId, int licenceId);
+        IDataResult<List<ListAllUsersToSideBar>> ListAllUsersToSideBar();
+     }
 }

@@ -24,13 +24,12 @@ namespace Business.Concrete
             _currentUserService = currentUserService;
         }
 
-        public IResult AddAsAdmin(ChatSupportListAsAdmin chatSupportListAsAdmin)
+        public IResult AddAsAdmin(ChatSupportAddAsAdmin chatSupportListAsAdmin)
         {
             ChatSupport chatSupport = _mapper.Map<ChatSupport>(chatSupportListAsAdmin);
             chatSupport.DoesItRead = false;
             chatSupport.Date = DateTime.Now;
             chatSupport.IsAnswer = true;
-
             _chatSupportDal.Add(chatSupport);
 
             return new SuccessResult(Messages.AddedSuccessfuly);
@@ -44,8 +43,6 @@ namespace Business.Concrete
             chatSupport.DoesItRead = false;
             chatSupport.Date = DateTime.Now;
             chatSupport.IsAnswer = false;
-
-
             _chatSupportDal.Add(chatSupport);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
@@ -65,23 +62,22 @@ namespace Business.Concrete
         }
         public IResult MakeItReadAsAdmin(int userId, int licenceId)
         {
-            List<ChatSupport> chatSupport = _chatSupportDal.GetAll(cs => cs.LicenceId == licenceId && cs.UserId == userId);
+            List<ChatSupport> chatSupport = _chatSupportDal.GetAll(cs => cs.LicenceId == licenceId && cs.UserId == userId && cs.IsAnswer != true);
             chatSupport.ForEach(c => c.DoesItRead = true);
-
             _chatSupportDal.UpdateRange(chatSupport);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
         public IResult MakeItReadAsuser()
         {
-            List<ChatSupport> chatSupport = _chatSupportDal.GetAll(cs => cs.UserId == _currentUserService.GetUserId() && cs.LicenceId == _currentUserService.GetLicenceId());
+            List<ChatSupport> chatSupport = _chatSupportDal.GetAll(cs => cs.UserId == _currentUserService.GetUserId() && cs.LicenceId == _currentUserService.GetLicenceId()
+            && cs.IsAnswer == true);
             chatSupport.ForEach(c => c.DoesItRead = true);
             _chatSupportDal.UpdateRange(chatSupport);
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
-       //public List<ChatSuppoertUserListAsAdmin> ChatSuppoertUserListAsAdmins()
-       // {
-
-       // }
-
+        public IDataResult<List<ListAllUsersToSideBar>> ListAllUsersToSideBar()
+        {
+            return new SuccessDataResult<List<ListAllUsersToSideBar>>(_chatSupportDal.ListAllUsersToSideBars());
+        }
     }
 }

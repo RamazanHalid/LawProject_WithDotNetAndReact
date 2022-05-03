@@ -15,6 +15,14 @@ namespace Business.DependencyResolvers.Autofac
         protected override void Load(ContainerBuilder builder)
         {
 
+            builder.RegisterType<CasesUpdateHistoryManager>().As<ICasesUpdateHistoryService>().SingleInstance();
+            builder.RegisterType<EfCasesUpdateHistoryDal>().As<ICasesUpdateHistoryDal>().SingleInstance();
+
+
+            builder.RegisterType<ChatSupportManager>().As<IChatSupportService>().SingleInstance();
+            builder.RegisterType<EfChatSupportDal>().As<IChatSupportDal>().SingleInstance();
+
+
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
 
@@ -22,7 +30,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<ContactInformationManager>().As<IContactInformationService>().SingleInstance();
             builder.RegisterType<EfContactInformationDal>().As<IContactInformationDal>().SingleInstance();
 
-            
+
             builder.RegisterType<CaseIgnoreUserManager>().As<ICaseIgnoreUserService>().SingleInstance();
             builder.RegisterType<EfCaseIgnoreUserDal>().As<ICaseIgnoreUserDal>().SingleInstance();
 

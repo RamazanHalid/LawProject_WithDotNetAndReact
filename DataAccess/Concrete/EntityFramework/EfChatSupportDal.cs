@@ -41,28 +41,29 @@ namespace DataAccess.Concrete.EntityFramework
             using (var context = new HukukContext())
             {
                 context.Set<ChatSupport>().UpdateRange(chatSupports);
+                context.SaveChanges();
             }
         }
-        //public List<ChatSupport> GetAllWithInclude2()
-        //{
-        //    using (var context = new HukukContext())
-        //    {
-        //        var result = context.Set<ChatSupport>()
-        //            .Select(cs => new ChatSuppoertUserListAsAdmin
-        //            {
-        //                UserId = cs.UserId,
-        //                LicenceId = cs.LicenceId,
-        //                ChatSupportId = cs.ChatSupportId,   
-        //                Date = cs.Date,
-        //                DoesItRead = cs.DoesItRead,
-        //                IsAnswer = cs.IsAnswer,
-        //                LicenceName = cs.
-        //            })
-        //            .GroupBy(x => x.LicenceId);
-
-
-        //       return result.ToList()
-        //    }
-        //}
+        public List<ListAllUsersToSideBar> ListAllUsersToSideBars()
+        {
+            using (var context = new HukukContext())
+            {
+                var result = from chatSupport in context.ChatSupports
+                             join licence in context.Licences on chatSupport.LicenceId equals licence.LicenceId
+                             join user in context.Users on chatSupport.UserId equals user.Id
+                             orderby chatSupport.Date
+                             select new ListAllUsersToSideBar
+                             {
+                                 Date = chatSupport.Date,
+                                 LicenceId = chatSupport.LicenceId,
+                                 LicenceProfileName = licence.ProfilName,
+                                 UserFullName = user.FirstName + " " + user.LastName,
+                                 UserId = user.Id,
+                                 UserProfileImage = user.ProfileImage,
+                                 MessageCount = context.ChatSupports.Count(w => w.UserId == user.Id && w.LicenceId == chatSupport.LicenceId),
+                             };
+                return result.ToList();
+            }
+        }
     }
 }

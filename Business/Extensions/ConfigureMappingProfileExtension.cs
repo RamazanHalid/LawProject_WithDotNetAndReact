@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using Core.Entities.Concrete;
-using Core.Utilities.Security.Encryption;
 using Entities.Concrete;
 using Entities.DTOs.CaseeDtos;
 using Entities.DTOs.CaseIngonereUserDtos;
 using Entities.DTOs.CasesDocumentDtos;
 using Entities.DTOs.CaseStatusDtos;
 using Entities.DTOs.CaseTypeDtos;
+using Entities.DTOs.CaseUpdateHistoryDtos;
+using Entities.DTOs.ChatSupportDtos;
 using Entities.DTOs.CourtOfficeDtos;
 using Entities.DTOs.CourtOfficeTypeDtos;
 using Entities.DTOs.CreditCardReminderDtos;
@@ -58,6 +59,15 @@ namespace Business.Extensions
                 //CaseIgnoreUser
                 CreateMap<CaseIgnoreUserAddDto, CaseIgnoreUser>();
                 CreateMap<CaseIgnoreUser, CaseIgnoreGetDto>();
+
+                //ChatSupport
+                CreateMap<ChatSupport, ChatSupportListAsUser>();
+                CreateMap<ChatSupportAddAsUser, ChatSupport>();
+
+                //CasesUpdateHistory
+                CreateMap<CasesUpdateHistory, CaseUpdateHistoryGetDto>();
+                CreateMap<CaseeUpdateDto, CasesUpdateHistory>();
+
 
                 //TaskType
                 CreateMap<CaseType, CaseTypeGetDto>();
