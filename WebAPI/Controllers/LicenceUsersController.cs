@@ -99,5 +99,16 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("GetAllUserRecordToLicence")]
+        public IActionResult GetAllUserRecordToLicence(int pageNumber, int pageSize, int licenceId)
+        {
+            var result = _licenceUser.GetByLicenceIdAsAdmin(pageNumber, pageSize, licenceId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
     }
 }

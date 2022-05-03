@@ -22,5 +22,6 @@ namespace Business.Abstract
         IDataResult<int> GetCountByLicenceId(int licenceId);
         [SecuredOperation("LicenceOwner")]
         IDataResult<List<GetAllUserListForIgnoreUserList>> UsersForIgnore();
+        IDataResult<List<GetUserInfoForLicenceUserAsAdminDto>> GetByLicenceIdAsAdmin(int pageNumber, int pageSize, int licenceId);
     }
 }

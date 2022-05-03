@@ -129,5 +129,11 @@ namespace Business.Concrete
             List<GetAllUserListForIgnoreUserList> newUserList = _mapper.Map<List<GetAllUserListForIgnoreUserList>>(userList);
             return new SuccessDataResult<List<GetAllUserListForIgnoreUserList>>(newUserList);
         }
+        //List all licence users for admin
+        public IDataResult<List<GetUserInfoForLicenceUserAsAdminDto>> GetByLicenceIdAsAdmin(int pageNumber, int pageSize, int licenceId)
+        {
+            var licenceUsers = _licenceUserDal.GetAllUserRecordToLicence(pageNumber, pageSize, licenceId);
+             return new SuccessDataResult<List<GetUserInfoForLicenceUserAsAdminDto>>(licenceUsers, Messages.GetAllSuccessfuly);
+        }
     }
 }
