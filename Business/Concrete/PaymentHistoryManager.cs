@@ -4,6 +4,7 @@ using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs.PaymentHistoryDtos;
 using System.Collections.Generic;
 
 namespace Business.Concrete
@@ -28,6 +29,10 @@ namespace Business.Concrete
         public IDataResult<List<PaymentHistory>> GetAll()
         {
             return new SuccessDataResult<List<PaymentHistory>>(_paymentHistoryDal.GetAll(p => p.LicenceId == _currentUserService.GetLicenceId()), Messages.GetAllSuccessfuly);
+        }
+        public IDataResult<List<PaymentHistoryListAsAdmin>> GetAllAsAdminWithFilter(int pageNumber, int pageSize,int licenceId)
+        {
+            return new SuccessDataResult<List<PaymentHistoryListAsAdmin>>(_paymentHistoryDal.GetAllAsAdmin(pageNumber, pageSize, licenceId));
         }
 
     }

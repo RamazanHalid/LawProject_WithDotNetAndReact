@@ -25,5 +25,16 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("GetAllAsAdmin")]
+        public IActionResult GetAllAsAdmin(int pageNumber, int pageSize,int licenceId)
+        {
+            var result = _PaymentHistoryService.GetAllAsAdminWithFilter(pageNumber, pageSize, licenceId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
     }
 }

@@ -1,5 +1,7 @@
-﻿using Core.Utilities.Results;
+﻿using Business.BusinessAspects.Autofac;
+using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs.PaymentHistoryDtos;
 using System.Collections.Generic;
 
 namespace Business.Abstract
@@ -9,5 +11,7 @@ namespace Business.Abstract
     {
         IDataResult<List<PaymentHistory>> GetAll();
         IResult Add(PaymentHistory PaymentHistory);
+        [SecuredOperation("admin")]
+        IDataResult<List<PaymentHistoryListAsAdmin>> GetAllAsAdminWithFilter(int pageNumber, int pageSize, int licenceId);
     }
 }
