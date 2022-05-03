@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Helpers;
+using Entities;
 using Entities.DTOs.LicenceDtos;
 using Microsoft.AspNetCore.Mvc;
 namespace WebAPI.Controllers
@@ -25,6 +26,26 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpPost("GetAllLicencesAsAdmin")]
+        public IActionResult GetAllLicencesAsAdmin(int pageNumber, int pageSize, LicenceFilterAsAdmin licenceFilterAsAdmin)
+        {
+            var result = _licenceService.GetAllAsAdmin(pageNumber, pageSize, licenceFilterAsAdmin);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("GetByIdAsAdmin")]
+        public IActionResult GetByIdAsAdmin(int licenceId)
+        {
+            var result = _licenceService.GetByIdAsAdmin(licenceId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
         [HttpGet("GetAllByUserId")]
         public IActionResult GetAllByUserId(int userId)
         {

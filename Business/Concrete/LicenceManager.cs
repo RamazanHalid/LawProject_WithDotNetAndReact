@@ -8,6 +8,7 @@ using Core.Entities.Concrete;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using Entities;
 using Entities.Concrete;
 using Entities.DTOs.LicenceDtos;
 using Entities.DTOs.SmsAccountDtos;
@@ -157,6 +158,13 @@ namespace Business.Concrete
             }, Messages.GetAllSuccessfuly);
         }
 
+        public IDataResult<List<LicenceAfterLoginDto>> GetAllAsAdmin(int pageNumber, int pageSize, LicenceFilterAsAdmin licenceFilterAsAdmin)
+        {
+            List<Licence> licences = _licenceDal.GetAllAsAdmin(pageNumber, pageSize, licenceFilterAsAdmin);
+            List<LicenceAfterLoginDto> licenceAfterLoginDtos = _mapper.Map<List<LicenceAfterLoginDto>>(licences);
+            return new SuccessDataResult<List<LicenceAfterLoginDto>>(licenceAfterLoginDtos);
+        }
+
         #region Some methods which using in this class
         //Mapping LicenceUpdateDto to Licence
         //LicenceUpdate needed for authority
@@ -202,6 +210,11 @@ namespace Business.Concrete
             return new ErrorResult(Messages.TheItemDoesNotExists);
 
 
+        }
+
+        public IDataResult<Licence> GetByIdAsAdmin(int licenceId)
+        {
+            return new SuccessDataResult<Licence>(_licenceDal.GetByIdWithInclude(w => w.LicenceId == licenceId));
         }
         #endregion
     }

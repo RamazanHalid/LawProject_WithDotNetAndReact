@@ -1,5 +1,6 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
+using Entities;
 using Entities.Concrete;
 using Entities.DTOs.LicenceDtos;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,24 @@ namespace DataAccess.Concrete.EntityFramework
                 return filter == null
                     ? context.Set<Licence>().Include(l => l.City).ThenInclude(c => c.Country).Include(c => c.PersonType).ToList()
                     : context.Set<Licence>().Include(l => l.City).ThenInclude(c => c.Country).Include(c => c.PersonType).Where(filter).ToList();
+            }
+        }
+        public List<Licence> GetAllAsAdmin(int pageNumber, int pageSize, LicenceFilterAsAdmin licenceFilterAsAdmin)
+        {
+            using (var context = new HukukContext())
+            {
+                var result = context.Set<Licence>();
+                if (licenceFilterAsAdmin.ProfileName.Length > 0)
+                    result.Where(w => w.ProfilName.StartsWith(licenceFilterAsAdmin.ProfileName));
+                if (licenceFilterAsAdmin.UserId > 0)
+                    result.Where(w => w.UserId == licenceFilterAsAdmin.UserId);
+                if (licenceFilterAsAdmin.Email.Length > 0)
+                    result.Where(w => w.Email.StartsWith(licenceFilterAsAdmin.Email));
+                if (licenceFilterAsAdmin.IsActive == 0 || licenceFilterAsAdmin.IsActive == 1)
+                    result.Where(w => w.IsActive == Convert.ToBoolean(licenceFilterAsAdmin.IsActive));
+                result.Include(l => l.City).ThenInclude(c => c.Country).Include(c => c.PersonType).OrderBy(w=>w.StartDate);
+                result.Skip(pageNumber*pageSize).Take(pageSize);
+                return result.ToList();
             }
         }
 

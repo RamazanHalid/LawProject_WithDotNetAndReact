@@ -1,11 +1,8 @@
-﻿using Core.Entities.Concrete;
-using Core.Utilities.Results;
-using Core.Utilities.Security.JWT;
+﻿using Core.Utilities.Results;
+using Entities;
 using Entities.Concrete;
 using Entities.DTOs.LicenceDtos;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Abstract
 {
@@ -20,5 +17,7 @@ namespace Business.Abstract
         IResult AddBalance(int licenceId, float balance);
         IDataResult<CountOfLicenceInfo> GetCountInfo();
         IDataResult<Licence> GetById(int id);
+        IDataResult<Licence> GetByIdAsAdmin(int licenceId);
+        IDataResult<List<LicenceAfterLoginDto>> GetAllAsAdmin(int pageNumber, int pageSize, LicenceFilterAsAdmin licenceFilterAsAdmin);
     }
 }
