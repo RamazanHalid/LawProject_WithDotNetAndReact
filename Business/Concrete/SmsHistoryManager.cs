@@ -32,5 +32,12 @@ namespace Business.Concrete
                 , Messages.GetAllSuccessfuly);
         }
 
+        public IDataResult<List<SmsHistory>> GetAllAsAdmin(int pageNumber, int pageSize, int licenceId)
+        {
+            return new SuccessDataResult<List<SmsHistory>>(
+                _smsHistoryDal.GetAllWithPagination(pageNumber, pageSize, c => c.LicenceId == licenceId)
+                , Messages.GetAllSuccessfuly);
+        }
+
     }
 }

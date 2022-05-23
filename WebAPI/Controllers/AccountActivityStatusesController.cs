@@ -7,7 +7,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountActivityStatusesController : ControllerBase
+      class AccountActivityStatusesController : ControllerBase
     {
         private readonly IAccountActivityStatusService _accountActivityStatusService;
         public AccountActivityStatusesController(IAccountActivityStatusService accountActivityStatusService)

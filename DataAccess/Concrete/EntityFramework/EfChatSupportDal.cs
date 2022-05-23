@@ -48,22 +48,31 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new HukukContext())
             {
-                var result = from chatSupport in context.ChatSupports
-                             join licence in context.Licences on chatSupport.LicenceId equals licence.LicenceId
-                             join user in context.Users on chatSupport.UserId equals user.Id
+
+
+                var result = from licence in context.Licences
+                             join chatSupport in context.ChatSupports on licence.LicenceId equals chatSupport.LicenceId
+                             join user in context.Users on licence.UserId equals user.Id
+                             join profileAvatar in context.UserProfileAvatars on user.UserProfileAvatarId equals profileAvatar.UserProfileAvatarId
                              orderby chatSupport.Date
                              select new ListAllUsersToSideBar
                              {
-                                 Date = chatSupport.Date,
                                  LicenceId = chatSupport.LicenceId,
                                  LicenceProfileName = licence.ProfilName,
                                  UserFullName = user.FirstName + " " + user.LastName,
                                  UserId = user.Id,
-                                 UserProfileImage = user.ProfileImage,
-                                 MessageCount = context.ChatSupports.Count(w => w.UserId == user.Id && w.LicenceId == chatSupport.LicenceId),
+                                 UserProfileImage = profileAvatar.ProfileAvatarPath,
+                                 MessageCount = context.ChatSupports.Count(w => w.UserId == user.Id && w.LicenceId == chatSupport.LicenceId && w.DoesItRead == false),
                              };
-                return result.ToList();
+
+                return result.Distinct().ToList();
             }
         }
+
+    }
+    public class ForFiltering
+    {
+        public int LicenceId { get; set; }
+        public int UserId { get; set; }
     }
 }

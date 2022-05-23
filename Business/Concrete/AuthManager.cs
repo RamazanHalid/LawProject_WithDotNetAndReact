@@ -9,6 +9,7 @@ using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JWT;
 using Entities.DTOs;
+using Entities.DTOs.LicenceDtos;
 using Entities.DTOs.UserDtos;
 using System;
 using System.Collections.Generic;
@@ -25,13 +26,14 @@ namespace Business.Concrete
         private readonly ILicenceService _licenceService;
         private readonly ILicenceUserService _licenceUserService;
         private readonly IEmailService _emailService;
+        private readonly IPersonTypeService _personTypeService;
         public AuthManager(IUserService userService,
             ITokenHelper tokenHelper,
             ISmsService smsService,
             ICurrentUserService currentUserService,
             IMapper mapper,
             ILicenceService licenceService,
-            ILicenceUserService licenceUserService, IEmailService emailService)
+            ILicenceUserService licenceUserService, IEmailService emailService, IPersonTypeService personTypeService)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
@@ -41,6 +43,7 @@ namespace Business.Concrete
             _licenceService = licenceService;
             _licenceUserService = licenceUserService;
             _emailService = emailService;
+            _personTypeService = personTypeService;
         }
         [ValidationAspect(typeof(UserForRegisterValidator))]
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
@@ -63,12 +66,29 @@ namespace Business.Concrete
                 Date = DateTime.Now,
                 IsEmailApproved = false,
                 SmsCode = new Random().Next(0, 1000000).ToString("D6"),
-                ProfileImage = "/Uploads/UserProfileIamges/NoImage.jpg",
                 ApproveGuid = Guid.NewGuid(),
             };
-            _userService.Add(user);
-            string smsMessage = $"Account approvement code: {user.SmsCode}.";
-            _smsService.SendIndividualMessage(smsMessage, user.CellPhone);
+
+
+            int defaultPersonTyhpeId = _personTypeService.GetAll().Data[0].PersonTypeId;
+            User recordedUser = _userService.AddWithReturn(user);
+            var resultLicence =  _licenceService.AddWhenRegistered(new LicenceAddDto
+            {
+                BillAddress = "None",
+                CityId = user.CityId,
+                Email = user.Email,
+                PhoneNumber = user.CellPhone,
+                ProfilName = user.FirstName + " " + user.LastName,
+                TaxNo = "None",
+                TaxOffice = "None",
+                UserId = recordedUser.Id,
+                WebSite = "None",
+                PersonTypeId = defaultPersonTyhpeId
+            });
+            if (!resultLicence.Success)
+                return new ErrorDataResult<User>(Messages.UnableToAdd);
+            //string smsMessage = $"Account approvement code: {user.SmsCode}.";
+            //_smsService.SendIndividualMessage(smsMessage, user.CellPhone);
             return new SuccessDataResult<User>(Messages.CellPhoneCode);
         }
         [ValidationAspect(typeof(LoginValidator))]
@@ -87,10 +107,6 @@ namespace Business.Concrete
             }
             if (!userToCheck.IsEmailApproved)
             {
-                //string emailMessage = $"Account approvement" +
-                //    $" code: <a target='_blank' href='https://webapi.emlakofisimden.com/api/Auth/ApproveEmail?userId={userToCheck.Id}&approveGuid={userToCheck.ApproveGuid}'> " +
-                //    $"Click here for approve your account </a>";
-
                 string emailMessage = $"Account approvement" +
                     $" code: <a target='_blank' href='https://webapi.emlakofisimden.com/api/Auth/ApproveEmail?userId={userToCheck.Id}&approveGuid={userToCheck.ApproveGuid}'> " +
                     $"Click here for approve your account </a>";
@@ -99,7 +115,7 @@ namespace Business.Concrete
                 _emailService.Send(new Entities.EmailContent
                 {
                     Message = emailMessage,
-                    Subject = "Approve Email",
+                    Subject = "Approve our email",
                     To = userToCheck.Email
                 });
                 return new ErrorDataResult<User>("Your have Approve your email! Check your emails!");
@@ -192,8 +208,7 @@ namespace Business.Concrete
             user.LastName = updateUserDto.LastName;
             user.CountryId = updateUserDto.CountryId;
             user.FirstName = updateUserDto.FirstName;
-            if (!string.IsNullOrEmpty(user.ProfileImage))
-                user.ProfileImage = updateUserDto.ProfileImage;
+            user.UserProfileAvatarId = updateUserDto.UserProfileAvatarId;
             _userService.Update(user);
             return new SuccessResult(Messages.UpdatedSuccessfuly);
         }

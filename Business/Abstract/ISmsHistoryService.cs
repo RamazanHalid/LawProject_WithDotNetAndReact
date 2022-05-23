@@ -9,5 +9,6 @@ namespace Business.Abstract
     {
         IDataResult<List<SmsHistory>> GetAll(int pageNumber, int pageSize);
         IResult Add(SmsHistory smsHistory);
+        IDataResult<List<SmsHistory>> GetAllAsAdmin(int pageNumber, int pageSize, int licenceId);
     }
 }

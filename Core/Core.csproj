@@ -11,6 +11,7 @@
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="FluentValidation" Version="9.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="6.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.11">
       <PrivateAssets>all</PrivateAssets>

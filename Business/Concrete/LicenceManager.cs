@@ -50,17 +50,22 @@ namespace Business.Concrete
             var result = AddForSystem(licenceAddDto);
             return result;
         }
+        public IResult AddWhenRegistered(LicenceAddDto licenceAddDto)
+        {
+            var result = AddForSystem(licenceAddDto);
+            return result;
+        }
         [ValidationAspect(typeof(LicenceAddDtoValidator))]
         public IResult AddForSystem(LicenceAddDto licenceAddDto)
         {
-            var rules = BusinessRules.Run(DoesLicenceProfileNameExist(licenceAddDto.ProfilName));
-            bool doesItFirstLicence = DoesItFirstLicence(licenceAddDto.UserId).Success;
-            if (!rules.Success)
-                return rules;
+            var re = DoesLicenceProfileNameExist(licenceAddDto.ProfilName);
+            bool isItFirstLicence = IsItFirstLicence(licenceAddDto.UserId).Success;
+            if (!re.Success)
+                return re;
             Licence licence = _mapper.Map<Licence>(licenceAddDto);
             licence.Balance = 0;
             licence.Gb = 1;
-            licence.IsMain = doesItFirstLicence;
+            licence.IsMain = isItFirstLicence;
             licence.StartDate = DateTime.Now;
             licence = _licenceDal.AddWithReturn(licence);
             var defaultClaims = _operationClaimService.GetByName("LicenceOwner");
@@ -106,6 +111,11 @@ namespace Business.Concrete
             List<Licence> licences = _licenceDal.GetAllWithInclude(l => l.UserId == userId);
             List<LicenceAfterLoginDto> licenceAfterLoginDtos = _mapper.Map<List<LicenceAfterLoginDto>>(licences);
             return new SuccessDataResult<List<LicenceAfterLoginDto>>(licenceAfterLoginDtos, Messages.GetAllSuccessfuly);
+        }
+        public IDataResult<List<Licence>> GetAllByUserIdAsAdmin(int userId)
+        {
+            List<Licence> licences = _licenceDal.GetAllWithInclude(l => l.UserId == userId);
+            return new SuccessDataResult<List<Licence>>(licences, Messages.GetAllSuccessfuly);
         }
 
         //Update current licence infoarmations!
@@ -192,7 +202,7 @@ namespace Business.Concrete
         public IResult DoesLicenceProfileNameExist(string profileName)
         {
             bool result = _licenceDal.DoesItExist(l => l.ProfilName == profileName);
-            if (result)
+            if (!result)
             {
                 return new SuccessResult(Messages.TheItemExists);
             }
@@ -200,7 +210,7 @@ namespace Business.Concrete
 
 
         }
-        public IResult DoesItFirstLicence(int userId)
+        public IResult IsItFirstLicence(int userId)
         {
             int result = _licenceDal.GetCount(l => l.UserId == userId);
             if (result == 0)

@@ -13,42 +13,35 @@ namespace WebAPI.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
-        private readonly ILogger<AuthController> logger;
 
-        public AuthController(IAuthService authService, ILogger<AuthController> logger)
+        public AuthController(IAuthService authService)
         {
             _authService = authService;
-            this.logger = logger;
         }
         [HttpPost("login")]
         public IActionResult Login(UserForLoginDto userForLoginDto, int licenceId = 0)
-        { 
+        {
             var userToLogin = _authService.Login(userForLoginDto);
             if (!userToLogin.Success)
-            {
                 return BadRequest(userToLogin);
-            }
-
             if (licenceId > 0)
             {
                 var checkLicenceExistance = _authService.CheckLicenceExistance(userToLogin.Data.Id, licenceId);
                 if (!checkLicenceExistance.Success)
                     return BadRequest(checkLicenceExistance);
+
                 var result = _authService.CreateAccessToken(userToLogin.Data, licenceId);
                 if (result.Success)
-                {
                     return Ok(result);
-                }
                 return BadRequest(result);
             }
-
             var userIdResult = _authService.UserAfterLogin(userToLogin.Data.Id);
             if (userIdResult.Success)
-            {
                 return Ok(userIdResult);
-            }
             return BadRequest(userIdResult);
         }
+
+
         [HttpPost("register")]
         public IActionResult Register(UserForRegisterDto userForRegisterDto)
         {
@@ -119,18 +112,6 @@ namespace WebAPI.Controllers
         [HttpPost("UpdateUserProfile")]
         public ActionResult UpdateUserProfile(UpdateUserDto updateUserDto)
         {
-            if (updateUserDto.ProfileImageFile != null)
-            {
-                var uploadImageResult = FileHelper.Add(updateUserDto.ProfileImageFile, "UserProfileImages");
-                if (uploadImageResult.Success)
-                {
-                    updateUserDto.ProfileImage = uploadImageResult.Data;
-                }
-                else
-                {
-                    return BadRequest(uploadImageResult);
-                }
-            }
             var result = _authService.UpdateUser(updateUserDto);
             if (!result.Success)
             {

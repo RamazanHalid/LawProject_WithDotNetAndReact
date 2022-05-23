@@ -1,0 +1,21 @@
+{
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.Graylog", "Serilog.Sinks.Console" ],
+    "MinimumLevel": "Information",
+    "WriteTo": [
+      {
+        "Name": "Graylog",
+        "Args": {
+          "hostnameOrAddress": "20.113.66.240",
+          "port": "12201",
+          "transportType": "Udp",
+          "facility": "Medilaw"
+        }
+      }
+    ],
+
+    "Properties": {
+      "Application": "WebApi"
+    }
+  }
+}

@@ -7,7 +7,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountActivityTypesController : ControllerBase
+     class AccountActivityTypesController : ControllerBase
     {
         private readonly IAccountActivityTypeService _accountActivityTypeService;
         public AccountActivityTypesController(IAccountActivityTypeService accountActivityTypeService)

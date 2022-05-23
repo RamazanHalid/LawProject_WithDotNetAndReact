@@ -56,6 +56,16 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("GetAllByUserIdAsAdmin")]
+        public IActionResult GetAllByUserIdAsAdmin(int userId)
+        {
+            var result = _licenceService.GetAllByUserIdAsAdmin(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
         [HttpGet("GetForUpdating")]
         public IActionResult GetForUpdating()
         {

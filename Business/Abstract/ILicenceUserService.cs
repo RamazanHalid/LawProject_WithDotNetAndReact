@@ -23,5 +23,6 @@ namespace Business.Abstract
         [SecuredOperation("LicenceOwner")]
         IDataResult<List<GetAllUserListForIgnoreUserList>> UsersForIgnore();
         IDataResult<List<GetUserInfoForLicenceUserAsAdminDto>> GetByLicenceIdAsAdmin(int pageNumber, int pageSize, int licenceId);
+        IDataResult<List<UserRecordLicence>> GetAllLicenceToRecordUser(int pageNumber, int pageSize, int userId);
     }
 }

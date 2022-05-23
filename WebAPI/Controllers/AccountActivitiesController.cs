@@ -6,7 +6,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountActivitiesController : ControllerBase
+      class AccountActivitiesController : ControllerBase
     {
         private IAccountActivityService _accountActivityService;
 

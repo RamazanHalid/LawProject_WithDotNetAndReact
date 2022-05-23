@@ -7,9 +7,9 @@ using System.Text;
 namespace Core.DataAccess
 {
     //generic constraint
-    //class : referans tip
-    //IEntity : IEntity olabilir veya IEntity implemente eden bir nesne olabilir
-    //new() : new'lenebilir olmalı
+    //class : referance type
+    //IEntity : it can be IEntity  or an object that implements IEntity  
+    //new() : it have to be new
     public interface IEntityRepository<T> where T : class, IEntity, new()
     {
         List<T> GetAll(Expression<Func<T, bool>> filter = null);

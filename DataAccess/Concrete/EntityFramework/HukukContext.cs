@@ -31,9 +31,9 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<User> Users { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public DbSet<OperationClaimCategory> OperationClaimCategories { get; set; }
-        public DbSet<AccountActivity> AccountActivities { get; set; }
-        public DbSet<AccountActivityStatus> AccountActivityStatuses { get; set; }
-        public DbSet<AccountActivityType> AccountActivityTypes { get; set; }
+        //public DbSet<AccountActivity> AccountActivities { get; set; }
+        //public DbSet<AccountActivityStatus> AccountActivityStatuses { get; set; }
+        //public DbSet<AccountActivityType> AccountActivityTypes { get; set; }
         public DbSet<Casee> Casees { get; set; }
         public DbSet<OrderType> OrderTypes { get; set; }
         public DbSet<CustomerUser> CustomerUsers { get; set; }
@@ -52,9 +52,95 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<ContactInformation> ContactInformations { get; set; }
         public DbSet<SmsOrder> SmsOrders { get; set; }
         public DbSet<SmsHistory> SmsHistories { get; set; }
-        public DbSet<CaseIgnoreUser> CaseIgnoreUsers{ get; set; }
+        public DbSet<CaseIgnoreUser> CaseIgnoreUsers { get; set; }
+        public DbSet<ChatSupport> ChatSupports { get; set; }
+        public DbSet<CasesUpdateHistory> CasesUpdateHistories { get; set; }
+        public DbSet<UserProfileAvatar> UserProfileAvatars { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
+            modelBuilder.Entity<CaseType>()
+                       .HasOne(t => t.Licence)
+                       .WithMany()
+                       .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+            
+            modelBuilder.Entity<CaseType>()
+                     .HasOne(t => t.CourtOfficeType)
+                     .WithMany()
+                     .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+
+            modelBuilder.Entity<CasesUpdateHistory>()
+            .HasOne(t => t.Licence)
+            .WithMany()
+         .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<CaseStatus>()
+                    .HasOne(t => t.Licence)
+                    .WithMany()
+                    .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<CasesUpdateHistory>()
+     .HasOne(t => t.ByWhichUser)
+     .WithMany()
+  .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<CasesUpdateHistory>()
+     .HasOne(t => t.Casee)
+     .WithMany()
+  .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<CasesUpdateHistory>()
+     .HasOne(t => t.CaseStatus)
+     .WithMany()
+  .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<CasesUpdateHistory>()
+     .HasOne(t => t.CaseType)
+     .WithMany()
+  .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<CasesUpdateHistory>()
+     .HasOne(t => t.CourtOffice)
+     .WithMany()
+  .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<CasesUpdateHistory>()
+     .HasOne(t => t.CourtOfficeType)
+     .WithMany()
+  .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<CasesUpdateHistory>()
+     .HasOne(t => t.Customer)
+     .WithMany()
+  .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+            modelBuilder.Entity<CasesUpdateHistory>()
+     .HasOne(t => t.RoleType)
+     .WithMany()
+  .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+
+
+
+
+
+
+            modelBuilder.Entity<ChatSupport>()
+         .HasOne(t => t.Licence)
+         .WithMany()
+         .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+
+            modelBuilder.Entity<ChatSupport>()
+         .HasOne(t => t.User)
+         .WithMany()
+         .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
 
 
@@ -63,16 +149,16 @@ namespace DataAccess.Concrete.EntityFramework
          .WithMany()
          .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
-            
+
             modelBuilder.Entity<CaseIgnoreUser>()
          .HasOne(t => t.User)
          .WithMany()
          .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
-            
+
             modelBuilder.Entity<CaseIgnoreUser>()
          .HasOne(t => t.Casee)
-         .WithMany(w=>w.CaseIgnoreUsers)
+         .WithMany(w => w.CaseIgnoreUsers)
          .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
 
@@ -150,24 +236,7 @@ namespace DataAccess.Concrete.EntityFramework
              .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
 
-            modelBuilder.Entity<CaseStatus>()
-                       .HasOne(t => t.Licence)
-                       .WithMany()
-                       .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-
-
-
-            modelBuilder.Entity<CaseType>()
-                       .HasOne(t => t.Licence)
-                       .WithMany()
-                       .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-
-
-            modelBuilder.Entity<CaseType>()
-                     .HasOne(t => t.CourtOfficeType)
-                     .WithMany()
-                     .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
-
+         
 
             modelBuilder.Entity<CourtOffice>()
                .HasOne(t => t.Licence)
@@ -248,25 +317,25 @@ namespace DataAccess.Concrete.EntityFramework
 .OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
 
-            modelBuilder.Entity<AccountActivity>()
-.HasOne(t => t.Licence)
-.WithMany()
-.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+//            modelBuilder.Entity<AccountActivity>()
+//.HasOne(t => t.Licence)
+//.WithMany()
+//.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
-            modelBuilder.Entity<AccountActivity>()
-.HasOne(t => t.OrderType)
-.WithMany()
-.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+//            modelBuilder.Entity<AccountActivity>()
+//.HasOne(t => t.OrderType)
+//.WithMany()
+//.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
-            modelBuilder.Entity<AccountActivity>()
-.HasOne(t => t.AccountActivityStatus)
-.WithMany()
-.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+//            modelBuilder.Entity<AccountActivity>()
+//.HasOne(t => t.AccountActivityStatus)
+//.WithMany()
+//.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
-            modelBuilder.Entity<AccountActivity>()
-.HasOne(t => t.AccountActivityType)
-.WithMany()
-.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
+//            modelBuilder.Entity<AccountActivity>()
+//.HasOne(t => t.AccountActivityType)
+//.WithMany()
+//.OnDelete((DeleteBehavior)ReferentialAction.NoAction);
 
 
 

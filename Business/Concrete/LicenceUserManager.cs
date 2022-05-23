@@ -58,7 +58,7 @@ namespace Business.Concrete
         }
         //Update user belogs to current licence
         //Authory needed
-        [SecuredOperation("LicenceUserUpdate")]
+        [SecuredOperation("LicenceOwner")]
         [ValidationAspect(typeof(LicenceUserUpdateDtoValidator))]
         public IResult Update(LicenceUserUpdateDto licenceUserUpdateDto)
         {
@@ -134,6 +134,11 @@ namespace Business.Concrete
         {
             var licenceUsers = _licenceUserDal.GetAllUserRecordToLicence(pageNumber, pageSize, licenceId);
              return new SuccessDataResult<List<GetUserInfoForLicenceUserAsAdminDto>>(licenceUsers, Messages.GetAllSuccessfuly);
+        }
+        public IDataResult<List<UserRecordLicence>> GetAllLicenceToRecordUser(int pageNumber, int pageSize, int userId)
+        {
+            var licenceUsers = _licenceUserDal.GetAllLicenceToRecordUser(pageNumber, pageSize, userId);
+            return new SuccessDataResult<List<UserRecordLicence>>(licenceUsers, Messages.GetAllSuccessfuly);
         }
     }
 }

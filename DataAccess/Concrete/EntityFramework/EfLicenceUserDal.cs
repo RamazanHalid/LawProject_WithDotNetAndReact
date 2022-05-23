@@ -2,6 +2,7 @@
 using Core.Entities.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs.LicenceUserDtos;
 using Entities.DTOs.UserDtos;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -49,22 +50,46 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = from licenceUser in contex.LicenceUsers
                              join user in contex.Users on licenceUser.UserId equals user.Id
+                             join profileAvatar in contex.UserProfileAvatars on user.UserProfileAvatarId equals profileAvatar.UserProfileAvatarId
                              select new GetUserInfoForLicenceUserAsAdminDto
                              {
                                  CellPhone = user.CellPhone,
                                  AddedDateToLicence = licenceUser.StartDate,
+                                 UserId = user.Id,
+                                 Title = user.Title,
                                  Email = user.Email,
                                  EndDateLeavtFromLicence = licenceUser.EndDate,
                                  FirstName = user.FirstName,
                                  IsActiveOnLicence = licenceUser.IsActive,
                                  LastName = user.LastName,
-                                 ProfileImage = user.ProfileImage,
+                                 ProfileImage = profileAvatar.ProfileAvatarPath,
                                  RecordedLicenceId = licenceUser.LicenceId
                              };
                 if (licenceId > 0)
                     result.Where(w => w.RecordedLicenceId == licenceId);
-                result.OrderBy(w => w.AddedDateToLicence);
-                return result.ToList();
+                return result.Skip(pageNumber * pageSize).Take(pageSize).OrderBy(w => w.AddedDateToLicence).ToList();
+            }
+        }
+        public List<UserRecordLicence> GetAllLicenceToRecordUser(int pageNumber, int pageSize, int userId)
+        {
+            using (var contex = new HukukContext())
+            {
+                var result = from licenceUser in contex.LicenceUsers
+
+                             join user in contex.Users on licenceUser.UserId equals user.Id
+                             join licence in contex.Licences on licenceUser.LicenceId equals licence.LicenceId
+                             select new UserRecordLicence
+                             {
+                                 EndDate = licenceUser.EndDate,
+                                 StartDate = licenceUser.StartDate,
+                                 LicenceName = licence.ProfilName,
+                                 UserId = licenceUser.UserId,
+                                 IsActive = licenceUser.IsActive
+                             };
+                if (userId > 0)
+                    result.Where(w => w.UserId == userId);
+                return result.Skip(pageNumber * pageSize).Take(pageSize).OrderBy(w => w.StartDate).ToList();
+
             }
         }
     }

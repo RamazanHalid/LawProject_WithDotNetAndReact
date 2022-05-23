@@ -4,6 +4,7 @@ using Entities;
 using Entities.Concrete;
 using Entities.DTOs.LicenceDtos;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,16 +36,16 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = context.Set<Licence>();
                 if (licenceFilterAsAdmin.ProfileName.Length > 0)
-                    result.Where(w => w.ProfilName.StartsWith(licenceFilterAsAdmin.ProfileName));
+                    result.Where(w => w.ProfilName == licenceFilterAsAdmin.ProfileName);
                 if (licenceFilterAsAdmin.UserId > 0)
                     result.Where(w => w.UserId == licenceFilterAsAdmin.UserId);
                 if (licenceFilterAsAdmin.Email.Length > 0)
-                    result.Where(w => w.Email.StartsWith(licenceFilterAsAdmin.Email));
+                    result.Where(w => w.Email == licenceFilterAsAdmin.Email);
                 if (licenceFilterAsAdmin.IsActive == 0 || licenceFilterAsAdmin.IsActive == 1)
                     result.Where(w => w.IsActive == Convert.ToBoolean(licenceFilterAsAdmin.IsActive));
-                result.Include(l => l.City).ThenInclude(c => c.Country).Include(c => c.PersonType).OrderBy(w=>w.StartDate);
-                result.Skip(pageNumber*pageSize).Take(pageSize);
-                return result.ToList();
+
+                return result.Include(l => l.City).ThenInclude(c => c.Country).Include(c => c.PersonType).OrderBy(w => w.StartDate)
+                     .Skip(pageNumber * pageSize).Take(pageSize).ToList();
             }
         }
 

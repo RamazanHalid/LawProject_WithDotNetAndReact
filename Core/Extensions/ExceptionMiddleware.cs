@@ -2,9 +2,11 @@
 using Core.Utilities.CustomExceptions;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Core.Extensions
@@ -18,18 +20,20 @@ namespace Core.Extensions
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext httpContext)
+        public async Task InvokeAsync(HttpContext httpContext, IHostingEnvironment hostingEnvironment)
         {
             try
             {
+
                 await _next(httpContext);
             }
             catch (Exception e)
             {
-                await HandleExceptionAsync(httpContext, e);
+
+                await HandleExceptionAsync(httpContext, e, hostingEnvironment);
             }
         }
-        private Task HandleExceptionAsync(HttpContext httpContext, Exception e)
+        private Task HandleExceptionAsync(HttpContext httpContext, Exception e, IHostingEnvironment hostingEnvironment)
         {
             httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = 400;
@@ -68,6 +72,7 @@ namespace Core.Extensions
                     Message = CoreMessages.UnAuthorizedAccount,
                 }.ToString());
             }
+            Log(httpContext, e, hostingEnvironment);
             return httpContext.Response.WriteAsync(new ErrorDetails
             {
                 SituationCode = 1,
@@ -75,6 +80,19 @@ namespace Core.Extensions
                 StatusCode = httpContext.Response.StatusCode,
                 Message = e.Message
             }.ToString());
+        }
+        private void Log(HttpContext context, Exception exception, IHostingEnvironment hostingEnvironment)
+        {
+            var savePath = hostingEnvironment.WebRootPath;
+            var now = DateTime.UtcNow;
+            var fileName = $"myLogs.txt";
+            var filePath = Path.Combine(savePath, "logs", fileName);
+
+            using (var writer = File.AppendText(filePath))
+            {
+                writer.WriteLine($"{now.ToString("HH:mm:ss")} {context.Request.Path}");
+                writer.WriteLine(exception.Message + "\n" + exception.InnerException.Message);
+            }
         }
     }
 }

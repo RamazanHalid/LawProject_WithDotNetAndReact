@@ -1,6 +1,7 @@
 ﻿using Core.DataAccess;
 using Core.Entities.Concrete;
 using Entities.Concrete;
+using Entities.DTOs.LicenceUserDtos;
 using Entities.DTOs.UserDtos;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace DataAccess.Abstract
         List<int> GetAllUserIdByLicenceId(int licenceId);
         List<User> GetAllUsersRecordedToTheLicence(Expression<Func<LicenceUser, bool>> filter = null);
         List<GetUserInfoForLicenceUserAsAdminDto> GetAllUserRecordToLicence(int pageNumber, int pageSize, int licenceId);
+        List<UserRecordLicence> GetAllLicenceToRecordUser(int pageNumber, int pageSize, int userId);
     }
 }

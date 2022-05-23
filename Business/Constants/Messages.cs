@@ -41,5 +41,7 @@ namespace Business.Constants
 
         public static string GetCountFailed = "Get counf of entity failed";
         public static string GetCountSuccessfuly = "Get counf of entity successfuly";
+
+        public static string UnableToAdd = "Unable to add the licence!";
     }
 }

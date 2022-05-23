@@ -110,5 +110,17 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
+
+        [HttpGet("GetAllLicenceToRecordUser")]
+        public IActionResult GetAllLicenceToRecordUser(int pageNumber, int pageSize, int userId)
+        {
+            var result = _licenceUser.GetAllLicenceToRecordUser(pageNumber, pageSize, userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
     }
 }

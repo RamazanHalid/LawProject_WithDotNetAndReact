@@ -22,7 +22,7 @@ namespace Business.ValidationRules.FluentValidation
         public bool CheckPhoneNumber(string arg)
         {
 
-            return Regex.IsMatch(arg, @"^((\d{11}))$", RegexOptions.IgnoreCase);
+            return Regex.IsMatch(arg, @"^((\d{10}))$", RegexOptions.IgnoreCase);
 
         }
     }

@@ -12,7 +12,7 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(c => c.CityId).GreaterThan(0);
             RuleFor(c => c.BillAddress).NotEmpty().MaximumLength(200);
             RuleFor(c => c.WebSite).NotEmpty().MaximumLength(50);
-            RuleFor(c => c.PhoneNumber).Must(CheckPhoneNumber).WithMessage("Number must be 11 digits!");
+            //RuleFor(c => c.PhoneNumber).Must(CheckPhoneNumber).WithMessage("Number must be 11 digits!");
             RuleFor(c => c.ProfilName).NotEmpty().MaximumLength(50);
             RuleFor(c => c.TaxNo).NotEmpty().MaximumLength(10);
             RuleFor(c => c.TaxOffice).NotEmpty().MaximumLength(50);
@@ -22,7 +22,7 @@ namespace Business.ValidationRules.FluentValidation
         public bool CheckPhoneNumber(string arg)
         {
 
-            return Regex.IsMatch(arg, @"^((\d{11}))$", RegexOptions.IgnoreCase);
+            return Regex.IsMatch(arg, @"^((\d{10}))$", RegexOptions.IgnoreCase);
 
         }
     }

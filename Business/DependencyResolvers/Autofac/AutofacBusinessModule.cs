@@ -15,6 +15,9 @@ namespace Business.DependencyResolvers.Autofac
         protected override void Load(ContainerBuilder builder)
         {
 
+            builder.RegisterType<UserProfileAvatarManager>().As<IUserProfileAvatarService>().SingleInstance();
+            builder.RegisterType<EfUserProfileAvatarDal>().As<IUserProfileAvatarDal>().SingleInstance();
+            
             builder.RegisterType<CasesUpdateHistoryManager>().As<ICasesUpdateHistoryService>().SingleInstance();
             builder.RegisterType<EfCasesUpdateHistoryDal>().As<ICasesUpdateHistoryDal>().SingleInstance();
 

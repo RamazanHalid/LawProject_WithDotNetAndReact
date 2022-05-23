@@ -4,6 +4,7 @@ using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using Entities;
 using Entities.DTOs.UserDtos;
 using System.Collections.Generic;
 
@@ -33,7 +34,10 @@ namespace Business.Concrete
         {
             _userDal.Add(user);
         }
-
+        public User AddWithReturn(User user)
+        {
+            return _userDal.AddWithReturn(user);
+        }
         public User GetByCellPhone(string cellPhone)
         {
             return _userDal.Get(u => u.CellPhone == cellPhone);
@@ -54,6 +58,16 @@ namespace Business.Concrete
         public void Update(User user)
         {
             _userDal.Update(user);
+        }
+
+
+        public IDataResult<List<GetUserInfoAsAdminDto>> GetAllAsAdmin(int pageNumber, int pageSize, UserFilterAsAdmin userFilterAsAdmin)
+        {
+            return new SuccessDataResult<List<GetUserInfoAsAdminDto>>(_userDal.GetAllAsAdmin(pageNumber, pageSize, userFilterAsAdmin));
+        }
+        public IDataResult<GetUserDetailsAsAdmin> GetUserDetailsAsAdmin(int id)
+        {
+            return new SuccessDataResult<GetUserDetailsAsAdmin>(_userDal.GetUserDetailsAsAdmin(id));
         }
         public IDataResult<List<UserForAddAnOtherLicenceInfo>> GetAllUsersForAddingOtherLicence()
         {

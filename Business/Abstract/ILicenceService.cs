@@ -19,5 +19,7 @@ namespace Business.Abstract
         IDataResult<Licence> GetById(int id);
         IDataResult<Licence> GetByIdAsAdmin(int licenceId);
         IDataResult<List<LicenceAfterLoginDto>> GetAllAsAdmin(int pageNumber, int pageSize, LicenceFilterAsAdmin licenceFilterAsAdmin);
+        IDataResult<List<Licence>> GetAllByUserIdAsAdmin(int userId);
+        IResult AddWhenRegistered(LicenceAddDto licenceAddDto);
     }
 }

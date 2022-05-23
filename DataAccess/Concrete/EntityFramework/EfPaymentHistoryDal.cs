@@ -19,8 +19,8 @@ namespace DataAccess.Concrete.EntityFramework
                 result.Include(l => l.Licence);
                 if (licenceId > 0)
                     result.Where(w => w.LicenceId == licenceId);
-                result.Skip(pageNumber * pageSize).Take(pageSize);
-                return result.Select(x => new PaymentHistoryListAsAdmin
+                 
+                return result.Skip(pageNumber * pageSize).Take(pageSize).Select(x => new PaymentHistoryListAsAdmin
                 {
                     Balance = x.Balance,
                     Id = x.Id,

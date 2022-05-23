@@ -24,7 +24,7 @@ namespace Business.Concrete
 
         //Adding new item as an user
         //Authority needed
-        [SecuredOperation("TaskTypeAdd")]
+        [SecuredOperation("LicenceOwner,TaskTypeAdd")]
         public IResult Add(TaskTypeAddDto taskTypeAddDto)
         {
             TaskType taskType = _mapper.Map<TaskType>(taskTypeAddDto);
@@ -35,7 +35,7 @@ namespace Business.Concrete
 
         //Get all items as an user
         //Authority needed
-        [SecuredOperation("TaskTypeGetAll")]
+        [SecuredOperation("LicenceOwner,TaskTypeGetAll")]
         public IDataResult<List<TaskTypeGetDto>> GetAll()
         {
             List<TaskType> taskTypes = _taskTypeDal.GetAll(tp => tp.LicenceId == _authenticatedUserInfoService.GetLicenceId());
@@ -44,7 +44,7 @@ namespace Business.Concrete
         }
         //Get all active items as an user
         //Authority needed
-        [SecuredOperation("TaskTypeGetAllActive")]
+        [SecuredOperation("LicenceOwner,TaskTypeGetAllActive")]
         public IDataResult<List<TaskTypeGetDto>> GetAllActive()
         {
             List<TaskType> taskTypes = _taskTypeDal.GetAll(tp => tp.LicenceId == _authenticatedUserInfoService.GetLicenceId() && tp.IsActive == true);
@@ -53,7 +53,7 @@ namespace Business.Concrete
         }
         //Get special item 
         //Authority needed
-        [SecuredOperation("TaskTypeGetAll")]
+        [SecuredOperation("LicenceOwner,TaskTypeGetAll")]
         public IDataResult<TaskTypeGetDto> GetById(int id)
         {
             TaskType taskType = _taskTypeDal.Get(tp => tp.TaskTypeId == id);
@@ -64,7 +64,7 @@ namespace Business.Concrete
         }
         //Change activity special TaskType
         //Authority needed
-        [SecuredOperation("TaskTypeUpdate")]
+        [SecuredOperation("LicenceOwner,TaskTypeUpdate")]
         public IResult ChangeActivity(int id)
         {
             var taskType = _taskTypeDal.Get(tp => tp.TaskTypeId == id); //Get special TaskType
@@ -76,7 +76,7 @@ namespace Business.Concrete
         }
         //Change activity special TaskType
         //Authority needed
-        [SecuredOperation("TaskTypeDelete")]
+        [SecuredOperation("LicenceOwner,TaskTypeDelete")]
         public IResult Delete(int id)
         {
             var taskType = _taskTypeDal.Get(tp => tp.TaskTypeId == id);
@@ -87,7 +87,7 @@ namespace Business.Concrete
         }
         //Update special TaskType
         //Authority needed
-        [SecuredOperation("TaskTypeUpdate")]
+        [SecuredOperation("LicenceOwner,TaskTypeUpdate")]
         public IResult Update(TaskTypeUpdateDto taskTypeUpdateDto)
         {
             TaskType taskType = _mapper.Map<TaskType>(taskTypeUpdateDto);

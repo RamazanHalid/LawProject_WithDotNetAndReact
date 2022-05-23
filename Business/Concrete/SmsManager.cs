@@ -85,8 +85,7 @@ namespace Business.Concrete
                 return new SuccessResult(Messages.SmsSended);
             }
             return new ErrorResult(Messages.SmsCouldNotSend);
-        }
-        [SecuredOperation("LicenceOwner,SendSms")]
+        } 
         public IResult SendIndividualMessage(string message, params string[] cellPhone)
         {
             if (cellPhone.Length == 0 || cellPhone == null)

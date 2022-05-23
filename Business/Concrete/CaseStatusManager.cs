@@ -24,7 +24,7 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("CaseStatusAdd")]
+        [SecuredOperation("LicenceOwner,CaseStatusAdd")]
         [ValidationAspect(typeof(CaseStatusAddDtoValidator))]
         public IResult Add(CaseStatusAddDto caseStatusAddDto)
         {
@@ -35,7 +35,7 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("CaseStatusUpdate")]
+        [SecuredOperation("LicenceOwner,CaseStatusUpdate")]
         public IResult ChangeActivity(int id)
         {
             var caseStatus = _caseStatusDal.GetWithInclude(c => c.CaseStatusId == id);
@@ -47,7 +47,7 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("CaseStatusDelete")]
+        [SecuredOperation("LicenceOwner,CaseStatusDelete")]
         public IResult Delete(int id)
         {
             var caseStatus = _caseStatusDal.Get(cs => cs.CaseStatusId == id);
@@ -58,7 +58,7 @@ namespace Business.Concrete
         }
 
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("CaseStatusGetAll")]
+        [SecuredOperation("LicenceOwner,CaseStatusGetAll")]
         public IDataResult<List<CaseStatusGetDto>> GetAll()
         {
             List<CaseStatus> caseStatuses = _caseStatusDal.GetAllExpressionWithInclude(c => c.LicenceId == _authenticatedUserInfoService.GetLicenceId());
@@ -66,7 +66,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CaseStatusGetDto>>(caseStatusDtos, Messages.GetAllSuccessfuly);
         }
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("CaseStatusGetAllActive")]
+        [SecuredOperation("LicenceOwner,CaseStatusGetAllActive")]
         public IDataResult<List<CaseStatusGetDto>> GetAllActive()
         {
             List<CaseStatus> caseStatuses = _caseStatusDal.GetAllExpressionWithInclude(
@@ -75,7 +75,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CaseStatusGetDto>>(caseStatusDtos, Messages.GetAllSuccessfuly);
         }
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("CaseStatusGetAll")]
+        [SecuredOperation("LicenceOwner,CaseStatusGetAll")]
         public IDataResult<CaseStatusGetDto> GetById(int id)
         {
             var caseStatus = _caseStatusDal.GetWithInclude(cs => cs.CaseStatusId == id);
@@ -84,7 +84,7 @@ namespace Business.Concrete
                 return new ErrorDataResult<CaseStatusGetDto>(Messages.TheItemDoesNotExists);
             return new SuccessDataResult<CaseStatusGetDto>(caseStatusDto, Messages.GetByIdSuccessfuly);
         }
-        [SecuredOperation("CaseStatusUpdate")]
+        [SecuredOperation("LicenceOwner,CaseStatusUpdate")]
         public IResult Update(CaseStatusUpdateDto caseStatusUpdateDto)
         {
             CaseStatus caseStatus = _mapper.Map<CaseStatus>(caseStatusUpdateDto);

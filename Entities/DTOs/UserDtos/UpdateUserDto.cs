@@ -10,7 +10,6 @@ namespace Entities.DTOs.UserDtos
         public string Title { get; set; }
         public int CityId { get; set; }
         public int CountryId { get; set; }
-        public string ProfileImage { get; set; }
-        public IFormFile ProfileImageFile { get; set; } 
-    }
+        public int UserProfileAvatarId { get; set; }
+     }
 }

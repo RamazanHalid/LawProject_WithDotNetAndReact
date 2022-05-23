@@ -63,6 +63,7 @@ namespace Business.Extensions
                 //ChatSupport
                 CreateMap<ChatSupport, ChatSupportListAsUser>();
                 CreateMap<ChatSupportAddAsUser, ChatSupport>();
+                CreateMap<ChatSupportAddAsAdmin, ChatSupport>();
 
                 //CasesUpdateHistory
                 CreateMap<CasesUpdateHistory, CaseUpdateHistoryGetDto>();
