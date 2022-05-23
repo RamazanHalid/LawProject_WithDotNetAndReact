@@ -13,7 +13,8 @@ namespace WebAPI.Controllers
         private ICaseeService _caseeService;
         private ICaseIgnoreUserService _caseIgnoreUserService;
 
-        public CaseesController(ICaseeService caseeService, ICaseIgnoreUserService caseIgnoreUserService)
+        public CaseesController(ICaseeService caseeService,
+            ICaseIgnoreUserService caseIgnoreUserService)
         {
             _caseeService = caseeService;
             _caseIgnoreUserService = caseIgnoreUserService;
@@ -98,6 +99,16 @@ namespace WebAPI.Controllers
         public IActionResult ChangeStatus(int id, int caseStatusId)
         {
             var result = _caseeService.ChangeStatus(id, caseStatusId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("CheckThisCaseBlognsToThisLicence")]
+        public IActionResult CheckThisCaseBlognsToThisLicence(int id)
+        {
+            var result = _caseeService.CheckThisCaseBlognsToThisLicence(id);
             if (result.Success)
             {
                 return Ok(result);

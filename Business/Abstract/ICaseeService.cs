@@ -14,5 +14,6 @@ namespace Business.Abstract
         IResult Delete(int id);
         IResult ChangeStatus(int id, int caseStatusId);
         IDataResult<int> GetCountByLicenceId(int licenceId);
+        IDataResult<bool> CheckThisCaseBlognsToThisLicence(int id);
     }
 }
