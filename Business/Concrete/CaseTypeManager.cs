@@ -25,7 +25,7 @@ namespace Business.Concrete
         //Get all Case Types as an user
         //Authority needed
         [SecuredOperation("LicenceOwner,CaseTypeGetAll")]
-        public IDataResult<List<CaseTypeGetDto>> GetAll(int licenceId)
+        public IDataResult<List<CaseTypeGetDto>> GetAll()
         {
             List<CaseType> caseTypes = _caseTypeDal.GetAllWithInclude(c => c.LicenceId == _currentUserInfoService.GetLicenceId());
             List<CaseTypeGetDto> caseTypeGetDto = _mapper.Map<List<CaseTypeGetDto>>(caseTypes);

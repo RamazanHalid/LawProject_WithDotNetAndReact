@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
-            var result = _caseTypeService.GetAll(15);
+            var result = _caseTypeService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
