@@ -239,10 +239,12 @@ Finally, the user can add a case by clicking the "add!" button, which will updat
 The "edit" option is added as a button for each case, and the other options such as "details," "upload," "history," and "delete" are displayed in a pop over for user convenience, as shown in figure 53. The first option in the pop-over, "details," is displayed as a modal in figure 54, displaying the details of each case. The second option in the pop-over which is “upload” takes the user to a separate page taking the corresponding case’s id as shown in the figure 55 and allows the user to upload a file from their device by clicking the “new record” button on the top right corner of the page and fill out the required areas as well as selecting the related file from their devices as can be seen in the figure 56. After uploading the file, the user can view the details of the file and download it as shown in the figure 55. The third option in the pop-over, "history," takes the user to a separate page that takes the corresponding selected case's id and displays the edit history of the selected case, as shown in figure 57. The modified information in each edit operation is highlighted in yellow to indicate the difference in the modification. The user will be able to scroll through the update history by clicking the left and right arrows on the top right corner of the page. The scroll option is programed in such a way that the scroll to the left will be performed if the length of the scroll is greater than zero and the scroll to the right will be performed if the length of the scroll is greater than or equal to three as the corresponding code of this operation can be seen shown in the figure 58. Lastly, the last option in the pop-over is the delete option which provides the deletion of the cases.
 Finally, as with all other pages, there exists the filter option for various properties.
 </br>
-![image](https://user-images.githubusercontent.com/42031794/177765092-38dc0c66-1689-4c8c-983f-34ea31d106cf.png)
-
+<img src="https://user-images.githubusercontent.com/42031794/177765092-38dc0c66-1689-4c8c-983f-34ea31d106cf.png"/>
+<img src=""/>
 </br>
 Figure 51:</br>
+<img src="https://user-images.githubusercontent.com/42031794/177759763-406aad4d-23ea-4764-8024-062ff66a1299.png"/>
+
 ![image](https://user-images.githubusercontent.com/42031794/177759763-406aad4d-23ea-4764-8024-062ff66a1299.png)
  </br>
 Figure 52:     </br>  
@@ -253,8 +255,8 @@ Figure 53:          </br>
  </br>
 Figure 54:</br>
 ![image](https://user-images.githubusercontent.com/42031794/177759809-0275ed62-a7dc-4113-9519-65789ccce5a1.png)
- </br>
-Figure 55:
+ </br></br>
+Figure 55:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177759817-962f38e2-b2ec-491d-bf66-402cb4500140.png)
  </br>
 Figure 56:</br> 
@@ -291,13 +293,13 @@ The sixth option in the sidebar, "tasks," as shown in Figure 61, has the propert
 Finally, the user can add a task by clicking the "add!" button, which will update the task list so that the user can edit, delete, and view the details, as shown in figure 61. 
 The user can edit each client by clicking the "edit" button, which displays the individual information for each record and allows users to edit their records. If an error occurs while adding or editing records, an error alert message with the corresponding message will be displayed at the bottom of the modal, as shown in Figure 63, which shows the incident of adding a task with a client who has no cases. Users can also view detailed information about clients by clicking the arrow icon at the top right of the list. The details will be folded if you click the icon a second time. Users can also toggle the status of each client by using the switch option to provide convenience. Finally, there is a filter operation based on "clients," "users," "status," "task type," and "task status."
 </br>
-![image](https://user-images.githubusercontent.com/42031794/177759910-63e20729-b75e-4832-a3d1-6fe76d0e53cf.png)
+<img src="https://user-images.githubusercontent.com/42031794/177759910-63e20729-b75e-4832-a3d1-6fe76d0e53cf.png"/>
  </br>
 Figure 61:</br>
-![image](https://user-images.githubusercontent.com/42031794/177759925-9f9364ab-25bc-4425-96bd-f0e8cfc9a581.png)
+<img src="https://user-images.githubusercontent.com/42031794/177759925-9f9364ab-25bc-4425-96bd-f0e8cfc9a581.png" />
  </br>
-Figure 62:
-![image](https://user-images.githubusercontent.com/42031794/177759938-810832ef-e0c5-45d5-99b1-fab721796ee3.png)
+Figure 62:</br>
+<img src="https://user-images.githubusercontent.com/42031794/177759938-810832ef-e0c5-45d5-99b1-fab721796ee3.png" />
  </br>
 Figure 63:</br>
 •	Events page:
@@ -312,13 +314,16 @@ As shown in Figure 64, the sixth option in the sidebar, "tasks," has the propert
 8.	The “date” the event ends.
 9.	The information about the corresponding event.
 Finally, the user can add an event by clicking the "add!" button, which updates the event grid and allows the user to edit and view the details, as shown in figure 64. If an error occurs while adding or editing records, an error alert message will be displayed at the bottom of the modal with the corresponding message. To display the "details" of each event, a modal is opened, as shown in figure 66, which lists the details of the selected events.</br>
-![image](https://user-images.githubusercontent.com/42031794/177759959-282e25f2-007d-4761-80c5-b4e65e3ef16f.png)
+ <img src="https://user-images.githubusercontent.com/42031794/177759959-282e25f2-007d-4761-80c5-b4e65e3ef16f.png"/>
+
 </br>
 Figure 64:</br>
-![image](https://user-images.githubusercontent.com/42031794/177759974-781e23d7-3304-488a-8e0f-aa2353b7d68c.png)
+ <img src="https://user-images.githubusercontent.com/42031794/177759974-781e23d7-3304-488a-8e0f-aa2353b7d68c.png"/>
+
  </br>
 Figure 65:</br>
-![image](https://user-images.githubusercontent.com/42031794/177759983-5104c90a-fbe1-4cc4-8cc2-c02422d4d5c9.png)
+ <img src="https://user-images.githubusercontent.com/42031794/177759983-5104c90a-fbe1-4cc4-8cc2-c02422d4d5c9.png"/>
+
  </br>
 Figure 66:</br>
 •	Messages page:
@@ -326,9 +331,9 @@ The last option in the sidebar, "messages," as shown in Figure 67, allows users 
 Figure 69 depicts the "post draft" button in the top right corner of the page, which is used in the optional "post draft" option in the "messages" page, that when selected, fills out the title and message text fields with the information from the "post draft" page. There is also a "none" option, which when selected, clears the text fields.  This page includes options for adding, editing, and deleting messages. Figure 70 shows how to add a record by clicking the "new record" button at the top right corner of the page and entering a "title" and a "message." Additionally, edit and delete operations are performed by clicking the "edit" and "delete" buttons on each post draft.
 Finally, there is a "sent messages" button in the top right corner that takes users to a page with a list of sent messages and a pagination option, as shown in figure 71.
  </br>
-![image](https://user-images.githubusercontent.com/42031794/177760033-b672ce5d-7422-4aa4-8cd7-9fa74d215ab9.png)
-![image](https://user-images.githubusercontent.com/42031794/177760044-28d68183-013a-4384-944c-2cbec0d6b703.png)
-![image](https://user-images.githubusercontent.com/42031794/177760071-e5ce5dfb-b6f3-4819-b038-3156f973a70e.png)
+ <img src="https://user-images.githubusercontent.com/42031794/177760033-b672ce5d-7422-4aa4-8cd7-9fa74d215ab9.png"/>
+ <img src="https://user-images.githubusercontent.com/42031794/177760044-28d68183-013a-4384-944c-2cbec0d6b703.png"/>
+ <img src="https://user-images.githubusercontent.com/42031794/177760071-e5ce5dfb-b6f3-4819-b038-3156f973a70e.png"/>
 </br>
  
 Figure 67:</br>
