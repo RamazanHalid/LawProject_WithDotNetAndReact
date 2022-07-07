@@ -4,4 +4,4 @@ Law project is a Interactive Law Firm Automation and Management System. People i
 </br></br> 
 
 ### Project Document
-<a target="_blank" href="https://github.com/RamazanHalid/LawProject/files/8835367/Senior.Project.Medilaw.Ramazan.Halid.-.Samin.Taheri.pdf"> Click for project document</a>
+https://github.com/RamazanHalid/LawProject/files/8835367/Senior.Project.Medilaw.Ramazan.Halid.-.Samin.Taheri.pdf"
