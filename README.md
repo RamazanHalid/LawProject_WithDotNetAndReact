@@ -209,7 +209,7 @@ Figure 47:
 </br>
 •	Client’s page:
 The third option in the sidebar, "clients," as shown in Figure 48, has the properties to display, add, and edit client information as well as change their activity. Figure 49 shows how to perform the add operation by clicking on the "new record" button at the top right corner of the page and filling out the required fields. The user can edit each client by clicking the "edit" button which once clicked, as shown in the figure 50 each record's individual information will be displayed and allow users to edit their records. In case any error occurs will adding or editing the records, an error alert message including the corresponding message will be displayed at the bottom of the modal. Users can also view the clients' detailed information by clicking the arrow icon at the top right of the list. By clicking the icon for the second time, the details will be folded. There is also a switch option that users can use to toggle the status of each client. Finally, the "status" filter operation is integrated into this page.</br>
- ![image](https://user-images.githubusercontent.com/42031794/177759697-c5dc9edd-7a12-4c6e-a0ad-85fc018f06eb.png)
+![image](https://user-images.githubusercontent.com/42031794/177759697-c5dc9edd-7a12-4c6e-a0ad-85fc018f06eb.png)
 </br>
 Figure 48:</br>
 ![image](https://user-images.githubusercontent.com/42031794/177759706-9232797e-e600-4fb2-9366-7a61760a3115.png)
@@ -260,7 +260,7 @@ Figure 55:
 Figure 56:</br> 
 ![image](https://user-images.githubusercontent.com/42031794/177759827-a4fe2a7e-5074-4aa1-a541-70ae4b7dca14.png)
  </br>
-Figure 57:
+Figure 57: </br>
 ![image](https://user-images.githubusercontent.com/42031794/177759848-da7498c9-e4f9-4c14-bd7f-ed733d5524b2.png)
  </br>
 Figure 58:
@@ -312,7 +312,7 @@ As shown in Figure 64, the sixth option in the sidebar, "tasks," has the propert
 8.	The “date” the event ends.
 9.	The information about the corresponding event.
 Finally, the user can add an event by clicking the "add!" button, which updates the event grid and allows the user to edit and view the details, as shown in figure 64. If an error occurs while adding or editing records, an error alert message will be displayed at the bottom of the modal with the corresponding message. To display the "details" of each event, a modal is opened, as shown in figure 66, which lists the details of the selected events.</br>
- ![image](https://user-images.githubusercontent.com/42031794/177759959-282e25f2-007d-4761-80c5-b4e65e3ef16f.png)
+![image](https://user-images.githubusercontent.com/42031794/177759959-282e25f2-007d-4761-80c5-b4e65e3ef16f.png)
 </br>
 Figure 64:</br>
 ![image](https://user-images.githubusercontent.com/42031794/177759974-781e23d7-3304-488a-8e0f-aa2353b7d68c.png)
