@@ -1,10 +1,6 @@
 # LawProject
 Law project is a Interactive Law Firm Automation and Management System. People in the field of law will benefit from this application.  This project was developed using N-Layer Architecture and AOP.
 
-</br></br> 
-
-### Project Document
-[embed]https://github.com/RamazanHalid/LawProject/files/8835367/Senior.Project.Medilaw.Ramazan.Halid.-.Samin.Taheri.pdf[/embed]
 
 The Register page was the first page created in this application. Users must enter information such as their name, title, cellphone, email, country, city, and password on this page. All this information is validated using “yup,” a JavaScript schema builder for value parsing and validation. The city option in the register form is displayed according to the selection of the country. After the user enters all this information and presses the “Sign Up!” button, it first performs a validation control of the password and confirm password equality. In case any error occurs, an error popup that has been imported and integrated as a component will appear and display the error to the users. If there are no problems, a loader will be displayed in the button to show the users the improvements of the process. Once completed, as shown in the second figure, a success pop up will appear to show the users that the process was successful, and the user will be registered to the system and directed to the login page. There is also an option on the top right corner of the page to redirect the users to the login page in case they already have an account.
 The user interface of this page is depicted in the first image.
@@ -243,13 +239,14 @@ Finally, the user can add a case by clicking the "add!" button, which will updat
 The "edit" option is added as a button for each case, and the other options such as "details," "upload," "history," and "delete" are displayed in a pop over for user convenience, as shown in figure 53. The first option in the pop-over, "details," is displayed as a modal in figure 54, displaying the details of each case. The second option in the pop-over which is “upload” takes the user to a separate page taking the corresponding case’s id as shown in the figure 55 and allows the user to upload a file from their device by clicking the “new record” button on the top right corner of the page and fill out the required areas as well as selecting the related file from their devices as can be seen in the figure 56. After uploading the file, the user can view the details of the file and download it as shown in the figure 55. The third option in the pop-over, "history," takes the user to a separate page that takes the corresponding selected case's id and displays the edit history of the selected case, as shown in figure 57. The modified information in each edit operation is highlighted in yellow to indicate the difference in the modification. The user will be able to scroll through the update history by clicking the left and right arrows on the top right corner of the page. The scroll option is programed in such a way that the scroll to the left will be performed if the length of the scroll is greater than zero and the scroll to the right will be performed if the length of the scroll is greater than or equal to three as the corresponding code of this operation can be seen shown in the figure 58. Lastly, the last option in the pop-over is the delete option which provides the deletion of the cases.
 Finally, as with all other pages, there exists the filter option for various properties.
 </br>
- ![image](https://user-images.githubusercontent.com/42031794/177759757-d7e19b6b-fc61-4d1a-9b29-32cacd9ffa5e.png)
+![image](https://user-images.githubusercontent.com/42031794/177765092-38dc0c66-1689-4c8c-983f-34ea31d106cf.png)
+
 </br>
 Figure 51:</br>
 ![image](https://user-images.githubusercontent.com/42031794/177759763-406aad4d-23ea-4764-8024-062ff66a1299.png)
-   </br>
+ </br>
 Figure 52:     </br>  
-![image](https://user-images.githubusercontent.com/42031794/177759789-6f6cb3c2-4be4-445d-a49e-f81d432c54d3.png)
+![image](https://user-images.githubusercontent.com/42031794/177765218-99d2605f-0a57-4656-9207-8daa9b4ce0a9.png)
 </br>
 Figure 53:          </br>                                                                                                 
 ![image](https://user-images.githubusercontent.com/42031794/177759803-860e0df8-5553-412a-b3e0-57f2be3e5154.png)
