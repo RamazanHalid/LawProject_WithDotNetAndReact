@@ -245,7 +245,6 @@ Finally, as with all other pages, there exists the filter option for various pro
 Figure 51:</br>
 <img src="https://user-images.githubusercontent.com/42031794/177759763-406aad4d-23ea-4764-8024-062ff66a1299.png"/>
 
-![image](https://user-images.githubusercontent.com/42031794/177759763-406aad4d-23ea-4764-8024-062ff66a1299.png)
  </br>
 Figure 52:     </br>  
 ![image](https://user-images.githubusercontent.com/42031794/177765218-99d2605f-0a57-4656-9207-8daa9b4ce0a9.png)
