@@ -21,7 +21,7 @@ Figure 2:
 •	Login, Approve Account pages:
 After user registers to the system, he/she will be directed to the login page where he/she will confirm his/her account since it is the first time the user will use the system. First as shown in the third figure, once the user enters his/her cellphone number and password and presses the login button, an approvement code will be sent via SMS to confirm his/her account. In the next step, as shown in the fourth figure, the user will be directed to the account approvement page and once they enter their phone number along with the approvement code sent to their cellphone number, as shown in the fifth figure a success pop up will appear which shows that they have been approved their account successfully. In the next step the users will be directed to the login page again to approve their email this time. After they enter their cellphone which has been approved along with their password, a pop up will appear that says they should approve their email address as well. In this step, the users would have to check their email inboxes and they will be able to approve their email address by clicking on the email sent from MediLaw. In this step which the user has been approved his/her cellphone number and email account, he/she will be able to successfully login to the system. After the user enters the cellphone number and password and clicks the “login” button a loader will be displayed in the button to show the users the improvements of the process and after that, a success pop up will appear to show the users they have been logged in to the system successfully.
 </br></br>![image](https://user-images.githubusercontent.com/42031794/177733027-887fe749-c854-449c-ba31-18ecb5187b1f.png)
-Figure 3:</br></br>
+</br></br>Figure 3:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177733047-d7cbfac0-9ac6-4e0d-8799-dd130187715a.png)
 </br></br>Figure 4:</br></br>
  ![image](https://user-images.githubusercontent.com/42031794/177733102-c04c1521-ab85-48a0-b143-2cb7b60d14c8.png)
@@ -94,8 +94,8 @@ Figure 19:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177758867-66222334-bd7f-4f6c-8460-982ff637543d.png)
 </br></br>
  
-Figure 20:
-As seen in the figur</br></br>e 21, the second button in the “Licence Settings” page “Add Balance”, will navigate the users to the balance page where users can add balance to</br></br> their credit card. After adding a balance, a pop up will appear asking users whether they want to save their information for later use or not, which can then be used as a drop down in the credit card reminder option, as shown in figure 22. For the next append operations, users could choose between credit cards for convenience or "none," which clears the text fields. There also exists a button at the top of the page as can be seen in the figure 23, which when clicked, opens a modal to edit credit card information that has been selected via the credit card reminder option. Also, must be mentioned that all the modals in this application are programmed to prevent any closing when clicking the area around the modal and to ensure the modal closes only after clicking the close icon on the top right corner of the modal, by setting the “hidebackdrop” and “disableEscapeKeyDown” options of the modal component to true. After users submit the form, if the operation is successful, a success message will be displayed as shown in the figure 24 and an error message otherwise.
+Figure 20:</br></br>
+As seen in the figure 21, the second button in the “Licence Settings” page “Add Balance”, will navigate the users to the balance page where users can add balance to</br></br> their credit card. After adding a balance, a pop up will appear asking users whether they want to save their information for later use or not, which can then be used as a drop down in the credit card reminder option, as shown in figure 22. For the next append operations, users could choose between credit cards for convenience or "none," which clears the text fields. There also exists a button at the top of the page as can be seen in the figure 23, which when clicked, opens a modal to edit credit card information that has been selected via the credit card reminder option. Also, must be mentioned that all the modals in this application are programmed to prevent any closing when clicking the area around the modal and to ensure the modal closes only after clicking the close icon on the top right corner of the modal, by setting the “hidebackdrop” and “disableEscapeKeyDown” options of the modal component to true. After users submit the form, if the operation is successful, a success message will be displayed as shown in the figure 24 and an error message otherwise.
 </br></br>
  ![image](https://user-images.githubusercontent.com/42031794/177758889-11a426ba-3e13-424f-bf3b-540c9452f065.png)
 </br></br>
@@ -116,7 +116,7 @@ The third button on the "Licence Settings" page, as shown in figure 25, is the u
 Figure 25:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177758997-e09c0b93-21b7-488f-984b-45bdf2be2e74.png)
  </br></br>
-Figure 26:
+Figure 26: </br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177759008-60d89891-f4ee-490d-92e5-0b880162d25d.png)
  </br></br>
 Figure 27:
