@@ -11,9 +11,10 @@ The user interface of this page is depicted in the first image.
  
 
  ![image](https://user-images.githubusercontent.com/42031794/177732724-7ab13a0a-8001-4c56-a1f0-e8c5b17e6e20.png)
+ </br>
  Figure 1:
 ![image](https://user-images.githubusercontent.com/42031794/177732791-c9afecab-20b8-4e27-847c-dd3ededb51d9.png)
-
+</br>
 Figure 2:
 •	Login, Approve Account pages:
 After user registers to the system, he/she will be directed to the login page where he/she will confirm his/her account since it is the first time the user will use the system. First as shown in the third figure, once the user enters his/her cellphone number and password and presses the login button, an approvement code will be sent via SMS to confirm his/her account. In the next step, as shown in the fourth figure, the user will be directed to the account approvement page and once they enter their phone number along with the approvement code sent to their cellphone number, as shown in the fifth figure a success pop up will appear which shows that they have been approved their account successfully. In the next step the users will be directed to the login page again to approve their email this time. After they enter their cellphone which has been approved along with their password, a pop up will appear that says they should approve their email address as well. In this step, the users would have to check their email inboxes and they will be able to approve their email address by clicking on the email sent from MediLaw. In this step which the user has been approved his/her cellphone number and email account, he/she will be able to successfully login to the system. After the user enters the cellphone number and password and clicks the “login” button a loader will be displayed in the button to show the users the improvements of the process and after that, a success pop up will appear to show the users they have been logged in to the system successfully.
