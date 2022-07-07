@@ -20,13 +20,15 @@ namespace Business.Concrete
         private readonly IMapper _mapper;
         private readonly ICaseIgnoreUserService _caseIgnoreUserService;
         private readonly ICasesUpdateHistoryService _casesUpdateHistoryService;
-        public CaseeManager(ICaseeDal caseeDal, IMapper mapper, ICurrentUserService authenticatedUserInfoService, ICaseIgnoreUserService caseIgnoreUserService, ICasesUpdateHistoryService casesUpdateHistoryService)
+        private readonly INotificationService _notificationService;
+        public CaseeManager(ICaseeDal caseeDal, IMapper mapper, ICurrentUserService authenticatedUserInfoService, ICaseIgnoreUserService caseIgnoreUserService, ICasesUpdateHistoryService casesUpdateHistoryService, INotificationService notificationService)
         {
             _caseeDal = caseeDal;
             _mapper = mapper;
             _authenticatedUserInfoService = authenticatedUserInfoService;
             _caseIgnoreUserService = caseIgnoreUserService;
             _casesUpdateHistoryService = casesUpdateHistoryService;
+            _notificationService = notificationService;
         }
         //Needed to authority as a lawyer or licence owner.
         [SecuredOperation("LicenceOwner,CaseeAdd")]
@@ -66,6 +68,15 @@ namespace Business.Concrete
                 HasItBeenDecide = newCasee.HasItBeenDecide,
                 DecisionDate = newCasee.DecisionDate,
             });
+            _notificationService.Add(new Notification
+            {
+                Content = newCasee.Info,
+                Date = DateTime.Now,
+                IsRead = false,
+                LicenceId = _authenticatedUserInfoService.GetLicenceId(),
+                Title = "New Case added",
+                UserId = _authenticatedUserInfoService.GetUserId()
+            });
             return new SuccessResult(Messages.AddedSuccessfuly);
         }
         //Needed to authority as a lawyer or licence owner.
@@ -102,6 +113,19 @@ namespace Business.Concrete
                && !ignoreUsers.Data.Contains(c.CaseeId));
             List<CaseeGetDto> caseeDtos = _mapper.Map<List<CaseeGetDto>>(caseees);
             return new SuccessDataResult<List<CaseeGetDto>>(caseeDtos, Messages.GetAllSuccessfuly);
+
+        }
+           //Needed to authority as a lawyer or licence owner.
+        [SecuredOperation("LicenceOwner,CaseeGetAll,CustomerGetAll,TaskGetAll,EventtGetAll,EventtGetAll,CaseeGetAll")]
+        public IDataResult<List<CaseeGetForDropDownDto>> CaseeGetForDropDown()
+        {
+            var ignoreUsers = _caseIgnoreUserService.GetAllCaseIdsByUserId(_authenticatedUserInfoService.GetUserId());
+            if (!ignoreUsers.Success)
+                return new ErrorDataResult<List<CaseeGetForDropDownDto>>(Messages.TheItemDoesNotExists);
+            List<Casee> caseees = _caseeDal.GetAllWithInclude(c => c.LicenceId == _authenticatedUserInfoService.GetLicenceId()
+               && !ignoreUsers.Data.Contains(c.CaseeId));
+            List<CaseeGetForDropDownDto> caseeDtos = _mapper.Map<List<CaseeGetForDropDownDto>>(caseees);
+            return new SuccessDataResult<List<CaseeGetForDropDownDto>>(caseeDtos, Messages.GetAllSuccessfuly);
         }
         [SecuredOperation("LicenceOwner,CaseeGetAll")]
         public IDataResult<List<CaseeGetDto>> GetAllByCustomerId(int customerId)

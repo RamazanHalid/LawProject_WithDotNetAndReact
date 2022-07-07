@@ -97,7 +97,7 @@ namespace Business.Extensions
                 CreateMap<CasesDocumentUpdateDto, CasesDocument>();
 
                 //Casee
-                CreateMap<Casee, CaseeGetDto>();
+                CreateMap<Casee, CaseeGetForDropDownDto>();
                 CreateMap<CaseeAddDto, Casee>();
                 CreateMap<CaseeUpdateDto, Casee>();
 
@@ -157,6 +157,7 @@ namespace Business.Extensions
                 //CourtOffice
                 CreateMap<CourtOfficeUpdateDto, CourtOffice>();
                 CreateMap<CourtOfficeAddDto, CourtOffice>();
+                CreateMap<CourtOffice, CourtOfficeGetForDropDownDto>();
                 CreateMap<CourtOffice, CourtOfficeGetDto>()
                     .ForMember(dst => dst.CourtOfficeTypeGetDto, x => x.MapFrom(src => src.CourtOfficeType))
                     .ForMember(dst => dst.City, x => x.MapFrom(src => src.City));
@@ -170,6 +171,7 @@ namespace Business.Extensions
                 CreateMap<CustomerUpdateDto, Customer>();
                 CreateMap<CustomerAddDto, Customer>();
                 CreateMap<Customer, CustomerGetDto>();
+                CreateMap<Customer, CustomerGetForDropDownDto>();
 
                 //SmsAccount
                 CreateMap<SmsAccountAddDto, SmsAccount>();

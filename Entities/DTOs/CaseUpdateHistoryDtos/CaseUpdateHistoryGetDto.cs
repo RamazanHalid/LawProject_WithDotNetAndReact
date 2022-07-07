@@ -15,7 +15,7 @@ namespace Entities.DTOs.CaseUpdateHistoryDtos
         public int CasesUpdateHistoryId { get; set; }
         public DateTime ChangeDate { get; set; }
         public GetAllUserListForIgnoreUserList ByWhichUser { get; set; }
-        public CaseeGetDto Casee { get; set; }
+        public CaseeGetForDropDownDto Casee { get; set; }
         public CourtOfficeTypeGetDto CourtOfficeType { get; set; }
         public CourtOfficeGetDto CourtOffice { get; set; }
         public CustomerGetDto Customer { get; set; }

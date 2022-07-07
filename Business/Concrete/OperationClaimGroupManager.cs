@@ -17,7 +17,7 @@ namespace Business.Concrete
 
         public IDataResult<List<OperationClaimGroup>> GetAll()
         {
-            return new SuccessDataResult<List<OperationClaimGroup>>(_operationClaimGroupDal.GetAllWithInclude(s=>s.OperationClaimGroupName != "admin"));
+            return new SuccessDataResult<List<OperationClaimGroup>>(_operationClaimGroupDal.GetAllWithInclude(s=>s.OperationClaimGroupName != "admin" && s.OperationClaimGroupName != "LicenceOwner"));
         }
 
     }

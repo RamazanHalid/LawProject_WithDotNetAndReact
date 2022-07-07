@@ -66,7 +66,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CaseStatusGetDto>>(caseStatusDtos, Messages.GetAllSuccessfuly);
         }
         //Needed to authority as a lawyer or licence owner.
-        [SecuredOperation("LicenceOwner,CaseStatusGetAllActive")]
+        [SecuredOperation("LicenceOwner,CaseStatusGetAll,CustomerGetAll,TaskGetAll,EventtGetAll,EventtGetAll,CaseeGetAll")]
         public IDataResult<List<CaseStatusGetDto>> GetAllActive()
         {
             List<CaseStatus> caseStatuses = _caseStatusDal.GetAllExpressionWithInclude(

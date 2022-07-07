@@ -33,6 +33,7 @@ namespace Business.Concrete
             List<CourtOfficeTypeGetDto> courtOfficeTypeGetDtos = _mapper.Map<List<CourtOfficeTypeGetDto>>(courtOfficeTypes);
             return new SuccessDataResult<List<CourtOfficeTypeGetDto>>(courtOfficeTypeGetDtos, Messages.GetAllSuccessfuly);
         }
+
         public IDataResult<CourtOfficeTypeGetDto> GetById(int id)
         {
             var courtOfficeType = _courtOfficeTypeDal.Get(c => c.CourtOfficeTypeId == id);

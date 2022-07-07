@@ -30,6 +30,16 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("GetAllCaseForDropDown")]
+        public IActionResult GetAllCaseForDropDown()
+        {
+            var result = _caseeService.CaseeGetForDropDown();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
 
         [HttpGet("GetAllByCustomerId")]
         public IActionResult GetAllByCustomerId(int customerId)

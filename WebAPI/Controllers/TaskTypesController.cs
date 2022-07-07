@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAllActive")]
         public IActionResult GetAllActive()
         {
-            var result = _taskTypeService.GetAll();
+            var result = _taskTypeService.GetAllActive();
             if (result.Success)
             {
                 return Ok(result);

@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Results;
+﻿using Business.BusinessAspects.Autofac;
+using Core.Utilities.Results;
 using Entities.DTOs.CustomerDtos;
 using System.Collections.Generic;
 
@@ -14,5 +15,7 @@ namespace Business.Abstract
         IResult Update(CustomerUpdateDto customerUpdateDro);
         IResult ChangeActivity(int id);
         IDataResult<int> GetCountByLicenceId(int licenceId);
+        [SecuredOperation("LicenceOwner,CustomerGetAllActive,CustomerGetAll,TaskGetAll,EventtGetAll,EventtGetAll,CaseeGetAll")]
+        IDataResult<List<CustomerGetForDropDownDto>> GetAllClientsForDropDown();
     }
 }

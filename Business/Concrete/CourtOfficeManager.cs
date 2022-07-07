@@ -59,6 +59,14 @@ namespace Business.Concrete
             List<CourtOfficeGetDto> courtOfficeGetDtos = _mapper.Map<List<CourtOfficeGetDto>>(courtOffices);
             return new SuccessDataResult<List<CourtOfficeGetDto>>(courtOfficeGetDtos, Messages.GetAllSuccessfuly);
         }
+        //List all active Court Office as licenceOwner or Lawyer
+        [SecuredOperation("LicenceOwner,CourtOfficeGetAll,CustomerGetAll,TaskGetAll,EventtGetAll,EventtGetAll,CaseeGetAll")]
+        public IDataResult<List<CourtOfficeGetForDropDownDto>> GetAllCourtOfficesForDropDown()
+        {
+            List<CourtOffice> courtOffices = _courtOfficeDal.GetAllWithInclude(c => c.LicenceId == _currentUserService.GetLicenceId() && c.IsActive == true);
+            List<CourtOfficeGetForDropDownDto> courtOfficeGetDtos = _mapper.Map<List<CourtOfficeGetForDropDownDto>>(courtOffices);
+            return new SuccessDataResult<List<CourtOfficeGetForDropDownDto>>(courtOfficeGetDtos, Messages.GetAllSuccessfuly);
+        }
         //Get special Court Office as licenceOwner or Lawyer
         [SecuredOperation("LicenceOwner,CourtOfficeGetAll")]
         public IDataResult<CourtOfficeGetDto> GetById(int id)

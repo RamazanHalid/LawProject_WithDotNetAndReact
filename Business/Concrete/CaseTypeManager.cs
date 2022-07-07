@@ -45,7 +45,7 @@ namespace Business.Concrete
         }
         //Get all Active Case Types as an user
         //Authority needed
-        [SecuredOperation("LicenceOwner,CaseTypeGetAllActive")]
+        [SecuredOperation("LicenceOwner,CaseTypeGetAll,CustomerGetAll,TaskGetAll,EventtGetAll,EventtGetAll,CaseeGetAll")]
         public IDataResult<List<CaseTypeGetDto>> GetAllActive()
         {
             List<CaseType> caseTypes = _caseTypeDal.GetAllWithInclude(c => c.LicenceId == _currentUserInfoService.GetLicenceId() && c.IsActive == true);

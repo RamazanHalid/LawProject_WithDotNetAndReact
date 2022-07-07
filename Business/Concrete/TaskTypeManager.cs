@@ -44,7 +44,7 @@ namespace Business.Concrete
         }
         //Get all active items as an user
         //Authority needed
-        [SecuredOperation("LicenceOwner,TaskTypeGetAllActive")]
+        [SecuredOperation("LicenceOwner,TaskTypeGetAll,CustomerGetAll,TaskGetAll,EventtGetAll,EventtGetAll,CaseeGetAll")]
         public IDataResult<List<TaskTypeGetDto>> GetAllActive()
         {
             List<TaskType> taskTypes = _taskTypeDal.GetAll(tp => tp.LicenceId == _authenticatedUserInfoService.GetLicenceId() && tp.IsActive == true);

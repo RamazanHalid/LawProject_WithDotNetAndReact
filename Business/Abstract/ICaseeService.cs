@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Results;
+﻿using Business.BusinessAspects.Autofac;
+using Core.Utilities.Results;
 using Entities.DTOs.CaseeDtos;
 using System.Collections.Generic;
 
@@ -15,5 +16,7 @@ namespace Business.Abstract
         IResult ChangeStatus(int id, int caseStatusId);
         IDataResult<int> GetCountByLicenceId(int licenceId);
         IDataResult<bool> CheckThisCaseBlognsToThisLicence(int id);
+        [SecuredOperation("LicenceOwner,CaseeGetAll,CustomerGetAll,TaskGetAll,EventtGetAll,EventtGetAll,CaseeGetAll")]
+        IDataResult<List<CaseeGetForDropDownDto>> CaseeGetForDropDown();
     }
 }

@@ -16,11 +16,13 @@ namespace Business.Concrete
         private readonly IEventtDal _eventtDal;
         private readonly ICurrentUserService _authenticatedUserInfoService;
         private readonly IMapper _mapper;
-        public EventtManager(IEventtDal eventtDal, IMapper mapper, ICurrentUserService authenticatedUserInfoService)
+        private readonly INotificationService _notificationService;
+        public EventtManager(IEventtDal eventtDal, IMapper mapper, ICurrentUserService authenticatedUserInfoService, INotificationService notificationService)
         {
             _eventtDal = eventtDal;
             _mapper = mapper;
             _authenticatedUserInfoService = authenticatedUserInfoService;
+            _notificationService = notificationService;
         }
 
         //Needed to authority as a lawyer or licence owner.
@@ -31,8 +33,19 @@ namespace Business.Concrete
             Eventt eventt = _mapper.Map<Eventt>(eventtAddDto);
             eventt.LicenceId = _authenticatedUserInfoService.GetLicenceId();
             eventt.CreatorId = _authenticatedUserInfoService.GetUserId();
+
             _eventtDal.Add(eventt);
+            _notificationService.Add(new Notification
+            {
+                UserId = eventtAddDto.UserId,
+                Title = "New Event Added!",
+                IsRead = false,
+                Content = eventtAddDto.Info,
+                LicenceId = _authenticatedUserInfoService.GetLicenceId(),
+                Date = System.DateTime.Now
+            });
             return new SuccessResult(Messages.AddedSuccessfuly);
+
         }
 
         //Needed to authority as a lawyer or licence owner.

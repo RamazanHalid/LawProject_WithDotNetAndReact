@@ -75,6 +75,15 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CustomerGetDto>>(customerDtos, Messages.GetAllSuccessfuly);
         }
         //Needed to authority as a lawyer or licence owner.
+        [SecuredOperation("LicenceOwner,CustomerGetAll,CustomerGetAll,TaskGetAll,EventtGetAll,EventtGetAll,CaseeGetAll")]
+        public IDataResult<List<CustomerGetForDropDownDto>> GetAllClientsForDropDown()
+        {
+            List<Customer> customeres = _customerDal.GetAllWithInclude(
+                c => c.LicenceId == _authenticatedUserInfoService.GetLicenceId() && c.IsActive == true);
+            List<CustomerGetForDropDownDto> customerDtos = _mapper.Map<List<CustomerGetForDropDownDto>>(customeres);
+            return new SuccessDataResult<List<CustomerGetForDropDownDto>>(customerDtos, Messages.GetAllSuccessfuly);
+        }
+        //Needed to authority as a lawyer or licence owner.
         [SecuredOperation("LicenceOwner,CustomerGetAll")]
         public IDataResult<CustomerGetDto> GetById(int id)
         {

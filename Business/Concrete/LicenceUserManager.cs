@@ -120,7 +120,7 @@ namespace Business.Concrete
             var countObj = _licenceUserDal.GetCount(cs => cs.LicenceId == licenceId);
             return new SuccessDataResult<int>(countObj, Messages.GetCountSuccessfuly);
         }
-        [SecuredOperation("LicenceOwner")]
+        [SecuredOperation("LicenceOwner,CustomerGetAll,TaskGetAll,EventtGetAll,EventtGetAll,CaseeGetAll")]
         public IDataResult<List<GetAllUserListForIgnoreUserList>> UsersForIgnore()
         {
             var userList = _licenceUserDal.GetAllUsersRecordedToTheLicence(l => l.LicenceId == _currentUserService.GetLicenceId());

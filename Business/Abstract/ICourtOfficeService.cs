@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Results;
+﻿using Business.BusinessAspects.Autofac;
+using Core.Utilities.Results;
 using Entities.DTOs.CourtOfficeDtos;
 using System.Collections.Generic;
 
@@ -13,5 +14,7 @@ namespace Business.Abstract
         IResult Update(CourtOfficeUpdateDto courtOfficeUpdateDto);
         IResult Delete(int id);
         IResult ChangeActivity(int id);
+        [SecuredOperation("LicenceOwner,CourtOfficeGetAll,CustomerGetAll,TaskGetAll,EventtGetAll,EventtGetAll,CaseeGetAll")]
+        IDataResult<List<CourtOfficeGetForDropDownDto>> GetAllCourtOfficesForDropDown();
     }
 }

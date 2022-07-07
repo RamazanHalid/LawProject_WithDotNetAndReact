@@ -11,7 +11,7 @@ namespace Entities.DTOs.CasesDocumentDtos
         public string Details { get; set; }
         public string DocumentPath { get; set; }
         public UserForLicenceUserGetDto Creator { get; set; }
-        public CaseeGetDto Casee { get; set; }
+        public CaseeGetForDropDownDto Casee { get; set; }
 
     }
 }

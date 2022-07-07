@@ -12,7 +12,7 @@ namespace Entities.DTOs.TaskkDtos
     {
         public int TaskkId { get; set; }
         public CustomerGetDto Customer { get; set; }
-        public CaseeGetDto Casee { get; set; }
+        public CaseeGetForDropDownDto Casee { get; set; }
         public UserForLicenceUserGetDto User { get; set; }
         public UserForLicenceUserGetDto Creator { get; set; }
         public string Info { get; set; }
