@@ -81,52 +81,68 @@ As shown in Figure 16, the box that displays the licence name is clickable and t
 
 The first button, "Users," takes users to a page, as shown in Figure 17, where each user can add users by sending them a request, and the user who has been sent the request will be able to accept the request in the “connected licence” section, which will then be listed in the "registered licences" section of the "licence" page. The user will be able to search for the numbers he/she wants to add by typing the first four digits of the cellphone number, and the sys![image](https://user-images.githubusercontent.com/42031794/177733460-11cd306e-d01a-4d74-a2dd-42a1ecaefcdf.png)tem will automatically list the users whose first four digits have been searched. The corresponding code for this section is also shown in figure 18, in which an empty list is first created, and then if the number searched by the user has a length greater than a length 3, the users to be displayed are equal to the created new list, and the new list is filtered by the filter function, that filters the searched numbers using the startsWith() method, which returns true or false if the string starts with that character or not, and finally the new list is returned.
 In the occasion that no user is found, a message will be displayed as shown in the figure 19. After the user sends the request to the corresponding user, a success popup message will be displayed to the users, as shown in figure 20, and the list will be updated accordingly.
+![image](https://user-images.githubusercontent.com/42031794/177758756-8004509b-159f-46ad-8eb6-62094176b0c4.png)
 
 Figure 16:
+![image](https://user-images.githubusercontent.com/42031794/177758775-ebce9d3f-8f43-4df5-9036-1c69d7c953cf.png)
  
 Figure 17:
- 
+ ![image](https://user-images.githubusercontent.com/42031794/177758848-347a65fa-f467-4fc0-a319-6cd6a7616930.png)
+
 Figure 18:
+![image](https://user-images.githubusercontent.com/42031794/177758858-7dd7331e-68dd-4282-ae59-2ca8f9a1e3c3.png)
 
  
 Figure 19:
+![image](https://user-images.githubusercontent.com/42031794/177758867-66222334-bd7f-4f6c-8460-982ff637543d.png)
 
  
 Figure 20:
 As seen in the figure 21, the second button in the “Licence Settings” page “Add Balance”, will navigate the users to the balance page where users can add balance to their credit card. After adding a balance, a pop up will appear asking users whether they want to save their information for later use or not, which can then be used as a drop down in the credit card reminder option, as shown in figure 22. For the next append operations, users could choose between credit cards for convenience or "none," which clears the text fields. There also exists a button at the top of the page as can be seen in the figure 23, which when clicked, opens a modal to edit credit card information that has been selected via the credit card reminder option. Also, must be mentioned that all the modals in this application are programmed to prevent any closing when clicking the area around the modal and to ensure the modal closes only after clicking the close icon on the top right corner of the modal, by setting the “hidebackdrop” and “disableEscapeKeyDown” options of the modal component to true. After users submit the form, if the operation is successful, a success message will be displayed as shown in the figure 24 and an error message otherwise.
 
- 
+ ![image](https://user-images.githubusercontent.com/42031794/177758889-11a426ba-3e13-424f-bf3b-540c9452f065.png)
+
 Figure 21:
- 
+ ![image](https://user-images.githubusercontent.com/42031794/177758925-564f48ba-17c0-467e-8edf-313da87c06d8.png)
+
 Figure 22:
+![image](https://user-images.githubusercontent.com/42031794/177758944-5d094cdb-eab2-44da-aa63-31fad3d5ed54.png)
  
 Figure 23:
- 
+ ![image](https://user-images.githubusercontent.com/42031794/177758971-8f5476de-be80-482c-b152-19164913887b.png)
+
 Figure 24:
 
 The third button on the "Licence Settings" page, as shown in figure 25, is the user list page, where each user can grant permission to other users if they have the required authorization; otherwise, the button will be disabled, indicating that the user is awaiting authorization. When a user clicks the "give permission" button, the selected user's id is collected at the end of the URL, as shown in figure 26, and the selected user's corresponding data is listed in the permission page, as shown in figure 27. On this page, the user can grant or revoke the selected user's permissions by checking and unchecking the check boxes and saving the changes by clicking the "save the changes" button.
+![image](https://user-images.githubusercontent.com/42031794/177758985-8ba19ef4-05ff-40c8-a491-c23e2e9a5749.png)
  
 Figure 25:
+![image](https://user-images.githubusercontent.com/42031794/177758997-e09c0b93-21b7-488f-984b-45bdf2be2e74.png)
  
 Figure 26:
+![image](https://user-images.githubusercontent.com/42031794/177759008-60d89891-f4ee-490d-92e5-0b880162d25d.png)
  
 Figure 27:
 
 The fourth button on the "Licence Settings" page, as shown in figure 28, is the "SMS package" option, which when clicked opens a modal with information about the SMS package and a purchase button. When the button is clicked, a success message appears to inform users that the operation was successful.
+
+![image](https://user-images.githubusercontent.com/42031794/177759019-c74008cf-5bb4-4fe0-adb0-642a60bea615.png)
  
 Figure 28:
 
 The fifth button on the "Licence Settings" page, as shown in figure 29, is the "Add licence" option, which when clicked opens a modal in which users can add licence by filling in the required text areas and clicking the "add" button.
 
- 
+![image](https://user-images.githubusercontent.com/42031794/177759032-46dadf2e-65fd-4461-b441-efd5d47c4f60.png) 
 Figure 29:
 
 The sixth button on the "Licence Settings" page, as shown in figure 30, is the "Edit licence" option, which when clicked opens a modal in which users can edit their license by changing the text areas and clicking the "edit" button.
- 
+  ![image](https://user-images.githubusercontent.com/42031794/177759209-cce006f5-6749-46df-88eb-3922723b1774.png)
+
 Figure 30:
 
 Last but not least, as shown in figure 31, the seventh button on the "Licence Settings" page, is the “payment history” option which when clicked will display the payment history information of the corresponding user which includes the amount and the payment day.
 
+![image](https://user-images.githubusercontent.com/42031794/177759227-8717882a-58d3-407c-a69b-0122c8f4dedf.png)
  
 Figure 31:
 
@@ -134,56 +150,75 @@ Figure 31:
 The second option in the sidebar, "Definitions," as shown in Figure 32, includes the necessary options that will be used throughout the application. The first definition option is "case status," as shown in figure 33. 
 In this page, the users can add, edit, and change the activity of the case statuses. The add operation can be performed by clicking the “new record” button at the top right corner of the page. As shown in the figure 34, the users will be able to add a new record by typing a name, selecting a court office type and a status for their case status. To improve usability, the "autofocus" option has been added to the first text field of each modal. In case there are any issues with adding or editing a record, an alert message including the error message such as the length of the character must be at least two characters long will be displayed at the bottom of the modal, as shown in figure 35. After the operation is done, if the process is successful, a success popup will appear, and the list will be updated accordingly. Each case status will have a "edit" option, which when clicked will display each record's individual information and allow users to edit their records as well as a "change activity" option where users can toggle the switch to toggle the status of each case between "active" and "passive," as shown in figure 33. Once the user changes the activity by toggling the switch, a success message will be displayed to prevent the service from crashing. There is also a filter option that allows users to filter the case statuses by the court office type and the status of the case statuses. As shown in Figure 36, this operation is carried out by creating a usestate() hook for each option and then filtering each object using the filter() function. Following that, the created hooks will be retrieved from the value property and set in the onchange property of each text field area.
 
+![image](https://user-images.githubusercontent.com/42031794/177759238-3edf569d-c8a6-449b-b13e-77a6ff38c84e.png)
  
 Figure 32:
- 
+![image](https://user-images.githubusercontent.com/42031794/177759247-1e5fb541-0b48-4897-b01e-d4ce06aa6182.png)
+  
 Figure 33:
- 
+ ![image](https://user-images.githubusercontent.com/42031794/177759273-e440edf7-dad3-4e7b-a2eb-f7b60fe812ac.png)
+
 Figure 34:
+![image](https://user-images.githubusercontent.com/42031794/177759284-943d82f4-5428-4b74-a609-b0a53753a8c5.png)
  
 Figure 35:
+![image](https://user-images.githubusercontent.com/42031794/177759296-05852114-50d1-4fe6-9d17-c48a4b806f90.png)
  
 Figure 36:
 
 The second definition option is "case type," as shown in figure 37. In this page, the users can add, edit, delete, and change the activity of the case types. Users can perform the add operation by clicking on the “new record” button and filling out the required fields as shown in the figure 38. An error alert message will also be displayed in case an error occurs while adding or editing the records as shown in the figure 39. As shown in Figure 37, users can also perform the change activity, edit, and delete, as well as filtering by "court office type" and "status" for each case type.
+![image](https://user-images.githubusercontent.com/42031794/177759307-b058ee35-8206-444f-8182-772cbc951f43.png)
  
 Figure 37:
- 
+ ![image](https://user-images.githubusercontent.com/42031794/177759347-ace98a6c-5de2-4f96-a90a-59d431d63125.png)
+
 Figure 38:
+![image](https://user-images.githubusercontent.com/42031794/177759373-71c33536-8a37-4eac-b5bf-b8eb00b48eb2.png)
  
 Figure 39:
 Figure 40 depicts the third definition option, "court office." Users can add, edit, delete, and change the activity of the court offices on this page in the same way that they can on the previous two pages. Figure 41 shows how to add a record by clicking on the "new record" button and filling out the required fields. If an error occurs while adding or editing records, an error alert message will be displayed. As shown in Figure 40 users can also perform the change activity, edit, and delete, as well as filtering by "court office type" and "status" for each court office.
 
+![image](https://user-images.githubusercontent.com/42031794/177759527-6281a582-b5a2-417f-a868-4c7dffe78610.png)
  
 Figure 40:
- 
+ ![image](https://user-images.githubusercontent.com/42031794/177759552-7098bfd8-82b6-4f86-87e5-ab649d01a361.png)
+
 Figure 41:
 
 The fourth definition option, "transaction activity subtype," is depicted in Figure 42. On this page, users can add, edit, delete, and change the activity of transaction activities in the same way that they can on the previous three pages. Figure 43 demonstrates how to add a record by clicking the "new record" button and filling out the required fields. An error alert message will be displayed if an error occurs while adding or editing records. Users can also perform the change activity, edit, and delete, as well as filtering by "court office type" and "status" for each transaction activity, as shown in Figure 42.
- 
+ ![image](https://user-images.githubusercontent.com/42031794/177759579-752726f6-3ad1-4db5-b5ca-ba8eafd3aa06.png)
+
 Figure 42:
+![image](https://user-images.githubusercontent.com/42031794/177759585-b3771a78-cfd0-4827-a1f9-1ec09614f8ef.png)
  
 Figure 43:
 
 The fifth definition option, "task type," is depicted in Figure 44. On this page, users can add, edit, delete, and change the activity of task types in the same way that they can on the previous four pages. Figure 45 demonstrates how to add a record by clicking the "new record" button and filling out the required fields. An error alert message will be displayed if an error occurs while adding or editing records.  Users can also perform the change, edit, and delete operations, as well as filtering the list by the "status" for each task type, as shown in Figure 44.
 
+![image](https://user-images.githubusercontent.com/42031794/177759609-5f38c82d-aa30-442b-a134-f05fae8a2fe8.png)
  
 Figure 44:
+![image](https://user-images.githubusercontent.com/42031794/177759620-e1ffc4a3-d336-4ccb-8bfd-f9caa7a69c89.png)
  
 Figure 45:
 
 Figure 46 depicts the sixth definition option, "process type." Users can add, edit, delete, and change the activity of task types on this page in the same way they can on the previous five pages. Figure 47 shows how to add a new record through clicking the "new record" button and filling out the necessary fields. If an error occurs while adding or editing records, an error alert message will be displayed. As shown in Figure 46, users can also perform the change, edit, and delete operations, as well as filter the list by the "status" for each process type.
+![image](https://user-images.githubusercontent.com/42031794/177759635-2f8cf6b7-e40d-4e71-9368-0532d910e643.png)
  
 Figure 46:
+![image](https://user-images.githubusercontent.com/42031794/177759649-92be024e-0e67-4c94-8401-4b23cc9b5a06.png)
  
 Figure 47:
 
 •	Client’s page:
 The third option in the sidebar, "clients," as shown in Figure 48, has the properties to display, add, and edit client information as well as change their activity. Figure 49 shows how to perform the add operation by clicking on the "new record" button at the top right corner of the page and filling out the required fields. The user can edit each client by clicking the "edit" button which once clicked, as shown in the figure 50 each record's individual information will be displayed and allow users to edit their records. In case any error occurs will adding or editing the records, an error alert message including the corresponding message will be displayed at the bottom of the modal. Users can also view the clients' detailed information by clicking the arrow icon at the top right of the list. By clicking the icon for the second time, the details will be folded. There is also a switch option that users can use to toggle the status of each client. Finally, the "status" filter operation is integrated into this page.
- 
+ ![image](https://user-images.githubusercontent.com/42031794/177759697-c5dc9edd-7a12-4c6e-a0ad-85fc018f06eb.png)
+
 Figure 48:
+![image](https://user-images.githubusercontent.com/42031794/177759706-9232797e-e600-4fb2-9366-7a61760a3115.png)
  
 Figure 49:
+![image](https://user-images.githubusercontent.com/42031794/177759712-8f9254d6-2c5c-41f4-b66c-62839f7c70dd.png)
  
 Figure 50:
 
@@ -207,18 +242,28 @@ Finally, the user can add a case by clicking the "add!" button, which will updat
 The "edit" option is added as a button for each case, and the other options such as "details," "upload," "history," and "delete" are displayed in a pop over for user convenience, as shown in figure 53. The first option in the pop-over, "details," is displayed as a modal in figure 54, displaying the details of each case. The second option in the pop-over which is “upload” takes the user to a separate page taking the corresponding case’s id as shown in the figure 55 and allows the user to upload a file from their device by clicking the “new record” button on the top right corner of the page and fill out the required areas as well as selecting the related file from their devices as can be seen in the figure 56. After uploading the file, the user can view the details of the file and download it as shown in the figure 55. The third option in the pop-over, "history," takes the user to a separate page that takes the corresponding selected case's id and displays the edit history of the selected case, as shown in figure 57. The modified information in each edit operation is highlighted in yellow to indicate the difference in the modification. The user will be able to scroll through the update history by clicking the left and right arrows on the top right corner of the page. The scroll option is programed in such a way that the scroll to the left will be performed if the length of the scroll is greater than zero and the scroll to the right will be performed if the length of the scroll is greater than or equal to three as the corresponding code of this operation can be seen shown in the figure 58. Lastly, the last option in the pop-over is the delete option which provides the deletion of the cases.
 Finally, as with all other pages, there exists the filter option for various properties.
 
- 
+ ![image](https://user-images.githubusercontent.com/42031794/177759757-d7e19b6b-fc61-4d1a-9b29-32cacd9ffa5e.png)
+
 Figure 51:
+![image](https://user-images.githubusercontent.com/42031794/177759763-406aad4d-23ea-4764-8024-062ff66a1299.png)
    
-Figure 52:                                                                                        Figure 53:                                                                                                           
+Figure 52:       
+![image](https://user-images.githubusercontent.com/42031794/177759789-6f6cb3c2-4be4-445d-a49e-f81d432c54d3.png)
+
+Figure 53:                                                                                                           
+![image](https://user-images.githubusercontent.com/42031794/177759803-860e0df8-5553-412a-b3e0-57f2be3e5154.png)
  
 Figure 54:
+![image](https://user-images.githubusercontent.com/42031794/177759809-0275ed62-a7dc-4113-9519-65789ccce5a1.png)
  
 Figure 55:
+![image](https://user-images.githubusercontent.com/42031794/177759817-962f38e2-b2ec-491d-bf66-402cb4500140.png)
  
 Figure 56: 
+![image](https://user-images.githubusercontent.com/42031794/177759827-a4fe2a7e-5074-4aa1-a541-70ae4b7dca14.png)
  
 Figure 57:
+![image](https://user-images.githubusercontent.com/42031794/177759848-da7498c9-e4f9-4c14-bd7f-ed733d5524b2.png)
  
 Figure 58:
 
@@ -226,8 +271,10 @@ Figure 58:
 As shown in Figure 51, the fifth option in the sidebar, "transaction activities," has the properties to display, add, edit, delete, and view the details of each transaction activity.
 Figure 60 depicts how to perform the add operation by clicking on the "new record" button at the top right corner of the page and filling out the required fields such as the "expense," the type of the amount of the transaction activity (which could be "upcoming" which is emphasized with green or "expense" which is emphasized with red), the date of the transaction activity, and so on. The user can edit each client by clicking the "edit" button, which, as shown in figure 59, displays each record's individual information and allows users to edit their records.  If an error occurs while adding or editing records, an error alert message will be displayed at the bottom of the modal, along with the corresponding message. Users can also view detailed information about transaction activities by clicking the arrow icon at the top right of the list and fold the details by clicking the icon a second time. Based on the added transaction activities, the box at the top of the list denotes the "total balance," "total expense," and "total income." Finally, this page incorporates the "transaction activity type" filter operation.
 
+![image](https://user-images.githubusercontent.com/42031794/177759859-c692b3d3-0375-4c27-843e-0306162d8bf8.png)
  
 Figure 59:
+![image](https://user-images.githubusercontent.com/42031794/177759869-63166e50-6f49-47f6-bbb1-9939bf8dc1ef.png)
  
 Figure 60:
 
@@ -246,10 +293,13 @@ The sixth option in the sidebar, "tasks," as shown in Figure 61, has the propert
 Finally, the user can add a task by clicking the "add!" button, which will update the task list so that the user can edit, delete, and view the details, as shown in figure 61. 
 The user can edit each client by clicking the "edit" button, which displays the individual information for each record and allows users to edit their records. If an error occurs while adding or editing records, an error alert message with the corresponding message will be displayed at the bottom of the modal, as shown in Figure 63, which shows the incident of adding a task with a client who has no cases. Users can also view detailed information about clients by clicking the arrow icon at the top right of the list. The details will be folded if you click the icon a second time. Users can also toggle the status of each client by using the switch option to provide convenience. Finally, there is a filter operation based on "clients," "users," "status," "task type," and "task status."
 
+![image](https://user-images.githubusercontent.com/42031794/177759910-63e20729-b75e-4832-a3d1-6fe76d0e53cf.png)
  
 Figure 61:
+![image](https://user-images.githubusercontent.com/42031794/177759925-9f9364ab-25bc-4425-96bd-f0e8cfc9a581.png)
  
 Figure 62:
+![image](https://user-images.githubusercontent.com/42031794/177759938-810832ef-e0c5-45d5-99b1-fab721796ee3.png)
  
 Figure 63:
 •	Events page:
@@ -264,10 +314,13 @@ As shown in Figure 64, the sixth option in the sidebar, "tasks," has the propert
 8.	The “date” the event ends.
 9.	The information about the corresponding event.
 Finally, the user can add an event by clicking the "add!" button, which updates the event grid and allows the user to edit and view the details, as shown in figure 64. If an error occurs while adding or editing records, an error alert message will be displayed at the bottom of the modal with the corresponding message. To display the "details" of each event, a modal is opened, as shown in figure 66, which lists the details of the selected events.
- 
+ ![image](https://user-images.githubusercontent.com/42031794/177759959-282e25f2-007d-4761-80c5-b4e65e3ef16f.png)
+
 Figure 64:
+![image](https://user-images.githubusercontent.com/42031794/177759974-781e23d7-3304-488a-8e0f-aa2353b7d68c.png)
  
 Figure 65:
+![image](https://user-images.githubusercontent.com/42031794/177759983-5104c90a-fbe1-4cc4-8cc2-c02422d4d5c9.png)
  
 Figure 66:
 •	Messages page:
@@ -275,49 +328,65 @@ The last option in the sidebar, "messages," as shown in Figure 67, allows users 
 Figure 69 depicts the "post draft" button in the top right corner of the page, which is used in the optional "post draft" option in the "messages" page, that when selected, fills out the title and message text fields with the information from the "post draft" page. There is also a "none" option, which when selected, clears the text fields.  This page includes options for adding, editing, and deleting messages. Figure 70 shows how to add a record by clicking the "new record" button at the top right corner of the page and entering a "title" and a "message." Additionally, edit and delete operations are performed by clicking the "edit" and "delete" buttons on each post draft.
 Finally, there is a "sent messages" button in the top right corner that takes users to a page with a list of sent messages and a pagination option, as shown in figure 71.
  
- 
+ ![image](https://user-images.githubusercontent.com/42031794/177760033-b672ce5d-7422-4aa4-8cd7-9fa74d215ab9.png)
+![image](https://user-images.githubusercontent.com/42031794/177760044-28d68183-013a-4384-944c-2cbec0d6b703.png)
+![image](https://user-images.githubusercontent.com/42031794/177760071-e5ce5dfb-b6f3-4819-b038-3156f973a70e.png)
+
  
 Figure 67:
+![image](https://user-images.githubusercontent.com/42031794/177760085-749e526f-ea28-4598-a804-097fda4b924b.png)
  
 Figure 68:
+![image](https://user-images.githubusercontent.com/42031794/177760102-ed631bb4-42e1-4f16-aaf2-f041643d2a86.png)
  
 Figure 69:
+![image](https://user-images.githubusercontent.com/42031794/177760111-3e1743c0-c3f8-4268-97a7-70ee67292baa.png)
  
 Figure 70:
+![image](https://user-images.githubusercontent.com/42031794/177760133-9fdd5099-a10d-403b-a5fa-5688725be078.png)
  
 Figure 71:
 Admin Panel:
 The admin panel is a panel that only the administrators have access to and displays the total created licences, total users logged into the system, and has an option named “support” to respond to the users that asked questions.
 •	Admin dashboard:
 Firstly, as can be seen in the figure 72, some necessary statistics are displayed such as “total active liences”, “total active users”, “total balance”, and “total sent messages”.
- 
+ ![image](https://user-images.githubusercontent.com/42031794/177760145-7b8aeb9c-6885-4606-88a7-d8de9e9944e0.png)
+
 Figure 72:
 
 •	Licences page:
 The second option in the sidebar is "licences," which, as shown in figure 73, displays information about each licence with pagination and the ability to filter the licences by "profile name," "email," "users," and "status" by clicking the filter button on the right top corner of the page.
 As shown in figure 74, each licence has a detail button that takes the administrator to a page of details with three buttons for "SMS history," "payment history," and "registered users." These options are also depicted in figures 75,76,77, with pagination options for each of them.
 
+![image](https://user-images.githubusercontent.com/42031794/177760157-23eb331c-b11b-4ec5-9c18-5ecc47ddbe6b.png)
  
 Figure 73:
+![image](https://user-images.githubusercontent.com/42031794/177760168-d639b2c8-a1cb-48f4-bacf-d2f416f7d719.png)
  
 Figure 74:
+![image](https://user-images.githubusercontent.com/42031794/177760181-389a8a5b-4b72-44f4-a43d-f936abf22b33.png)
  
 Figure 75:
+![image](https://user-images.githubusercontent.com/42031794/177760191-fbeec118-764e-4695-96ae-ce44e14f84f0.png)
  
 Figure 76:
+![image](https://user-images.githubusercontent.com/42031794/177760208-a58427bc-2972-4555-b1f7-a98af453f56b.png)
  
 Figure 77:
 
 •	Users page:
 The third option in the sidebar is "users," which, as shown in figure 78, displays information about each user with pagination and the ability to filter the users by "first name," "last name," "cellphone," "status," and "email" by clicking the filter button in the page's right top corner. Each user, as shown in figure 79, has a detail button that takes the administrator to a page of details for the selected user.
 
+![image](https://user-images.githubusercontent.com/42031794/177760223-aa46e9ae-c38c-4a5b-b61f-a1ddea5338ac.png)
  
 Figure 78:
+![image](https://user-images.githubusercontent.com/42031794/177760238-47af71a7-b027-44fb-ae23-298a58b680d9.png)
  
 Figure 79:
 
 •	Admin support page:
 The last page in this panel is the "support" page, as shown in Figure 80, where the admin can respond to questions from users and provide service to them. The full name and license name are written in the message field, and notifications are displayed when there is an unread message. In addition, read messages are denoted by a blue tick, whereas unread messages are denoted by a grey tick.
+![image](https://user-images.githubusercontent.com/42031794/177760255-f18cfe49-bddb-4582-bab1-cbcffe96ec8c.png)
  
 Figure 80:
 
@@ -331,9 +400,11 @@ Figure 80:
 Landing Page:
 
 The hero, as shown in the figure 81 contains the header that when clicked navigates the users to the specified areas and also there exist two buttons that when pressed navigates the users to the MediLaw admin panel.
+![image](https://user-images.githubusercontent.com/42031794/177760266-d7fbcd87-96d0-48a5-bdc5-2a19afc34778.png)
  
 Figure 81:
 In the next section, the advantages of this software solution is displayed as can be seen in the figure 82.
+![image](https://user-images.githubusercontent.com/42031794/177760279-63b1ffa8-3a91-4139-88de-3e23f4baa008.png)
  
 Figure 82:
 
@@ -343,18 +414,22 @@ Figure 82:
 
 
 Figure 83 displays the feature of MediLaw. 
+![image](https://user-images.githubusercontent.com/42031794/177760307-0bf241c2-036d-4116-88fb-3607495fbc54.png)
  
 Figure 83:
 Figure 84 depicts the information about us.
 
+![image](https://user-images.githubusercontent.com/42031794/177760324-679a5a24-d2fc-47c4-be48-f0ad5e6a5f06.png)
  
 Figure 84:
 
 Figure 85 depicts the contact us form in which the users can send message to us.
+![image](https://user-images.githubusercontent.com/42031794/177760342-131b6c83-e31d-450f-8edb-099fa4298879.png)
  
 Figure 85:
 
 Figure 86 depicts the footer, which includes our social media option as well as contact, address, policy, and company information. 
+![image](https://user-images.githubusercontent.com/42031794/177760359-4d3d3cdc-6b61-4cee-b582-4fc7bb4107af.png)
 Figure 86:
 
 
