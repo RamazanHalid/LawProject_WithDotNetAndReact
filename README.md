@@ -24,166 +24,167 @@ Figure 2:
  </br>
 •	Login, Approve Account pages:
 After user registers to the system, he/she will be directed to the login page where he/she will confirm his/her account since it is the first time the user will use the system. First as shown in the third figure, once the user enters his/her cellphone number and password and presses the login button, an approvement code will be sent via SMS to confirm his/her account. In the next step, as shown in the fourth figure, the user will be directed to the account approvement page and once they enter their phone number along with the approvement code sent to their cellphone number, as shown in the fifth figure a success pop up will appear which shows that they have been approved their account successfully. In the next step the users will be directed to the login page again to approve their email this time. After they enter their cellphone which has been approved along with their password, a pop up will appear that says they should approve their email address as well. In this step, the users would have to check their email inboxes and they will be able to approve their email address by clicking on the email sent from MediLaw. In this step which the user has been approved his/her cellphone number and email account, he/she will be able to successfully login to the system. After the user enters the cellphone number and password and clicks the “login” button a loader will be displayed in the button to show the users the improvements of the process and after that, a success pop up will appear to show the users they have been logged in to the system successfully.
-![image](https://user-images.githubusercontent.com/42031794/177733027-887fe749-c854-449c-ba31-18ecb5187b1f.png)
-Figure 3:
+</br></br>![image](https://user-images.githubusercontent.com/42031794/177733027-887fe749-c854-449c-ba31-18ecb5187b1f.png)
+Figure 3:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177733047-d7cbfac0-9ac6-4e0d-8799-dd130187715a.png)
-Figure 4:
+</br></br>Figure 4:</br></br>
  ![image](https://user-images.githubusercontent.com/42031794/177733102-c04c1521-ab85-48a0-b143-2cb7b60d14c8.png)
-Figure 5:
+</br></br>Figure 5:</br></br>
 
 •	Forgot password page:
 In the login page, there exists a “forgot password?” option, in case the user forgot his/her password which navigated the user to the forgot password page as shown in the sixth figure. Once the user has entered his/her cellphone number, as shown in the seventh figure, a pop up will appear that shows a code has been sent to his/her cellphone. In the next step, as shown in the eighth figure, the users will be navigated to the change password page where the user can change his/her password by entering his/her cellphone number and his/her new password two times. A validation control is also performed in case the two passwords don’t match each other.
-
+</br></br>
  ![image](https://user-images.githubusercontent.com/42031794/177733168-f708dfbf-8332-4804-a9ef-cd6a47ac2b40.png)
-Figure 6:
+</br></br>Figure 6:</br></br>
  ![image](https://user-images.githubusercontent.com/42031794/177733193-5bfbc06e-962e-4aa1-8a2b-7ccb4df9595e.png)
 
-Figure 7:
+</br></br>Figure 7:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177733215-4098ca2b-7a6c-4612-8d00-c2b00b87d73f.png)
  
-Figure 8:
+</br></br>Figure 8:</br></br>
 
 •	Licence page:
 Users will be able to perform actions in this application by owning a licence, which is a way of describing the authorization to perform certain actions in this application. After users log into the system for the first time, a licence is automatically created for them based on the information shown in the ninth figure. There are two cards on this page: one to show the licences created by the user as well as the licence that was created automatically, and the other to show the licences that the user has been registered in, which will be explained later. When the user selects one of these licenses, he or she will be able to access the home page (dashboard).
-![image](https://user-images.githubusercontent.com/42031794/177733255-a0fcd58a-ebbc-43ef-90e3-da94abb97e9b.png)
- 
+</br></br>![image](https://user-images.githubusercontent.com/42031794/177733255-a0fcd58a-ebbc-43ef-90e3-da94abb97e9b.png)
+ </br></br>
 Figure 9:
-
+</br></br>
 •	Dashbaosrd:
 The first option in the sidebar which is dashboard displays the users' upcoming five events as well as statistics for each user's connected clients, connected tasks, connected events, and connected cases. Since the user will have no upcoming events when he or she first logs into the system, a message will be displayed saying, "Please Add Event."
 •	Header (Profile, Connected Licences, Support, Notifications):
 The panel consists of a header which is depicted in figure 11. The header includes an account popover that initially displays the user's name, surname, and email address. Then there exist some options for linking the user to specific pages, and finally, there is a logout button to assist users in logging out of the system. The first option takes the user to the home (dashboard), while the second takes the user to the profile page, as shown in Figure 13. The user will be able to view and update his or her information on this page, as well as select an avatar as their profile picture. The third option, as shown in Figure 14, takes users to the "connected licences" page, where they can accept or decline a licence that other users requested in the add user section, which will be explained shortly. And lastly the fourth option is the admin panel which only admins can see since there exists a claim that has permissions only for the administrators. 
 The second header property is the notification option, which displays notifications as shown in Figure 12. When users click the notification button, all notifications are marked as read; however, users can delete any notification by clicking the trash icon on each notification.
 The support option is another feature in the header, as shown in Figure 15. Users can seek assistance from administrators on this page by typing their messages in the text field and clicking the send button. If the administrator sees the messages, the messages will be marked as read; otherwise, they will be marked as unread. There is also a refresh button to refresh the messages if necessary.
-![image](https://user-images.githubusercontent.com/42031794/177733285-64dd27b0-6f34-450e-b5e1-d2a698aea51a.png)
+</br></br>![image](https://user-images.githubusercontent.com/42031794/177733285-64dd27b0-6f34-450e-b5e1-d2a698aea51a.png)
  
-Figure 10:
+</br></br>Figure 10:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177733329-f0bea28d-451d-49c6-9822-2240a1371335.png)
      
-Figure 11:
+</br></br>Figure 11:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177733368-1ea87952-82d2-484f-846f-2866503d3085.png)
-
-Figure 12:
+</br></br>
+Figure 12:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177733392-bdac34ee-6a0a-4531-abe8-415c3eecadd7.png)
  
-Figure 13:
+</br></br>Figure 13:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177733428-2dcf1176-64e5-4312-86c6-03ad4ad01cf2.png)
  
-Figure 14:
+</br></br>Figure 14:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177733440-0e3f643e-2b86-4fb7-a15c-6ad936df1f86.png)
- 
-Figure 15:
+ </br></br>
+Figure 15:</br></br>
 
 •	Sidebar:
 The second feature of the panel is the sidebar. The sidebar contains the logo, a box displaying the licence that users have logged in with, sidebar configurations, and a button that takes users to the landing page.
 •	Licence settings page:
 As shown in Figure 16, the box that displays the licence name is clickable and takes users to the "licence setting" page. This page contains a list of important information for lawyers, such as continuing tasks, clients, cases, transaction activities, current balance, currently used disk space (to keep track of space used after uploading files for cases), number of current users, and SMS. The following section of this page consists of some buttons that direct users to various sections with specific purposes.
-
+</br></br>
 The first button, "Users," takes users to a page, as shown in Figure 17, where each user can add users by sending them a request, and the user who has been sent the request will be able to accept the request in the “connected licence” section, which will then be listed in the "registered licences" section of the "licence" page. The user will be able to search for the numbers he/she wants to add by typing the first four digits of the cellphone number, and the sys![image](https://user-images.githubusercontent.com/42031794/177733460-11cd306e-d01a-4d74-a2dd-42a1ecaefcdf.png)tem will automatically list the users whose first four digits have been searched. The corresponding code for this section is also shown in figure 18, in which an empty list is first created, and then if the number searched by the user has a length greater than a length 3, the users to be displayed are equal to the created new list, and the new list is filtered by the filter function, that filters the searched numbers using the startsWith() method, which returns true or false if the string starts with that character or not, and finally the new list is returned.
+</br></br>
 In the occasion that no user is found, a message will be displayed as shown in the figure 19. After the user sends the request to the corresponding user, a success popup message will be displayed to the users, as shown in figure 20, and the list will be updated accordingly.
-![image](https://user-images.githubusercontent.com/42031794/177758756-8004509b-159f-46ad-8eb6-62094176b0c4.png)
-
-Figure 16:
+</br></br>![image](https://user-images.githubusercontent.com/42031794/177758756-8004509b-159f-46ad-8eb6-62094176b0c4.png)
+</br></br>
+Figure 16:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177758775-ebce9d3f-8f43-4df5-9036-1c69d7c953cf.png)
- 
-Figure 17:
+ </br></br>
+Figure 17:</br></br>
  ![image](https://user-images.githubusercontent.com/42031794/177758848-347a65fa-f467-4fc0-a319-6cd6a7616930.png)
-
-Figure 18:
+</br></br>
+Figure 18:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177758858-7dd7331e-68dd-4282-ae59-2ca8f9a1e3c3.png)
 
- 
-Figure 19:
+ </br></br>
+Figure 19:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177758867-66222334-bd7f-4f6c-8460-982ff637543d.png)
-
+</br></br>
  
 Figure 20:
-As seen in the figure 21, the second button in the “Licence Settings” page “Add Balance”, will navigate the users to the balance page where users can add balance to their credit card. After adding a balance, a pop up will appear asking users whether they want to save their information for later use or not, which can then be used as a drop down in the credit card reminder option, as shown in figure 22. For the next append operations, users could choose between credit cards for convenience or "none," which clears the text fields. There also exists a button at the top of the page as can be seen in the figure 23, which when clicked, opens a modal to edit credit card information that has been selected via the credit card reminder option. Also, must be mentioned that all the modals in this application are programmed to prevent any closing when clicking the area around the modal and to ensure the modal closes only after clicking the close icon on the top right corner of the modal, by setting the “hidebackdrop” and “disableEscapeKeyDown” options of the modal component to true. After users submit the form, if the operation is successful, a success message will be displayed as shown in the figure 24 and an error message otherwise.
-
+As seen in the figur</br></br>e 21, the second button in the “Licence Settings” page “Add Balance”, will navigate the users to the balance page where users can add balance to</br></br> their credit card. After adding a balance, a pop up will appear asking users whether they want to save their information for later use or not, which can then be used as a drop down in the credit card reminder option, as shown in figure 22. For the next append operations, users could choose between credit cards for convenience or "none," which clears the text fields. There also exists a button at the top of the page as can be seen in the figure 23, which when clicked, opens a modal to edit credit card information that has been selected via the credit card reminder option. Also, must be mentioned that all the modals in this application are programmed to prevent any closing when clicking the area around the modal and to ensure the modal closes only after clicking the close icon on the top right corner of the modal, by setting the “hidebackdrop” and “disableEscapeKeyDown” options of the modal component to true. After users submit the form, if the operation is successful, a success message will be displayed as shown in the figure 24 and an error message otherwise.
+</br></br>
  ![image](https://user-images.githubusercontent.com/42031794/177758889-11a426ba-3e13-424f-bf3b-540c9452f065.png)
-
-Figure 21:
+</br></br>
+Figure 21:</br></br>
  ![image](https://user-images.githubusercontent.com/42031794/177758925-564f48ba-17c0-467e-8edf-313da87c06d8.png)
-
-Figure 22:
+</br></br>
+Figure 22:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177758944-5d094cdb-eab2-44da-aa63-31fad3d5ed54.png)
- 
-Figure 23:
+ </br></br>
+Figure 23:</br></br>
  ![image](https://user-images.githubusercontent.com/42031794/177758971-8f5476de-be80-482c-b152-19164913887b.png)
-
-Figure 24:
+</br></br>
+Figure 24:</br></br>
 
 The third button on the "Licence Settings" page, as shown in figure 25, is the user list page, where each user can grant permission to other users if they have the required authorization; otherwise, the button will be disabled, indicating that the user is awaiting authorization. When a user clicks the "give permission" button, the selected user's id is collected at the end of the URL, as shown in figure 26, and the selected user's corresponding data is listed in the permission page, as shown in figure 27. On this page, the user can grant or revoke the selected user's permissions by checking and unchecking the check boxes and saving the changes by clicking the "save the changes" button.
-![image](https://user-images.githubusercontent.com/42031794/177758985-8ba19ef4-05ff-40c8-a491-c23e2e9a5749.png)
- 
-Figure 25:
+</br></br>![image](https://user-images.githubusercontent.com/42031794/177758985-8ba19ef4-05ff-40c8-a491-c23e2e9a5749.png)
+ </br></br>
+Figure 25:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177758997-e09c0b93-21b7-488f-984b-45bdf2be2e74.png)
- 
+ </br></br>
 Figure 26:
 ![image](https://user-images.githubusercontent.com/42031794/177759008-60d89891-f4ee-490d-92e5-0b880162d25d.png)
- 
+ </br></br>
 Figure 27:
-
+</br></br>
 The fourth button on the "Licence Settings" page, as shown in figure 28, is the "SMS package" option, which when clicked opens a modal with information about the SMS package and a purchase button. When the button is clicked, a success message appears to inform users that the operation was successful.
-
+</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177759019-c74008cf-5bb4-4fe0-adb0-642a60bea615.png)
- 
+ </br></br>
 Figure 28:
-
+</br></br>
 The fifth button on the "Licence Settings" page, as shown in figure 29, is the "Add licence" option, which when clicked opens a modal in which users can add licence by filling in the required text areas and clicking the "add" button.
-
+</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177759032-46dadf2e-65fd-4461-b441-efd5d47c4f60.png) 
-Figure 29:
+</br></br>Figure 29:</br></br>
 
 The sixth button on the "Licence Settings" page, as shown in figure 30, is the "Edit licence" option, which when clicked opens a modal in which users can edit their license by changing the text areas and clicking the "edit" button.
-  ![image](https://user-images.githubusercontent.com/42031794/177759209-cce006f5-6749-46df-88eb-3922723b1774.png)
-
-Figure 30:
+  </br></br>![image](https://user-images.githubusercontent.com/42031794/177759209-cce006f5-6749-46df-88eb-3922723b1774.png)
+</br></br>
+Figure 30:</br></br>
 
 Last but not least, as shown in figure 31, the seventh button on the "Licence Settings" page, is the “payment history” option which when clicked will display the payment history information of the corresponding user which includes the amount and the payment day.
-
+</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177759227-8717882a-58d3-407c-a69b-0122c8f4dedf.png)
- 
+ </br></br>
 Figure 31:
-
+</br></br>
 •	Definitions page (Case Status, Case Type, Court Offices, Transaction Activity Subtype, Task Type, Process Type):
 The second option in the sidebar, "Definitions," as shown in Figure 32, includes the necessary options that will be used throughout the application. The first definition option is "case status," as shown in figure 33. 
 In this page, the users can add, edit, and change the activity of the case statuses. The add operation can be performed by clicking the “new record” button at the top right corner of the page. As shown in the figure 34, the users will be able to add a new record by typing a name, selecting a court office type and a status for their case status. To improve usability, the "autofocus" option has been added to the first text field of each modal. In case there are any issues with adding or editing a record, an alert message including the error message such as the length of the character must be at least two characters long will be displayed at the bottom of the modal, as shown in figure 35. After the operation is done, if the process is successful, a success popup will appear, and the list will be updated accordingly. Each case status will have a "edit" option, which when clicked will display each record's individual information and allow users to edit their records as well as a "change activity" option where users can toggle the switch to toggle the status of each case between "active" and "passive," as shown in figure 33. Once the user changes the activity by toggling the switch, a success message will be displayed to prevent the service from crashing. There is also a filter option that allows users to filter the case statuses by the court office type and the status of the case statuses. As shown in Figure 36, this operation is carried out by creating a usestate() hook for each option and then filtering each object using the filter() function. Following that, the created hooks will be retrieved from the value property and set in the onchange property of each text field area.
-
+</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177759238-3edf569d-c8a6-449b-b13e-77a6ff38c84e.png)
- 
-Figure 32:
+ </br></br>
+Figure 32:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177759247-1e5fb541-0b48-4897-b01e-d4ce06aa6182.png)
-  
-Figure 33:
+  </br></br>
+Figure 33:</br></br>
  ![image](https://user-images.githubusercontent.com/42031794/177759273-e440edf7-dad3-4e7b-a2eb-f7b60fe812ac.png)
-
-Figure 34:
+</br></br>
+Figure 34:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177759284-943d82f4-5428-4b74-a609-b0a53753a8c5.png)
- 
-Figure 35:
+ </br></br>
+Figure 35:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177759296-05852114-50d1-4fe6-9d17-c48a4b806f90.png)
- 
-Figure 36:
+ </br></br>
+Figure 36:</br></br>
 
-The second definition option is "case type," as shown in figure 37. In this page, the users can add, edit, delete, and change the activity of the case types. Users can perform the add operation by clicking on the “new record” button and filling out the required fields as shown in the figure 38. An error alert message will also be displayed in case an error occurs while adding or editing the records as shown in the figure 39. As shown in Figure 37, users can also perform the change activity, edit, and delete, as well as filtering by "court office type" and "status" for each case type.
+The second definition option is "case type," as shown in figure 37. In this page, the users can add, edit, delete, and change the activity of the case types. Users can perform the add operation by clicking on the “new record” button and filling out the required fields as shown in the figure 38. An error alert message will also be displayed in case an error occurs while adding or editing the records as shown in the figure 39. As shown in Figure 37, users can also perform the change activity, edit, and delete, as well as filtering by "court office type" and "status" for each case type.</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177759307-b058ee35-8206-444f-8182-772cbc951f43.png)
- 
-Figure 37:
+ </br></br>
+Figure 37:</br></br>
  ![image](https://user-images.githubusercontent.com/42031794/177759347-ace98a6c-5de2-4f96-a90a-59d431d63125.png)
-
-Figure 38:
+</br></br>
+Figure 38:</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177759373-71c33536-8a37-4eac-b5bf-b8eb00b48eb2.png)
- 
-Figure 39:
+ </br></br>
+Figure 39:</br></br>
 Figure 40 depicts the third definition option, "court office." Users can add, edit, delete, and change the activity of the court offices on this page in the same way that they can on the previous two pages. Figure 41 shows how to add a record by clicking on the "new record" button and filling out the required fields. If an error occurs while adding or editing records, an error alert message will be displayed. As shown in Figure 40 users can also perform the change activity, edit, and delete, as well as filtering by "court office type" and "status" for each court office.
-
+</br></br>
 ![image](https://user-images.githubusercontent.com/42031794/177759527-6281a582-b5a2-417f-a868-4c7dffe78610.png)
- 
-Figure 40:
+ </br></br>
+Figure 40:</br></br>
  ![image](https://user-images.githubusercontent.com/42031794/177759552-7098bfd8-82b6-4f86-87e5-ab649d01a361.png)
-
-Figure 41:
+</br></br>
+Figure 41:</br></br>
 
 The fourth definition option, "transaction activity subtype," is depicted in Figure 42. On this page, users can add, edit, delete, and change the activity of transaction activities in the same way that they can on the previous three pages. Figure 43 demonstrates how to add a record by clicking the "new record" button and filling out the required fields. An error alert message will be displayed if an error occurs while adding or editing records. Users can also perform the change activity, edit, and delete, as well as filtering by "court office type" and "status" for each transaction activity, as shown in Figure 42.
  ![image](https://user-images.githubusercontent.com/42031794/177759579-752726f6-3ad1-4db5-b5ca-ba8eafd3aa06.png)
