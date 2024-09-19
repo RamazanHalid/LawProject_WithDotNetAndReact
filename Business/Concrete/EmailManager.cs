@@ -79,9 +79,9 @@ namespace Business.Concrete
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network
             };
-            smtpClient.Credentials = new NetworkCredential("medilaw7@gmail.com", "Halid3535");
+            smtpClient.Credentials = new NetworkCredential("", "");
             MailMessage mailMessage = new MailMessage() { };
-            mailMessage.From = new MailAddress("medilaw7@gmail.com", "Medilaw");
+            mailMessage.From = new MailAddress("", "");
             mailMessage.Body = emailContent.Message;
             mailMessage.To.Add(emailContent.To);
             mailMessage.Subject = emailContent.Subject;
@@ -99,9 +99,9 @@ namespace Business.Concrete
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network
             };
-            smtpClient.Credentials = new NetworkCredential("medilaw7@gmail.com", "Halid3535");
+            smtpClient.Credentials = new NetworkCredential("", "");
             MailMessage mailMessage = new MailMessage() { };
-            mailMessage.From = new MailAddress("medilaw7@gmail.com", "Medilaw");
+            mailMessage.From = new MailAddress("", "");
             foreach (var item in emailMultipleReciver.Tos)
             {
                 mailMessage.To.Add(item);
