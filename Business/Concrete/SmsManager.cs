@@ -22,9 +22,9 @@ namespace Business.Concrete
             _customerService = customerService;
             _licenceUserService = licenceUserService;
         }
-        private string api = "http://api.iletimerkezi.com/v1/send-sms";
-        private string userName = "5433232164";
-        private string userPassword = "Terra2010";
+        private string api = "";
+        private string userName = "";
+        private string userPassword = "";
 
         [SecuredOperation("LicenceOwner,SendSms")]
         public IResult SendSmsToMembers(string message, List<int> ids)
